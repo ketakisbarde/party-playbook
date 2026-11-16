@@ -408,7 +408,15 @@
               <p id="drawing-game-summary" role="status"></p>
               <p class="party-small">Choose your game length below, from 1 second to 10 minutes. The suggested time is a quick speed round, not a guarantee that every drawing will be finished. The selected pack starts at the current prompt and wraps around without repeats.</p>
             </div>
-            <div class="round-prompt" id="round-prompt-card">
+            <div class="party-panel rapid-finish" id="rapid-finish" hidden>
+              <h2 class="handwritten" id="rapid-finish-title" tabindex="-1"></h2>
+              <p>Record your points, then continue to the next round or choose another round of this game.</p>
+              <div class="inline-controls">
+                <button class="primary-button" id="rapid-next-round" type="button">Next round</button>
+                <button class="secondary-button" id="rapid-choose-round" type="button">Choose a round</button>
+              </div>
+            </div>
+            <div class="round-prompt" id="round-prompt-card" tabindex="-1">
               <p class="rapid-step-clock" id="rapid-step-clock" role="timer" aria-live="off" hidden></p>
               <p class="rapid-reader-reminder" id="rapid-reader-reminder" hidden>Player: face away. Teammate: read the title aloud once, in its normal order. No hints or repeats.</p>
               <p id="round-prompt-text"></p>
@@ -427,7 +435,9 @@
               <button class="secondary-button" id="next-prompt" type="button">Next prompt</button>
               <button class="secondary-button" id="shuffle-prompt" type="button">Random prompt</button>
               <button class="primary-button" id="reveal-prompt" type="button" hidden>Reveal answer</button>
+              <button class="secondary-button" id="rapid-round-menu" type="button" aria-describedby="rapid-round-menu-note" hidden>Choose a round</button>
             </div>
+            <p class="party-small" id="rapid-round-menu-note" hidden>Choose a round to leave this attempt. That round will start fresh when you press START.</p>
             <div class="party-panel" id="audio-panel" hidden>
               <label for="round-audio-file">Add an audio clip for this challenge</label>
               <input id="round-audio-file" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.aac,.flac">
@@ -448,14 +458,6 @@
               </div>
               <p id="round-status" role="status">Ready when you are.</p>
               <p class="party-small" id="timer-help">Timers pause when you leave the round or hide this tab. Reloading resets the timer.</p>
-            </div>
-            <div class="party-panel rapid-finish" id="rapid-finish" hidden>
-              <h2 class="handwritten" id="rapid-finish-title"></h2>
-              <p>Take a breather, then get everyone ready for the next round.</p>
-              <div class="inline-controls">
-                <button class="primary-button" id="rapid-next-round" type="button">Next round</button>
-                <button class="secondary-button" id="rapid-choose-round" type="button">Choose a round</button>
-              </div>
             </div>
           </div>
         </div>

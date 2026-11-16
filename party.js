@@ -456,6 +456,8 @@
     el("round-prompt-controls").hidden = !rapid.started;
     el("round-timer-panel").hidden = !rapid.started;
     el("rapid-finish").hidden = !rapid.complete;
+    el("rapid-round-menu").hidden = !rapid.started || rapid.complete;
+    el("rapid-round-menu-note").hidden = !rapid.started || rapid.complete;
     el("round-instructions").open = false;
   }
 
@@ -470,7 +472,7 @@
     options.replaceChildren();
     for (let index = 0; index < Math.ceil(game.prompts.length / game.roundSize); index += 1) {
       const label = rapidRoundLabel(index);
-      const button = action(label, `Choose ${label.toLowerCase()}`, () => prepareRapidRound(index));
+      const button = action(label, `Choose ${label.toLowerCase()}`, () => chooseRapidRound(index));
       button.setAttribute("aria-pressed", String(index === round));
       options.append(button);
     }
@@ -494,6 +496,13 @@
     saveState();
   }
 
+  function chooseRapidRound(round) {
+    prepareRapidRound(round);
+    const selected = el("rapid-round-options").querySelector('[aria-pressed="true"]');
+    selected.focus({ preventScroll: true });
+    el("rapid-round-options").scrollIntoView({ block: "center", behavior: "instant" });
+  }
+
   function beginRapidRound() {
     clearPartyError();
     pauseTimer();
@@ -512,6 +521,8 @@
       updatePromptView();
       renderTimer();
     } else runTimer();
+    el("round-prompt-card").focus({ preventScroll: true });
+    el("round-prompt-card").scrollIntoView({ block: "start", behavior: "instant" });
   }
 
   function waitForReader() {
@@ -541,6 +552,8 @@
       : "Round finished. Compare your points before starting another round.";
     showRapidStage();
     renderTimer();
+    el("rapid-finish-title").focus({ preventScroll: true });
+    el("rapid-finish").scrollIntoView({ block: "start", behavior: "instant" });
   }
 
   function nextRapidPrompt() {
@@ -765,6 +778,8 @@
     el("round-instructions").open = game.id === "drawing-telephone";
     el("rapid-intro").hidden = !isRapid;
     el("rapid-finish").hidden = true;
+    el("rapid-round-menu").hidden = true;
+    el("rapid-round-menu-note").hidden = true;
     el("rapid-step-clock").hidden = !isRapid;
     el("rapid-skip-tile").hidden = !isRapid;
     el("round-prompt-card").hidden = isRapid;
@@ -932,8 +947,10 @@
     el("play-wheel-game").addEventListener("click", () => selectGame(state.selectedId));
     el("start-rapid-round").addEventListener("click", beginRapidRound);
     el("rapid-answer-start").addEventListener("click", runTimer);
-    el("rapid-next-round").addEventListener("click", () => prepareRapidRound(rapid.round + 1));
-    el("rapid-choose-round").addEventListener("click", () => prepareRapidRound(rapid.round));
+    el("rapid-next-round").addEventListener("click", () => chooseRapidRound(rapid.round + 1));
+    for (const id of ["rapid-choose-round", "rapid-round-menu"]) {
+      el(id).addEventListener("click", () => chooseRapidRound(rapid.round));
+    }
     el("rapid-skip-tile").addEventListener("click", () => {
       nextRapidPrompt();
       if (running) rapid.phaseDeadline = performance.now() + rapid.phaseRemaining * 1000;
