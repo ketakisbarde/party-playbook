@@ -329,6 +329,22 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
   .corner-star { width: 36px; height: 36px; right: 10px; top: 12px; }
 }
 @media (max-width: 680px) {
+  button, .brand, .chapter-dots a, summary { min-height: 44px; }
+  .brand { display: inline-flex; align-items: center; }
+  .site-footer { flex-wrap: wrap; justify-content: center; gap: 8px 16px; }
+  .chapter-dots { order: 1; flex-basis: 100%; justify-content: center; gap: 2px; }
+  .chapter-dots a { display: grid; place-items: center; width: 44px; border: 0; background: transparent; }
+  .chapter-dots a::before { content: ""; width: 12px; height: 12px; border: 1px solid #7799b8; border-radius: 50%; }
+  .chapter-dots a[aria-current] { background: transparent; }
+  .chapter-dots a[aria-current]::before { background: var(--blue); border-color: var(--blue); }
+  summary { padding-block: 10px; }
+  .party-panel input:not([type="checkbox"]), .game-menu-heading select { min-height: 44px; font-size: 16px; }
+  #round-audio-file { min-height: 44px; font-size: 16px; }
+  .wheel-choice { display: flex; align-items: center; gap: 10px; min-height: 44px; padding-block: 10px; }
+  .wheel-choice input { flex: 0 0 auto; width: 20px; height: 20px; margin: 0; }
+  .game-open { padding-block: 6px; }
+  .message-controls { flex-wrap: wrap; }
+  .round-main, .round-layout, .welcome-copy, .our-note { min-width: 0; }
   .header-actions { width: 100%; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .header-button { padding: 10px 8px; font-size: 14px; }
   .party-game-grid { grid-template-columns: 1fr; }
@@ -364,7 +380,7 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
   .letter-card { padding: 24px 20px; }
   .friend-message { font-size: 21px; }
   .message-controls { gap: 9px; width: 100%; }
-  .secondary-button { padding: 10px; font-size: 12px; }
+  .secondary-button { padding: 12px; font-size: 14px; }
   #message-count { min-width: 72px; }
   .our-photo-wrap { max-width: 350px; width: 100%; margin: auto; }
   .our-note { text-align: center; }

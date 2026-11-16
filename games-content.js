@@ -5,7 +5,7 @@
 // then revealSeconds for its answer and optional transitionSeconds for a "Next!"
 // changeover. Extras after full rounds form a shorter bonus round.
 // readAloud waits for a host click before each answer timer; reading time is untimed.
-// Optional trialPrompt opens an existing prompt for a host-led, unscored trial.
+// Optional trialPrompt is separate from the playable pack for an untimed, unscored trial.
 // "Yes Exit / No Entry" is reserved for the instructions, not the playable deck.
 window.partyGames = [
   {
@@ -80,10 +80,14 @@ window.partyGames = [
     ]
   },
   {
-    id: "alphabet", title: "Alphabet Object Dash", group: "teams", mode: "challenge", seconds: 30,
+    id: "alphabet", title: "Alphabet Object Dash", group: "teams", mode: "rapid", seconds: 88,
+    roundSize: 8, guessSeconds: 10, revealSeconds: 0, transitionSeconds: 1, promptUnit: "letter",
+    example: { text: "Find something starting with L", answer: "A lamp", tip: "Point out the lamp to the host without moving it. This practice letter is not in the game." },
+    intro: "One player from every team searches at the same time. Find or point out a safe object beginning with the displayed letter within ten seconds. First valid object earns one point; the host judges and scores manually.",
+    lineGuide: "Use a different teammate for each letter, cycling through each team's queue. A full-screen NEXT! cue lasts one second, then the next ten-second search starts automatically. Pause for extra time to change players or settle a point.",
     supplies: "Objects already in the agreed party area.",
-    rules: ["One runner per team searches for an object starting with the displayed letter.", "Keep searching to the agreed party area: no private rooms, cupboards or dangerous objects.", "Bring the object to the host. First valid object earns one point.", "Change runners and use another letter for the next round."],
-    prompts: [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"].map(letter => ({ text: `Find something starting with...\n${letter}` }))
+    rules: ["One player from each team searches at the same time; everyone else stays out of the search and gives no hints.", "Press START for eight letters. Each letter gets ten seconds, followed by a one-second full-screen NEXT! cue. Letters advance automatically.", "Find or point out a safe object beginning with the displayed letter. Keep searching to the agreed party area: no private rooms, cupboards, dangerous objects, climbing or running.", "First valid object earns one point per letter. If nobody finds one before time is up, no point. The host judges and scores manually; the website cannot detect objects.", "Rotate to the next teammate at every NEXT!, cycling through each team's queue. Every team gets eight chances even when team sizes differ.", "Use Pause if you need more time to change players or settle a point. Choose the most points after eight letters as the winner; ties may share the win."],
+    prompts: [..."ABCMPSTW"].map(letter => ({ text: `Find something starting with...\n${letter}` }))
   },
   {
     id: "hook-step", title: "Hook-Step Roulette", group: "teams", mode: "audio", seconds: 30,
@@ -100,24 +104,39 @@ window.partyGames = [
   },
   {
     id: "dance-telephone", title: "Copy the Step", group: "teams", mode: "secret", seconds: 60,
-    supplies: "Enough clear space for each team to form a line.",
-    rules: ["Use equal-length team lines; rotate extra players in between prompts. Line up facing away from the person behind you.", "Only the first performer looks at the secret prompt. Everyone else turns away from the screen.", "Person one performs once for person two; pass the move down the line without talking.", "The last person performs for everyone. Reveal the original and compare!", "The host awards a point for the closest match, or gives every team a point for a great effort."],
+    supplies: "Enough clear space for equal-length team lines. All actions and props are imaginary.",
+    rules: ["Use equal-length team lines; rotate extra players and roles between prompts. Everyone faces away until it is their turn to watch.", "Only the first performer in each team sees the same secret situation. Everyone else turns away from the screen. Hide the prompt before starting the timer.", "Start the 60-second default timer for the whole chain, including the final guess. Person one silently acts the situation once for person two, who copies what they saw once for person three, and so on.", "No talking, sound effects, spelling, real props or help from waiting players. Only the next person in the chain watches each performance.", "The last player guesses the situation privately to the host before time runs out. Keep all guesses private until every team has answered or time is up, so teams cannot copy.", "Reveal the original after guesses are locked. Each team earns one point for a correct situation; exact wording is not required. The host judges and records scores manually. Most points after the agreed rounds wins; ties may share the win.", "Use mime only: never light real fireworks, spill drinks, fall or collide with anyone. Run on the spot and adapt movements for comfort. Anyone may pass."],
     prompts: [
-      { text: "A robot slips on a banana, recovers, and strikes a superstar pose." },
-      { text: "Stir a giant pot, taste the food, then do a happy shoulder shimmy." },
-      { text: "An imaginary cricket shot, a victory jump, and a dramatic hair flip." },
-      { text: "Sneak past a sleeping dog, get spotted, and freeze like a statue." },
-      { text: "Blow out birthday candles, open a surprise gift, and celebrate." },
-      { text: "Strum an air guitar, sing into an imaginary microphone, and take a rockstar bow." },
-      { text: "Open an imaginary umbrella, dodge a puddle, and shake rain off your shoulders." },
-      { text: "Adjust invisible sunglasses, walk like a model, and blow a kiss to the cameras." },
-      { text: "Spot a mosquito, swat at it twice, and celebrate catching it." },
-      { text: "Lift an imaginary trophy, kiss it, and wave to the crowd." },
-      { text: "Pull a fish out of the water, show how huge it is, and pose for a photo." },
-      { text: "Put on headphones, bop your head, and finish with a dramatic disco point." },
-      { text: "Take a giant ice cream lick, notice a brain freeze, and fan your face." },
-      { text: "Wind yourself up like a toy, march with stiff arms, and slowly run out of power." },
-      { text: "Check an imaginary watch, tap your foot impatiently, and cheer when your friend arrives." }
+      { text: "Killing a mosquito: spot it, chase it, and swat it." },
+      { text: "Lighting an imaginary Diwali pataka and running away at Flash speed. Mime running on the spot!" },
+      { text: "Hailing a cab that keeps ignoring you." },
+      { text: "Opening an umbrella that won't open in heavy rain." },
+      { text: "Eating something unexpectedly spicy." },
+      { text: "Trying to close an overstuffed suitcase." },
+      { text: "Walking into a spiderweb." },
+      { text: "Taking a selfie but struggling to get the right angle." },
+      { text: "Carrying too many grocery bags and trying to unlock the door." },
+      { text: "Sneaking a snack from the kitchen at midnight." },
+      { text: "Chasing a hat that keeps blowing away." },
+      { text: "Trying to put on jeans that are too tight." },
+      { text: "Catching a phone before it falls." },
+      { text: "Trying to stay awake during a boring meeting." },
+      { text: "Stepping on something sticky and trying to get it off your shoe." },
+      { text: "Opening a shaken fizzy drink and trying to stop the overflow." },
+      { text: "Trying to open a stubborn pickle jar." },
+      { text: "Looking for your glasses while wearing them on your head." },
+      { text: "Brushing your teeth and suddenly needing to sneeze." },
+      { text: "Trying to get the last drop of ketchup out of a bottle." },
+      { text: "Peeling an onion and trying not to cry." },
+      { text: "Trying to kill time while a painfully slow lift arrives." },
+      { text: "Struggling to untangle a pair of earphones." },
+      { text: "Trying to catch popcorn in your mouth and missing every time." },
+      { text: "Washing your hands when the automatic tap won't detect them." },
+      { text: "Trying to squeeze toothpaste from an almost-empty tube." },
+      { text: "Realising you have waved enthusiastically at a complete stranger." },
+      { text: "Trying to carry a bowl of soup without spilling it." },
+      { text: "Pushing a door repeatedly before realising it says pull." },
+      { text: "Trying to fold a bedsheet that is much bigger than you." }
     ]
   },
   {
@@ -239,14 +258,14 @@ window.partyGames = [
     rules: ["Adapt the floor-bottle idea into a stationary tabletop challenge.", "Hold a paper cone in front of your face without pressing it against your eye.", "Look through the narrow opening and place blunt paper straws into the container.", "Keep containers on a table and don't walk with restricted vision or use sharp sticks.", "First player to place all three straws wins a point."],
     prompts: [
       { text: "Three straws. One container. Tunnel vision!\nFirst to place all three wins." },
-      { text: "Team relay: place one straw each, then swap players." }
+      { text: "Team relay: place three straws in total per team, swapping players after each straw." }
     ]
   },
   {
     id: "drawing-telephone", title: "Draw Behind the Back", group: "teams", mode: "secret", seconds: 140, continuous: true,
     trialPrompt: "Mountains",
     supplies: "Paper and washable markers for everyone.",
-    rules: ["Teams form equal-length lines, each person looking at the back of the person in front. Use the smallest team's size and rotate extra players in between prompts.", "Every team's starting artist gets the same secret prompt. Everyone else, including waiting players, must avoid peeking or giving hints.", "With permission, draw gently on paper held against the next person's back, never directly on skin. Anyone may opt out of back contact.", "Each player recreates what they felt on the next person's paper. No talking or peeking; the front person guesses.", "Choose how many prompts to attempt and a whole-game duration, up to ten minutes. The suggested speed-round time is 90 seconds for eight prompts or 140 seconds for twelve. Increase it if the chains need longer.", "First correct team earns one point. The host records it and clicks Next drawing; all teams abandon the old drawing and start the new one. Only artists look when the host reveals the new prompt.", "One continuous clock covers all drawings, revealing prompts and switching roles. Next drawing does not reset it. The game ends when time runs out or the selected pack is finished.", "Try an unscored practice with 'Mountains' first: two large peaks. Rotate drawing, copying and guessing roles after each prompt. The website never hears guesses or awards points."],
+    rules: ["Teams form equal-length lines, each person looking at the back of the person in front. Use the smallest team's size and rotate extra players in between prompts.", "Every team's starting artist gets the same secret prompt. Everyone else, including waiting players, must avoid peeking or giving hints.", "With permission, draw gently on paper held against the next person's back, never directly on skin. Anyone may opt out of back contact.", "Each player recreates what they felt on the next person's paper. No talking or peeking; the front person guesses.", "Choose how many prompts to attempt and a whole-game duration, up to ten minutes. The suggested speed-round time is 90 seconds for eight prompts or 140 seconds for twelve. Increase it if the chains need longer.", "First correct team earns one point. The host records it and clicks Next drawing; all teams abandon the old drawing and start the new one. Only artists look when the host reveals the new prompt.", "One continuous clock covers all drawings, revealing prompts and switching roles. Next drawing does not reset it. The game ends when time runs out or the selected pack is finished.", "Try an untimed, unscored practice with 'Mountains' first: two large peaks. This trial prompt never appears in the game pack. Finish the trial to set up the actual game. Rotate drawing, copying and guessing roles after each prompt. The website never hears guesses or awards points."],
     prompts: [
       { text: "A house with a chimney and one window" },
       { text: "A birthday cake with three candles" },
@@ -254,7 +273,7 @@ window.partyGames = [
       { text: "A flower in a pot" },
       { text: "A bicycle" },
       { text: "An umbrella in the rain" },
-      { text: "Mountains" },
+      { text: "A kite" },
       { text: "An ice cream cone" },
       { text: "An apple" },
       { text: "A fish" },
@@ -268,7 +287,7 @@ window.partyGames = [
     rules: ["Arrange one clearly marked, identical lane per competing team.", "Use your own balloon: put its opening into an upright cup and inflate it enough to grip the cup inside.", "Lift and move the cup using the balloon, without holding the cup with your hands.", "Deflate to release it at the finish. Repeat for all five cups.", "First team to move all five wins. Do not share balloons; a hand pump is an alternative."],
     prompts: [
       { text: "Move all five cups to the finish line.\nNo hands on the cups!" },
-      { text: "Relay edition: each team member moves one cup." }
+      { text: "Relay edition: move five cups in total per team, swapping players after each cup." }
     ]
   },
   {
@@ -323,7 +342,7 @@ window.partyGames = [
     rules: ["Count upward together, but only one person may say each number.", "Whoever says a number squats, sits, or raises a hand for the rest of that attempt.", "No planning, signals, fixed order, or two people speaking together.", "If two people speak at once, reset to one and try again.", "Try to get everyone counted. The timer is optional."],
     prompts: [
       { text: "Start at ONE.\nOne voice, one number, one person at a time." },
-      { text: "Silent planning only: no signals!\nCan everyone finish this time?" }
+      { text: "No planning or signals!\nCan everyone finish this time?" }
     ]
   },
   {
@@ -340,35 +359,63 @@ window.partyGames = [
     supplies: "No props. One guesser per team.",
     rules: ["Choose one guesser and the same number of actors from each team; rotate extra players in between prompts. The guesser turns away while the actors see the secret prompt.", "Hide the prompt before the guesser looks back.", "The selected actors perform together without words or spelling letters.", "One point if the guesser gets it before the timer ends."],
     prompts: [
-      { text: "Getting everyone ready for a group photo" },
-      { text: "Trying to catch a mosquito" },
+      { text: "An orchestra discovering that nobody is following the conductor" },
+      { text: "Passengers trying to keep their balance on a very bumpy bus ride" },
       { text: "Going through airport security" },
       { text: "A cricket team celebrating a win" },
       { text: "Cooking a meal when everything goes wrong" },
       { text: "A surprise birthday party" },
       { text: "A family fighting over the TV remote" },
-      { text: "Friends trying to squeeze into one selfie" },
+      { text: "A sports crowd reacting to a terrible referee decision" },
       { text: "A wedding dance group forgetting the steps" },
       { text: "An entire family reacting to a power cut" },
-      { text: "A restaurant table discovering the food is too spicy" },
+      { text: "Campers trying to put up a tent in strong wind" },
       { text: "Friends assembling furniture without instructions" },
       { text: "A group pretending to understand modern art" },
       { text: "People stuck in a lift with someone singing badly" },
       { text: "Wedding guests spotting the dessert buffet" },
-      { text: "A family packing for a trip at the last minute" }
+      { text: "A rowing team paddling in completely different directions" }
     ]
   },
   {
-    id: "five-things", title: "Five Things in Ten Seconds", group: "teams", mode: "challenge", seconds: 10,
+    id: "five-things", title: "Five Things in Ten Seconds", group: "teams", mode: "rapid", seconds: 330,
+    roundSize: 30, guessSeconds: 10, revealSeconds: 0, transitionSeconds: 1, promptUnit: "prompt",
+    example: { text: "Name five colours.", answer: "Red, blue, green, yellow, purple.", tip: "Say five different valid answers aloud within ten seconds. This practice prompt is not in the game." },
+    intro: "One player at a time says five different valid answers aloud in ten seconds. All five earn one point; fewer than five earn zero. No teammate help. The host judges and scores manually.",
+    lineGuide: "Alternate teams, sending the next player from each team's queue. After ten seconds, a full-screen NEXT! cue lasts one second, then a fresh prompt starts automatically. Pause if changing players or judging needs longer.",
     supplies: "No props.",
-    rules: ["One player names five different answers to the prompt in ten seconds.", "No repeated answers or help from teammates.", "All five valid answers earn one point. Swap players each turn."],
+    rules: ["Use alternating team turns, with one player speaking at a time. Cycle through each team's players rather than letting larger teams take more turns.", "Press START for 30 prompts. One player names five different answers aloud in ten seconds. No repeated answers or help from teammates.", "All five valid answers earn one point; fewer than five earn zero. The host judges and records scores manually.", "After each ten-second turn, a full-screen NEXT! cue lasts one second. The next player takes over and a fresh prompt starts automatically. Pause if judging or changing players needs longer.", "The host judges answers manually. Ash confirms personal facts and favourites; there is no built-in answer key. Favourites can be named in any order. For imagined reactions or plans, accept plausible, good-natured answers rather than treating them as facts.", "Give every team the same number of scored turns. If 30 does not divide evenly by the number of teams, treat the leftover prompts as unscored bonuses. Most points wins; ties may share the win."],
     prompts: [
       { text: "Name five things Ash says." },
       { text: "Name five Bollywood villains." },
       { text: "Name five things people forget when travelling." },
       { text: "Name five foods you would order at midnight." },
       { text: "Name five things you can find at a birthday party." },
-      { text: "Name five excuses for being late." }
+      { text: "Name five excuses for being late." },
+      { text: "Name five things Ash says when he is excited." },
+      { text: "Name five things people do at weddings." },
+      { text: "Name five of Ash's favourite desserts." },
+      { text: "Name five things Ash says while watching a match." },
+      { text: "Name five foods Ash would happily order again." },
+      { text: "Name five things Ash would pack for a holiday." },
+      { text: "Name five ways Ash might celebrate winning a game." },
+      { text: "Name five things Ash might do with a completely free Sunday." },
+      { text: "Name five gifts you think would make Ash smile." },
+      { text: "Name five things people say when the Wi-Fi stops working." },
+      { text: "Name five things people do before taking a group photo." },
+      { text: "Name five excuses people make to skip the gym." },
+      { text: "Name five things people say when the food is too spicy." },
+      { text: "Name five things people do when their phone battery is at one percent." },
+      { text: "Name five things people say while stuck in traffic." },
+      { text: "Name five things people do when guests are arriving in ten minutes." },
+      { text: "Name five things people argue about on a group trip." },
+      { text: "Name five things people say after losing a board game." },
+      { text: "Name five things people do when their favourite song comes on." },
+      { text: "Name five things Ash might say when a delivery arrives." },
+      { text: "Name five things people do to avoid washing the dishes." },
+      { text: "Name five things people say when asked to dance." },
+      { text: "Name five things people do when they cannot find the TV remote." },
+      { text: "Name five things people say when a holiday ends." }
     ]
   },
   {

@@ -161,7 +161,7 @@
       return [`Bring one player from each team up together; all ${plan.teamCount} representatives compete on the same clues. Other teammates stay quiet.`, ...rounds,
         "First correct team gets one point. Record each round on your whiteboard; the smaller team's players repeat, but every team has the same number of chances."];
     }
-    if (game.id === "wrong-answers" || game.id === "movie-backwards") {
+    if (game.id === "wrong-answers" || game.id === "movie-backwards" || game.id === "five-things") {
       const fullCycles = Math.floor(game.prompts.length / plan.teamCount);
       const bonus = game.prompts.length % plan.teamCount;
       const starters = Array.from({ length: Math.ceil(game.prompts.length / game.roundSize) }, (_, round) =>
@@ -169,7 +169,9 @@
       return [
         `Use ${plan.teamCount} short team queues, calling ${order}, then repeat. Each team sends its next player on its turn. ${plan.sizes[0] !== plan.chainSize ? `The smaller team rotates its players more often; a fixed ${plan.players}-person line would give bigger teams more attempts.` : "Your teams are equally sized, so an alternating-player line also works."}`,
         `${starters.join("; ")}. Keep the team order rolling across round breaks.`,
-        game.readAloud
+        game.id === "five-things"
+          ? "Only the called player answers: say five different valid answers aloud in ten seconds for one point; fewer than five earns zero. No teammate help. NEXT! lasts one second, then the next player's prompt starts automatically. Pause if judging needs longer. Ash confirms personal facts and favourites."
+          : game.readAloud
           ? "On each turn, an answering player faces away and a teammate reads the title once, normally. The host clicks Start 10s after the read-out; NEXT! lasts two seconds. Swap answering and reading roles."
           : "Only the called player answers: a clearly wrong answer earns one point; a genuinely correct answer, silence or repeating the question earns zero. Five seconds to answer, then one second of NEXT!.",
         bonus
@@ -186,15 +188,25 @@
           }).join(" -> ")}.`),
           "Only the artist sees the secret prompt. They draw gently on paper against the next player's back, with permission. Each player passes on what they felt; the front player guesses. No talking, peeking or help from waiting players.",
           "Practice without points or a running clock: use 'Mountains' and pass two large peaks down each chain. Then choose your prompt count and game length.",
-          `One shared clock covers ${drawing ? drawing.count : game.prompts.length} prompts${drawing ? ` in ${drawing.duration} seconds` : ""}. All teams get the same prompt. First correct team earns a point; the host clicks Next drawing and everyone abandons the old drawing. The clock keeps running.`,
+          drawing && drawing.trial
+            ? "This trial is untimed and unscored. Mountains is not in the game pack. Click Finish trial / set up game when everyone is ready."
+            : `One shared clock covers ${drawing ? drawing.count : game.prompts.length} prompts${drawing ? ` in ${drawing.duration} seconds` : ""}. All teams get the same prompt. First correct team earns a point; the host clicks Next drawing and everyone abandons the old drawing. The clock keeps running.`,
           "Only artists look when each new prompt is revealed. Switch roles between drawings. Play stops when the game clock expires or the selected pack is finished; scores stay on your whiteboard."];
       case "dance-telephone":
-        return [chain, "The first performer sees the secret move and shows it once to the next player. Pass it down without talking; the last player performs it. Compare all teams' results after 60 seconds."];
+        return [chain,
+          "Only the first performer in each team sees the same secret situation. Hide it, then start the 60-second default timer for the whole chain and final guess.",
+          "Act silently once for the next player, who copies what they saw once for the next. Everyone else faces away. No talking, sound effects, real props or help from waiting players.",
+          "The last player guesses the situation privately to the host before time is up. Keep guesses secret until every team has answered or time ends, then reveal the prompt.",
+          "One point per team for the correct situation; exact wording is not needed. The host judges and scores manually. Rotate roles and extra players for the next prompt. Most points after your agreed rounds wins; ties may share the win.",
+          "Mime everything, including fireworks; run on the spot and never fall or collide with anyone. Adapt movements for comfort; anyone may pass."];
       case "reverse-charades":
         return [`Use one guesser and ${plan.chainSize - 1} actor${plan.chainSize === 2 ? "" : "s"} from each team, so actor counts match. Rotate extra players in each turn.`,
           "Only the actors see the secret prompt. Hide it before the guesser turns back; actors mime silently. One point for a correct guess within 45 seconds."];
       case "alphabet":
-        return [representatives, "All representatives search the same agreed area for an object beginning with the letter. Example: A -> an apple. First valid object earns one point; use a new runner next turn."];
+        return [representatives,
+          "All representatives search together for each of eight letters: ten seconds to find or point out a safe object, then one second of full-screen NEXT! before the next letter starts automatically.",
+          "First valid object earns one point per letter; no object by the cutoff means no point. The host judges and records scores manually.",
+          "Use the next teammate at each NEXT!, cycling through team queues so each team gets eight chances. Pause if the changeover needs longer. No running, climbing, private rooms or unsafe objects."];
       case "hook-step":
         return [representatives, "Use one permitted audio clip for everyone's turn. Each representative performs the displayed dance challenge; compare performances and award points manually."];
       case "tunnel-vision":
@@ -205,9 +217,6 @@
         return [representatives, `Give each of ${plan.teamCount} teams five cups and its own safe table lane. Use escaping balloon air to clear them; first to clear the identical set wins.`];
       case "dice-tower":
         return [representatives, `Give ${plan.teamCount} representatives matching dice sets and chopsticks or tongs. Build for 45 seconds; the tallest standing tower wins. Rotate players next turn.`];
-      case "five-things":
-        return [`Call one player at a time in this order: ${order}. Rotate the next person from each team.`,
-          "Example: name five foods in ten seconds. Five different valid answers earn one point; teammates cannot help. Give every team the same number of turns."];
       case "in-out":
         return [`Play as one group, not teams. If a host calls, all ${plan.players} players participate; if a player calls, ${plan.players - 1} others play.`,
           "Do an unscored practice: IN, IN, OUT. Then play elimination with steps or a seated hand version; last player remaining wins."];
@@ -278,7 +287,8 @@
   function renderMenu() {
     const filter = el("game-filter").value;
     el("party-game-grid").replaceChildren();
-    games.forEach((game, index) => {
+    const orderedGames = [...games.filter(game => game.group === "group"), ...games.filter(game => game.group === "teams")];
+    orderedGames.forEach((game, index) => {
       if (filter !== "all" && filter !== game.group) return;
       const card = make("article", "party-game-card");
       card.append(make("span", "game-badge", `${String(index + 1).padStart(2, "0")} / ${game.group === "teams" ? "teams" : "whole group"}`));
@@ -323,11 +333,13 @@
     }
     if (drawing) {
       el("start-timer").textContent = running ? "Pause game" : drawing.complete ? "Play again" : drawing.started ? "Resume game" : "START GAME";
-      el("next-prompt").disabled = !running || drawing.complete;
+      el("next-prompt").disabled = !drawing.trial && (!running || drawing.complete);
       el("reveal-prompt").disabled = drawing.complete;
       el("drawing-prompt-count").disabled = drawing.started && !drawing.complete;
-      el("drawing-trial").disabled = running;
-    } else el("drawing-trial").disabled = false;
+    }
+    for (const id of ["drawing-trial", "party-try-drawing"]) {
+      el(id).disabled = Boolean(drawing && drawing.started && !drawing.complete);
+    }
     el("timer-seconds").disabled = running || Boolean(drawing && drawing.started && !drawing.complete);
     const showChangeover = Boolean(rapid && running && !rapid.complete && rapid.phase === "transition" && location.hash === "#party-round");
     el("turn-changeover").hidden = !showChangeover;
@@ -382,7 +394,7 @@
 
   function prepareDrawingGame(count, seconds, startIndex = state.promptIndex) {
     pauseTimer();
-    drawing = { count, duration: seconds, startIndex, turn: 0, started: false, complete: false, reason: null };
+    drawing = { count, duration: seconds, startIndex, turn: 0, started: false, complete: false, reason: null, trial: false };
     state.promptIndex = startIndex;
     promptRevealed = false;
     el("drawing-prompt-count").max = byId.get(state.selectedId).prompts.length;
@@ -407,6 +419,10 @@
   }
 
   function nextDrawingPrompt() {
+    if (drawing.trial) {
+      prepareDrawingGame(drawing.count, drawing.duration, drawing.startIndex);
+      return;
+    }
     if (drawing.turn + 1 >= drawing.count) {
       finishDrawingGame("all");
       return;
@@ -580,7 +596,11 @@
     if (rapid) rapid.phaseDeadline = now + rapid.phaseRemaining * 1000;
     running = true;
     el("round-status").textContent = rapid
-      ? byId.get(state.selectedId).revealSeconds === 0
+      ? state.selectedId === "alphabet"
+        ? "Go! One player per team searches together. First valid object earns a point; rotate teammates at NEXT!."
+        : state.selectedId === "five-things"
+          ? "Go! Only the called player speaks: five different valid answers in ten seconds earns one point. Rotate at NEXT!; the host judges."
+          : byId.get(state.selectedId).revealSeconds === 0
         ? byId.get(state.selectedId).readAloud
           ? "Go! Player: keep facing away and say the title backwards from memory. Reader: no hints or repeats. The host judges."
           : "Go! Only the front person answers. The next prompt is the next person's turn. The host judges answers."
@@ -607,7 +627,7 @@
   function updatePromptView() {
     const game = byId.get(state.selectedId);
     const prompts = game.prompts;
-    const prompt = prompts[state.promptIndex];
+    const prompt = drawing && drawing.trial ? { text: game.trialPrompt } : prompts[state.promptIndex];
     const secret = game.mode === "secret";
     const changeover = Boolean(rapid && rapid.phase === "transition" && !rapid.complete);
     const reading = Boolean(rapid && rapid.phase === "reading" && !rapid.complete);
@@ -652,16 +672,21 @@
     el("next-prompt").disabled = state.promptIndex >= prompts.length - 1;
     el("shuffle-prompt").disabled = prompts.length < 2;
     if (rapid) {
-      el("prompt-count").textContent = `${rapidRoundLabel(rapid.round)} / ${game.revealSeconds === 0 ? "Turn" : "Clue"} ${state.promptIndex - rapid.round * game.roundSize + 1} of ${rapidCount()}`;
+        el("prompt-count").textContent = `${rapidRoundLabel(rapid.round)} / ${game.id === "alphabet" ? "Letter" : game.revealSeconds === 0 ? "Turn" : "Clue"} ${state.promptIndex - rapid.round * game.roundSize + 1} of ${rapidCount()}`;
       el("previous-prompt").disabled = true;
       el("shuffle-prompt").disabled = true;
       el("next-prompt").disabled = !running && !reading;
       el("rapid-skip-tile").disabled = !running;
     }
     if (drawing) {
-      el("prompt-count").textContent = `Drawing ${drawing.turn + 1} of ${drawing.count}${drawing.complete ? " / game finished" : ""}`;
-      el("next-prompt").textContent = drawing.turn + 1 === drawing.count ? "Finish game" : "Next drawing";
-      el("next-prompt").disabled = !running || drawing.complete;
+      el("drawing-game-settings").hidden = drawing.trial;
+      el("round-timer-panel").hidden = drawing.trial;
+      el("prompt-count").textContent = drawing.trial
+        ? "Unscored, untimed trial / not in game pack"
+        : `Drawing ${drawing.turn + 1} of ${drawing.count}${drawing.complete ? " / game finished" : ""}`;
+      el("next-prompt").textContent = drawing.trial ? "Finish trial / set up game"
+        : drawing.turn + 1 === drawing.count ? "Finish game" : "Next drawing";
+      el("next-prompt").disabled = !drawing.trial && (!running || drawing.complete);
       el("previous-prompt").disabled = true;
       el("shuffle-prompt").disabled = true;
       el("reveal-prompt").disabled = drawing.complete;
@@ -734,7 +759,7 @@
       el("rapid-how-to-play").textContent = `${game.intro} ${timing} Pick a round, get ready, then press START!`;
       el("rapid-line-guide").hidden = game.lineGuide === undefined;
       el("rapid-line-guide").textContent = game.lineGuide === undefined ? "" : game.lineGuide;
-      el("rapid-skip-tile").setAttribute("aria-label", game.revealSeconds === 0
+      el("rapid-skip-tile").setAttribute("aria-label", game.id === "alphabet" ? "Skip to the next letter" : game.revealSeconds === 0
         ? "Move to the next person's prompt" : "Skip this movie and show the next prompt");
     }
     el("round-instructions").open = game.id === "drawing-telephone";
@@ -751,7 +776,7 @@
     el("timer-duration-label").hidden = isRapid;
     el("timer-seconds").hidden = isRapid;
     el("rapid-timed-play-note").hidden = !isRapid || !game.readAloud;
-    el("next-prompt").textContent = isRapid ? game.revealSeconds === 0 ? "Next person" : "Skip movie" : game.id === "scattergories" ? "Next category" : "Next prompt";
+    el("next-prompt").textContent = isRapid ? game.id === "alphabet" ? "Next letter" : game.revealSeconds === 0 ? "Next person" : "Skip movie" : game.id === "scattergories" ? "Next category" : "Next prompt";
     el("previous-prompt").textContent = game.id === "scattergories" ? "Previous category" : "Previous";
     el("shuffle-prompt").textContent = game.id === "scattergories" ? "Random category" : "Random prompt";
     el("reset-timer").textContent = isRapid ? "Restart round" : game.continuous ? "Reset game" : "Reset timer";
@@ -818,8 +843,8 @@
         game.handMap.every(pair => Array.isArray(pair) && pair.length === 2 && pair.every(shape => ["palm", "circle"].includes(shape)))) &&
       (game.continuous === undefined || typeof game.continuous === "boolean" &&
         (!game.continuous || game.mode === "secret" && new Set(game.prompts.map(prompt => prompt && prompt.text)).size === game.prompts.length)) &&
-      (game.trialPrompt === undefined || typeof game.trialPrompt === "string" &&
-        game.prompts.some(prompt => prompt && prompt.text === game.trialPrompt)) &&
+      (game.trialPrompt === undefined || game.continuous && typeof game.trialPrompt === "string" &&
+        game.trialPrompt.trim() && !game.prompts.some(prompt => prompt && prompt.text === game.trialPrompt)) &&
       (game.mode !== "rapid" || Number.isInteger(game.roundSize) && game.roundSize > 0 &&
         Number.isInteger(game.guessSeconds) && game.guessSeconds > 0 &&
         Number.isInteger(game.revealSeconds) && game.revealSeconds >= 0 &&
@@ -886,7 +911,11 @@
     for (const id of ["drawing-trial", "party-try-drawing"]) {
       el(id).addEventListener("click", () => {
         const game = byId.get("drawing-telephone");
-        selectGame(game.id, game.prompts.findIndex(prompt => prompt.text === game.trialPrompt));
+        selectGame(game.id);
+        drawing.trial = true;
+        updatePromptView();
+        renderGamePlan(game);
+        renderTimer();
       });
     }
     el("game-filter").addEventListener("change", renderMenu);
@@ -980,10 +1009,14 @@
         else runTimer();
         return;
       }
-      if (drawing && (!drawing.started || drawing.complete) && readDrawingCount() === null) return;
+      const startingDrawing = drawing && (!drawing.started || drawing.complete);
+      const drawingCount = startingDrawing ? readDrawingCount() : null;
+      if (startingDrawing && drawingCount === null) return;
       const seconds = readDuration();
       if (seconds === null) return;
       clearPartyError();
+      if (startingDrawing) prepareDrawingGame(drawingCount, seconds, drawing.startIndex);
+      if (drawing) drawing.started = true;
       if (remaining <= 0) remaining = seconds;
       if (byId.get(state.selectedId).mode === "secret") {
         promptRevealed = false;
