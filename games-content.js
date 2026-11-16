@@ -1,0 +1,384 @@
+// Edit rules, seconds and prompts here as the party plan changes.
+// Optional prompt.audio paths must point to clips you have permission to use.
+// Uploaded audio stays in this browser tab and is not uploaded or saved after a reload.
+// Rapid games use consecutive packs of roundSize prompts. Each gets guessSeconds,
+// then revealSeconds for its answer and optional transitionSeconds for a "Next!"
+// changeover. Extras after full rounds form a shorter bonus round.
+// readAloud waits for a host click before each answer timer; reading time is untimed.
+// Optional trialPrompt opens an existing prompt for a host-led, unscored trial.
+// "Yes Exit / No Entry" is reserved for the instructions, not the playable deck.
+window.partyGames = [
+  {
+    id: "bollywood", title: "Bollywood Opposites", group: "teams", mode: "rapid", seconds: 132,
+    roundSize: 12, guessSeconds: 10, revealSeconds: 1,
+    example: { text: "Yes Exit", answer: "No Entry", tip: "This is a practice example, not a clue in the game." },
+    intro: "The competing teams guess together. The host judges answers and keeps points manually.",
+    supplies: "No props. The competing teams guess together; the host keeps points manually.",
+    rules: ["Guess the Bollywood movie from its playful opposite title.", "Choose a round and get the competing teams ready before pressing START.", "You have 10 seconds per movie. The answer appears for 1 second, then the next movie starts automatically.", "First team to give a correct answer earns a point. The host judges answers and keeps scores manually.", "Some clues are playful word swaps rather than strict opposites. Accept sensible alternatives at the host's discretion.", "The host can tap the tile to skip a movie, or use Reveal answer early. Pause whenever you need a break."],
+    prompts: [
+      { text: "Principal of the Day", answer: "Student of the Year" },
+      { text: "Go to Sleep Sid", answer: "Wake Up Sid" },
+      { text: "Sad Old Year", answer: "Happy New Year" },
+      { text: "Always Say Goodbye", answer: "Kabhi Alvida Naa Kehna" },
+      { text: "Always Happy but Always Sad", answer: "Kabhi Khushi Kabhie Gham" },
+      { text: "Dad", answer: "Mom" },
+      { text: "Nothing Nothing Happens", answer: "Kuch Kuch Hota Hai" },
+      { text: "Stars Akash Mai", answer: "Taare Zameen Par" },
+      { text: "Multiple Friends", answer: "Ek Villain" },
+      { text: "Divorce", answer: "Vivah" },
+      { text: "Mansion Boy", answer: "Gully Boy" },
+      { text: "Heart Doesn't Love", answer: "Dil Chahta Hai" },
+      { text: "Byebye", answer: "Welcome" },
+      { text: "You Honest, Me Also Truthful", answer: "Tu Jhoothi Main Makkaar" },
+      { text: "Empty House", answer: "Housefull" },
+      { text: "Bad Newz", answer: "Good Newwz" },
+      { text: "We Never Met", answer: "Jab We Met" },
+      { text: "Purush", answer: "Stree" },
+      { text: "I Love Hate Stories", answer: "I Hate Luv Storys" },
+      { text: "King", answer: "Queen" },
+      { text: "Don't Marry Me", answer: "Mujhse Shaadi Karogi" },
+      { text: "Dad of Sardar?", answer: "Son of Sardaar" },
+      { text: "God Never Made This Jodi", answer: "Rab Ne Bana Di Jodi" },
+      { text: "Hatred These Days", answer: "Love Aaj Kal" },
+      { text: "You Always Know", answer: "Jaane Tu... Ya Jaane Na" },
+      { text: "Babes, Do Not Fear xP", answer: "Bachna Ae Haseeno" },
+      { text: "Mocktail", answer: "Cocktail" },
+      { text: "Bareilly's Spice", answer: "Bareilly Ki Barfi" },
+      { text: "Faltu Life", answer: "Dear Zindagi" },
+      { text: "I Am Not There", answer: "Main Hoon Na" },
+      { text: "Wishing You the Worst", answer: "All the Best" },
+      { text: "Everyone Is Killing Jessica", answer: "No One Killed Jessica" },
+      { text: "Not Forgiving Your 7 Murders", answer: "7 Khoon Maaf" },
+      { text: "12th Pass", answer: "12th Fail" },
+      { text: "Haye Bhagvan", answer: "Thank God" },
+      { text: "3 Geniuses", answer: "3 Idiots" },
+      // User-requested book-title clue; its film adaptation is Kai Po Che!
+      { text: "3 Accomplishments of My Life", answer: "3 Mistakes of My Life (book)" },
+      { text: "Nahi Tha Tiger?", answer: "Ek Tha Tiger" },
+      { text: "Don't Kick xP", answer: "Kick" },
+      { text: "Cold Masala", answer: "Garam Masala" },
+      { text: "I'll Always Get Life", answer: "Zindagi Na Milegi Dobara" },
+      { text: "Don't Let Heart Beat", answer: "Dil Dhadakne Do" },
+      { text: "Don't Look Again", answer: "Baar Baar Dekho" },
+      { text: "Till Life Isn't There", answer: "Jab Tak Hai Jaan" },
+      { text: "Aram Se Gadi Chalao", answer: "Race" },
+      { text: "Everyday in Mumbai", answer: "Once Upon a Time in Mumbaai" },
+      { text: "Everyday in Mumbai Again", answer: "Once Upon Ay Time in Mumbai Dobaara!" },
+      { text: "Full Boyfriend", answer: "Half Girlfriend" },
+      { text: "Singh Raja Nai Ho Paega", answer: "Singh Is Kinng" },
+      { text: "Love Is Possible", answer: "Pyaar Impossible!" },
+      { text: "Saint Aadmi", answer: "Don" },
+      { text: "Clear Vision", answer: "Andhadhun" },
+      { text: "Found", answer: "Talaash" },
+      { text: "Maafi", answer: "Badla" },
+      { text: "I'm Your Everything", answer: "Hum Aapke Hain Koun..!" },
+      { text: "13Y", answer: "13B" },
+      { text: "Somebody Got Lost", answer: "Koi... Mil Gaya" },
+      { text: "The Clean Picture", answer: "The Dirty Picture" },
+      { text: "We Aren't Together", answer: "Hum Saath-Saath Hain" },
+      { text: "Bye London", answer: "Namastey London" }
+    ]
+  },
+  {
+    id: "alphabet", title: "Alphabet Object Dash", group: "teams", mode: "challenge", seconds: 30,
+    supplies: "Objects already in the agreed party area.",
+    rules: ["One runner per team searches for an object starting with the displayed letter.", "Keep searching to the agreed party area: no private rooms, cupboards or dangerous objects.", "Bring the object to the host. First valid object earns one point.", "Change runners and use another letter for the next round."],
+    prompts: [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"].map(letter => ({ text: `Find something starting with...\n${letter}` }))
+  },
+  {
+    id: "hook-step", title: "Hook-Step Roulette", group: "teams", mode: "audio", seconds: 30,
+    supplies: "A speaker and your own permitted audio clips.",
+    rules: ["Send one representative, or invite the whole team to dance.", "Add an audio clip below, then press play when everyone is ready.", "Perform the displayed challenge. Cheer loudly; the host awards a point.", "Use a different clip or challenge for each turn."],
+    prompts: [
+      { text: "Mickey-style clubhouse dance!\nMake it your funniest cartoon dance." },
+      { text: "Do your favourite Bollywood hook step." },
+      { text: "Dance like a robot trying to become a Bollywood star." },
+      { text: "Perform a dramatic slow-motion entrance." },
+      { text: "Dance like you're celebrating a last-ball cricket win." },
+      { text: "Invent a birthday hook step for Ash." }
+    ]
+  },
+  {
+    id: "dance-telephone", title: "Copy the Step", group: "teams", mode: "secret", seconds: 60,
+    supplies: "Enough clear space for each team to form a line.",
+    rules: ["Use equal-length team lines; rotate extra players in between prompts. Line up facing away from the person behind you.", "Only the first performer looks at the secret prompt. Everyone else turns away from the screen.", "Person one performs once for person two; pass the move down the line without talking.", "The last person performs for everyone. Reveal the original and compare!", "The host awards a point for the closest match, or gives every team a point for a great effort."],
+    prompts: [
+      { text: "A robot slips on a banana, recovers, and strikes a superstar pose." },
+      { text: "Stir a giant pot, taste the food, then do a happy shoulder shimmy." },
+      { text: "An imaginary cricket shot, a victory jump, and a dramatic hair flip." },
+      { text: "Sneak past a sleeping dog, get spotted, and freeze like a statue." },
+      { text: "Blow out birthday candles, open a surprise gift, and celebrate." },
+      { text: "Strum an air guitar, sing into an imaginary microphone, and take a rockstar bow." },
+      { text: "Open an imaginary umbrella, dodge a puddle, and shake rain off your shoulders." },
+      { text: "Adjust invisible sunglasses, walk like a model, and blow a kiss to the cameras." },
+      { text: "Spot a mosquito, swat at it twice, and celebrate catching it." },
+      { text: "Lift an imaginary trophy, kiss it, and wave to the crowd." },
+      { text: "Pull a fish out of the water, show how huge it is, and pose for a photo." },
+      { text: "Put on headphones, bop your head, and finish with a dramatic disco point." },
+      { text: "Take a giant ice cream lick, notice a brain freeze, and fan your face." },
+      { text: "Wind yourself up like a toy, march with stiff arms, and slowly run out of power." },
+      { text: "Check an imaginary watch, tap your foot impatiently, and cheer when your friend arrives." }
+    ]
+  },
+  {
+    id: "wrong-answers", title: "Wrong Answers Only", group: "teams", mode: "rapid", seconds: 132,
+    roundSize: 22, guessSeconds: 5, revealSeconds: 0, transitionSeconds: 1,
+    example: { text: "What do you drink when you're thirsty?", answer: "An umbrella!", tip: "'Water' would be a fail. Any clearly wrong answer works. This practice question is not used in the rounds." },
+    intro: "The front person gives a clearly wrong answer. A correct answer, silence, or repeating the question is a fail. The host judges, not the website. Move to the back after your turn.",
+    lineGuide: "Alternate players from opposing teams; agree on the turn order in the room. Agree on an optional silly face, brief seated statue pose, or water/mocktail sip for a fail. Anyone may pass.",
+    supplies: "No props. An alternating-team line; one person answers at a time.",
+    rules: ["Arrange an alternating-team turn order in the room; the website does not track names.", "Only the person at the front answers. They must give a clearly wrong answer within five seconds.", "A correct answer, silence, or repeating the question is a fail. The host decides; the website cannot hear or judge answers.", "After five seconds, Next! appears for one second. Move to the back of the line during this changeover; the next question then starts automatically.", "The host can use Next person to advance early, or Pause if someone needs extra time to move or take a forfeit.", "There are three rounds of 22 questions. Rotate players and agree on each round's starting team. Take a break between rounds.", "Agree on an optional silly face, brief seated statue pose, or water/mocktail sip for a fail. Passing is always fine; no one has to drink.", "If you want points, the host records one for each successful wrong answer manually."],
+    prompts: [
+      { text: "What do you eat your food with?" },
+      { text: "What do you sleep on?" },
+      { text: "What do you wear on your feet?" },
+      { text: "What colour is the sky on a clear day?" },
+      { text: "What do you call a person who teaches students?" },
+      { text: "What colour is grass?" },
+      { text: "What do you use to brush your teeth?" },
+      { text: "Where do you keep ice cream cold?" },
+      { text: "What do you use to tell the time?" },
+      { text: "What do you call a baby dog?" },
+      { text: "What do you open to enter a room?" },
+      { text: "What do you use to wash your hair?" },
+      { text: "Which animal says meow?" },
+      { text: "How many wheels does a bicycle have?" },
+      { text: "What do you sit on at a dining table?" },
+      { text: "What do you use to write on paper?" },
+      { text: "Which fruit is yellow and curved?" },
+      { text: "Where do fish live?" },
+      { text: "What do you hold over your head when it rains?" },
+      { text: "What do you wear on your head to block the sun?" },
+      { text: "What do you use to cut paper?" },
+      { text: "What do you put on your toothbrush?" },
+
+      { text: "Who delivers letters to your house?" },
+      { text: "Who treats people when they are ill?" },
+      { text: "Which vehicle flies through the sky?" },
+      { text: "Which vehicle runs on railway tracks?" },
+      { text: "What do you use to unlock a door?" },
+      { text: "What do you switch on to see a dark room?" },
+      { text: "What do you clap with?" },
+      { text: "Which body part do you use to smell?" },
+      { text: "Which body part do you use to hear?" },
+      { text: "Which body part do you use to see?" },
+      { text: "What do you wear to keep your hands warm?" },
+      { text: "What do you use to clean the floor?" },
+      { text: "Where do you normally put your pillow?" },
+      { text: "What do hens lay?" },
+      { text: "Which animal barks?" },
+      { text: "Which animal has a long trunk?" },
+      { text: "Which animal gives us wool?" },
+      { text: "What do bees make?" },
+      { text: "What do birds use to fly?" },
+      { text: "What do you call someone who cooks in a restaurant?" },
+      { text: "Where do you go to watch a film on a big screen?" },
+      { text: "What do you call the person who drives a bus?" },
+
+      { text: "What are we celebrating today?" },
+      { text: "Whose birthday are we celebrating?" },
+      { text: "What do you blow out on a birthday cake?" },
+      { text: "What do you cut at a birthday party?" },
+      { text: "What do you use to wrap a birthday gift?" },
+      { text: "What do you usually say to someone on their birthday?" },
+      { text: "What do you use to take a photograph?" },
+      { text: "What do you use to call someone who is far away?" },
+      { text: "Which letter comes after A?" },
+      { text: "Which number comes after one?" },
+      { text: "What do you call frozen water?" },
+      { text: "What normally falls from rain clouds?" },
+      { text: "What colour is a ripe tomato?" },
+      { text: "Where do you bake a pizza?" },
+      { text: "What do you use to carry groceries home?" },
+      { text: "What do you normally put on a bookshelf?" },
+      { text: "What do you call the meal you eat first thing in the morning?" },
+      { text: "What do you play music through so everyone can hear?" },
+      { text: "Which appliance turns bread into toast?" },
+      { text: "What do you use to dry yourself after a shower?" },
+      { text: "What do you wear when you go swimming?" },
+      { text: "Which day comes after Monday?" }
+    ]
+  },
+  {
+    id: "movie-backwards", title: "Movie Titles Backwards", group: "teams", mode: "rapid", seconds: 132,
+    roundSize: 11, guessSeconds: 10, revealSeconds: 0, transitionSeconds: 2, promptUnit: "title", readAloud: true,
+    example: { text: "Dil Chahta Hai", answer: "Hai Chahta Dil", tip: "The teammate says 'Dil Chahta Hai' once. The player faces away from the screen and answers 'Hai Chahta Dil' from memory. Reverse words, not letters. This practice title is not used in either round." },
+    intro: "One player faces away from the screen. A teammate faces the screen and reads the title aloud once, in its normal order. No repeats, hints, or help with reversing it. The player then says the whole title backwards from memory, keeping each word unchanged. The host judges and records points manually; the website does not listen or score.",
+    lineGuide: "Rotate player-reader pairs from opposing teams; agree on the turn order in the room. During NEXT!, get the next player facing away and their teammate ready to read. Swap reader and answering roles so everyone gets to play. Any silly forfeit is optional; anyone may pass.",
+    supplies: "No props. One answering player facing away from the screen and one teammate reading it.",
+    rules: ["Choose an answering player and a reader from the same team. The answering player must face away from the screen before the title appears.", "The reader says the displayed title aloud once, in its normal order. No repeats, hints, or reversing it for the player.", "Press START to show the first title. It waits without a countdown while the teammate reads. When the reader finishes, the host presses Start 10s.", "The player has ten seconds to say the title with its words in reverse order, from memory. Do not reverse letters inside words or look at the screen.", "The host judges the answer and records one point for a correct reversal, or no point for a wrong answer or silence. Use Reveal answer to check the expected order after the player answers; it is never revealed automatically.", "After ten seconds, a full-screen NEXT! cue appears for two seconds. Get the next player-reader pair ready; the next title then appears and waits for the host to start its timer.", "Use Pause to stop an active countdown, Resume to continue, or Next person to skip a title. Reading time is untimed and is not included in the round's timed-play total.", "There are two rounds of eleven titles, each with at least three words and no repeated titles. Rotate answering and reading roles between turns. Any forfeit is optional; passing is always fine."],
+    prompts: [
+      "Zindagi Na Milegi Dobara",
+      "Mere Brother Ki Dulhan",
+      "Kabhi Khushi Kabhie Gham",
+      "The Devil Wears Prada",
+      "Jab Harry Met Sejal",
+      "The Parent Trap",
+      "The Pursuit of Happyness",
+      "A Walk to Remember",
+      "The Chronicles of Narnia",
+      "Hum Saath Saath Hain",
+      "The Fault in Our Stars",
+
+      "Kabhi Haan Kabhi Naa",
+      "Yeh Jawaani Hai Deewani",
+      "Hum Aapke Hain Koun",
+      "Ajab Prem Ki Ghazab Kahani",
+      "Band Baaja Baaraat",
+      "Pyaar Kiya To Darna Kya",
+      "Bachna Ae Haseeno",
+      "Humko Deewana Kar Gaye",
+      "Kal Ho Naa Ho",
+      "Mere Yaar Ki Shaadi Hai",
+      "Bareilly Ki Barfi"
+    ].map(text => ({ text, answer: text.split(/\s+/).reverse().join(" ") }))
+  },
+  {
+    id: "tunnel-vision", title: "Cone & Bottle Challenge", group: "teams", mode: "challenge", seconds: 45,
+    supplies: "Paper viewing cones, blunt paper straws, wide-neck bottles or cups, and a table.",
+    rules: ["Adapt the floor-bottle idea into a stationary tabletop challenge.", "Hold a paper cone in front of your face without pressing it against your eye.", "Look through the narrow opening and place blunt paper straws into the container.", "Keep containers on a table and don't walk with restricted vision or use sharp sticks.", "First player to place all three straws wins a point."],
+    prompts: [
+      { text: "Three straws. One container. Tunnel vision!\nFirst to place all three wins." },
+      { text: "Team relay: place one straw each, then swap players." }
+    ]
+  },
+  {
+    id: "drawing-telephone", title: "Draw Behind the Back", group: "teams", mode: "secret", seconds: 140, continuous: true,
+    trialPrompt: "Mountains",
+    supplies: "Paper and washable markers for everyone.",
+    rules: ["Teams form equal-length lines, each person looking at the back of the person in front. Use the smallest team's size and rotate extra players in between prompts.", "Every team's starting artist gets the same secret prompt. Everyone else, including waiting players, must avoid peeking or giving hints.", "With permission, draw gently on paper held against the next person's back, never directly on skin. Anyone may opt out of back contact.", "Each player recreates what they felt on the next person's paper. No talking or peeking; the front person guesses.", "Choose how many prompts to attempt and a whole-game duration, up to ten minutes. The suggested speed-round time is 90 seconds for eight prompts or 140 seconds for twelve. Increase it if the chains need longer.", "First correct team earns one point. The host records it and clicks Next drawing; all teams abandon the old drawing and start the new one. Only artists look when the host reveals the new prompt.", "One continuous clock covers all drawings, revealing prompts and switching roles. Next drawing does not reset it. The game ends when time runs out or the selected pack is finished.", "Try an unscored practice with 'Mountains' first: two large peaks. Rotate drawing, copying and guessing roles after each prompt. The website never hears guesses or awards points."],
+    prompts: [
+      { text: "A house with a chimney and one window" },
+      { text: "A birthday cake with three candles" },
+      { text: "A cat with a long tail" },
+      { text: "A flower in a pot" },
+      { text: "A bicycle" },
+      { text: "An umbrella in the rain" },
+      { text: "Mountains" },
+      { text: "An ice cream cone" },
+      { text: "An apple" },
+      { text: "A fish" },
+      { text: "A tree" },
+      { text: "A heart" }
+    ]
+  },
+  {
+    id: "balloon-cups", title: "Balloon Cup Relay", group: "teams", mode: "challenge", seconds: 60,
+    supplies: "Five lightweight cups per team, individual balloons, and a clear table.",
+    rules: ["Arrange one clearly marked, identical lane per competing team.", "Use your own balloon: put its opening into an upright cup and inflate it enough to grip the cup inside.", "Lift and move the cup using the balloon, without holding the cup with your hands.", "Deflate to release it at the finish. Repeat for all five cups.", "First team to move all five wins. Do not share balloons; a hand pump is an alternative."],
+    prompts: [
+      { text: "Move all five cups to the finish line.\nNo hands on the cups!" },
+      { text: "Relay edition: each team member moves one cup." }
+    ]
+  },
+  {
+    id: "balloon-knockdown", title: "Balloon Cup Knockdown", group: "teams", mode: "challenge", seconds: 45,
+    supplies: "Lightweight cups, individual balloons, a table, and a clear landing area.",
+    rules: ["Line up five cups on each team's side of the table.", "Inflate your own balloon, then aim the escaping air at the cups.", "Move the cups across the finish line or off the far edge, without touching them.", "Keep people and breakable items out of the landing area.", "First team to clear all five cups wins a point."],
+    prompts: [
+      { text: "Use balloon air to knock down all five cups!" },
+      { text: "Accuracy round: move three cups across a taped finish line." }
+    ]
+  },
+  {
+    id: "dice-tower", title: "Chop & Die Towers", group: "teams", mode: "challenge", seconds: 45,
+    supplies: "Chopsticks or tongs, equal sets of large dice, and a stable table.",
+    rules: ["Lift and stack dice using chopsticks or tongs; hands cannot touch the dice.", "Everyone gets the same number of dice and the same time.", "The tallest tower still standing when time ends wins.", "Swap players for the next round."],
+    prompts: [
+      { text: "Build the tallest standing dice tower in 45 seconds." },
+      { text: "First to stack five dice wins!" }
+    ]
+  },
+  {
+    id: "in-out", title: "In-N-Out Circle", group: "group", mode: "challenge", seconds: 60,
+    supplies: "A roomy circle marked with tape or soft markers, not trip hazards.",
+    rules: ["One caller stands outside the circle and looks away.", "The caller says IN or OUT; everyone moves to the correct side of the line.", "A mistake means sitting out that round. Make the circle smaller only if there is still safe space.", "Use steps rather than jumps; a seated version uses hands in or out instead.", "Last player remaining wins. The timer is optional."],
+    prompts: [
+      { text: "Caller says IN or OUT.\nListen carefully: repeated commands count!" },
+      { text: "Practice round: IN, IN, OUT, IN, OUT, OUT!" }
+    ]
+  },
+  {
+    id: "scattergories", title: "Scattergories Sprint", group: "group", mode: "challenge", seconds: 60,
+    supplies: "Each player's phone, your existing WhatsApp group, and the shared screen.",
+    timeUpMessage: "Time's up! Send your three answers to the WhatsApp group now. The host checks answers and scores.",
+    rules: ["Choose Random category or Next category. There is no starting-letter restriction: name three things matching the displayed category.", "Everyone plays individually. Start the timer, then type three different answers in one WhatsApp message. The default typing time is 60 seconds.", "Do not send early, discuss answers, or copy another player's answers. Keep the message unsent until the timer ends.", "When SEND TO WHATSAPP appears, everyone sends their prepared message. The host calls the cutoff; no editing or adding answers afterward.", "Each valid answer that no other player submitted earns one point, up to three points. Matching answers between players cancel out; a repeated answer in your own message counts only once.", "The host judges answers and records scores manually. The website does not access WhatsApp, read messages, send messages or score answers."],
+    prompts: [
+      { text: "Name three Taylor Swift songs." },
+      { text: "Name three football (soccer) clubs." },
+      { text: "Name three Formula 1 drivers, past or present." },
+      { text: "Name three tennis players, past or present." },
+      { text: "Name three sitcoms." },
+      { text: "Name three animated movie characters." },
+      { text: "Name three superheroes." },
+      { text: "Name three board games." },
+      { text: "Name three movies with a number in the title." },
+      { text: "Name three fictional places from films, books or TV." },
+      { text: "Name three apps you would hate to lose for a day." }
+    ]
+  },
+  {
+    id: "count-together", title: "Count & Squat", group: "group", mode: "challenge", seconds: 60,
+    supplies: "A circle and enough space. Sitting or raising a hand works too.",
+    rules: ["Count upward together, but only one person may say each number.", "Whoever says a number squats, sits, or raises a hand for the rest of that attempt.", "No planning, signals, fixed order, or two people speaking together.", "If two people speak at once, reset to one and try again.", "Try to get everyone counted. The timer is optional."],
+    prompts: [
+      { text: "Start at ONE.\nOne voice, one number, one person at a time." },
+      { text: "Silent planning only: no signals!\nCan everyone finish this time?" }
+    ]
+  },
+  {
+    id: "camera-catch", title: "Moon Ball Camera Catch", group: "group", mode: "challenge", seconds: 45,
+    supplies: "A soft ball and, only with everyone's consent, a phone camera.",
+    rules: ["Seat the camera player in the middle; they stay stationary. Looking away can replace a blindfold.", "The surrounding players gently pass or bounce a soft ball without appearing in the phone's view.", "No throwing toward the seated player, collisions, or moving while blindfolded.", "After the round, review the recording together to see who was caught.", "The website does not access or record your camera. Agree on recording first and delete clips unless everyone wants to keep them."],
+    prompts: [
+      { text: "Pass the soft ball around the circle.\nCan you escape the camera?" },
+      { text: "Gentle-bounce round: keep the middle player stationary." }
+    ]
+  },
+  {
+    id: "reverse-charades", title: "Reverse Charades", group: "teams", mode: "secret", seconds: 45,
+    supplies: "No props. One guesser per team.",
+    rules: ["Choose one guesser and the same number of actors from each team; rotate extra players in between prompts. The guesser turns away while the actors see the secret prompt.", "Hide the prompt before the guesser looks back.", "The selected actors perform together without words or spelling letters.", "One point if the guesser gets it before the timer ends."],
+    prompts: [
+      { text: "Getting everyone ready for a group photo" },
+      { text: "Trying to catch a mosquito" },
+      { text: "Going through airport security" },
+      { text: "A cricket team celebrating a win" },
+      { text: "Cooking a meal when everything goes wrong" },
+      { text: "A surprise birthday party" },
+      { text: "A family fighting over the TV remote" },
+      { text: "Friends trying to squeeze into one selfie" },
+      { text: "A wedding dance group forgetting the steps" },
+      { text: "An entire family reacting to a power cut" },
+      { text: "A restaurant table discovering the food is too spicy" },
+      { text: "Friends assembling furniture without instructions" },
+      { text: "A group pretending to understand modern art" },
+      { text: "People stuck in a lift with someone singing badly" },
+      { text: "Wedding guests spotting the dessert buffet" },
+      { text: "A family packing for a trip at the last minute" }
+    ]
+  },
+  {
+    id: "five-things", title: "Five Things in Ten Seconds", group: "teams", mode: "challenge", seconds: 10,
+    supplies: "No props.",
+    rules: ["One player names five different answers to the prompt in ten seconds.", "No repeated answers or help from teammates.", "All five valid answers earn one point. Swap players each turn."],
+    prompts: [
+      { text: "Name five things Ash says." },
+      { text: "Name five Bollywood villains." },
+      { text: "Name five things people forget when travelling." },
+      { text: "Name five foods you would order at midnight." },
+      { text: "Name five things you can find at a birthday party." },
+      { text: "Name five excuses for being late." }
+    ]
+  },
+  {
+    id: "hand-map", title: "Hand & Fist Map", group: "group", mode: "quiz", seconds: 60,
+    supplies: "No props. Use your own hands; a table is optional. The timer is optional.",
+    handMap: [["palm", "circle"], ["circle", "circle"], ["circle", "palm"], ["palm", "palm"]],
+    rules: ["Everyone plays together. Follow the four rows from top to bottom, using your own left and right hands.", "Round 1: a handprint means an open palm; a circle means a closed fist.", "Round 2, Opposite Hands: a handprint means a fist; a circle means an open palm. The displayed map stays the same.", "Keep left and right as labelled on the screen. Hold your hands up or place them gently on your own tabletop; do not touch the TV.", "Use Next prompt to switch rounds and Reveal answer to check the sequence. Play self-paced, or use the optional one-minute timer.", "The host judges mistakes. A silly pose or sitting out an attempt is optional; anyone may pass."],
+    prompts: [
+      { text: "Round 1: Match the map\nHandprint = open palm. Circle = closed fist.", answer: "Left / Right\nPalm / Fist\nFist / Fist\nFist / Palm\nPalm / Palm" },
+      { text: "Round 2: Opposite Hands\nHandprint = closed fist. Circle = open palm.", answer: "Left / Right\nFist / Palm\nPalm / Palm\nPalm / Fist\nFist / Fist" }
+    ]
+  }
+];

@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#315c9b">
+  <title>A birthday, just for you</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./content.js" defer></script>
+  <script src="./games-content.js" defer></script>
+  <script src="./app.js" defer></script>
+  <script src="./party.js" defer></script>
+</head>
+<body>
+  <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="party-cat" viewBox="0 0 220 260">
+      <ellipse cx="110" cy="247" rx="72" ry="8" fill="#254873" opacity=".12"/>
+      <path d="M151 199q56-28 47 5-4 20-44 14" fill="none" stroke="#d89c6b" stroke-width="16" stroke-linecap="round"/>
+      <ellipse cx="110" cy="197" rx="49" ry="48" fill="#eaba8d"/>
+      <path d="M62 96 53 43l43 30m29 0 42-31-7 58" fill="#eaba8d" stroke="#c88b60" stroke-width="4"/>
+      <path d="m64 77-3-20 22 19m55 0 21-20-3 24" fill="#e6b0ad"/>
+      <ellipse cx="110" cy="112" rx="58" ry="49" fill="#f0c49c"/>
+      <path d="m87 72 6 21m18-23v22m21-18-5 20" stroke="#c88b60" stroke-width="6" stroke-linecap="round"/>
+      <ellipse cx="89" cy="112" rx="7" ry="10" fill="#263b52"/>
+      <ellipse cx="133" cy="112" rx="7" ry="10" fill="#263b52"/>
+      <circle cx="91" cy="109" r="2" fill="white"/><circle cx="135" cy="109" r="2" fill="white"/>
+      <path d="m104 127 7 5 7-5" fill="#bf7c7b"/>
+      <path d="M111 132v6m0 0q-9 7-15 0m15 0q9 7 15 0" fill="none" stroke="#805f51" stroke-width="2" stroke-linecap="round"/>
+      <path d="m56 126 29 4m-29 9 28-4m54-5 28-4m-28 9 28 4" stroke="#805f51" stroke-width="2"/>
+      <path d="m83 71 26-65 29 65Z" fill="#426da8"/>
+      <path d="m101 25 21 10m-29 8 37 12" stroke="#a9c9e5" stroke-width="5"/>
+      <circle cx="109" cy="8" r="7" fill="#e3b85a"/>
+      <rect x="69" y="177" width="84" height="61" rx="5" fill="#729ac7"/>
+      <path d="M107 177h9v61M69 194h84" stroke="#f9edcf" stroke-width="9"/>
+      <path d="M111 176q-38-28-27-35 15-6 27 35Zm0 0q38-28 27-35-15-6-27 35Z" fill="none" stroke="#f9edcf" stroke-width="7"/>
+      <ellipse cx="68" cy="192" rx="12" ry="17" fill="#f0c49c"/><ellipse cx="154" cy="192" rx="12" ry="17" fill="#f0c49c"/>
+    </symbol>
+    <symbol id="party-raccoon" viewBox="0 0 220 280">
+      <path d="M159 215q52-27 41 14-7 26-48 17" fill="none" stroke="#84919a" stroke-width="27" stroke-linecap="round"/>
+      <path d="m173 212 6 27m13-33 7 24m-38-9 2 26" stroke="#354b5c" stroke-width="12"/>
+      <ellipse cx="111" cy="217" rx="45" ry="57" fill="#84919a" stroke="#fffaf0" stroke-width="6"/>
+      <ellipse cx="111" cy="220" rx="27" ry="42" fill="#e1e4df"/>
+      <path d="M78 197Q42 166 32 119m110 78q37-27 44-77" fill="none" stroke="#fffaf0" stroke-width="23" stroke-linecap="round"/>
+      <path d="M78 197Q42 166 32 119m110 78q37-27 44-77" fill="none" stroke="#84919a" stroke-width="15" stroke-linecap="round"/>
+      <path d="m25 121-9-15m16 12-3-20m10 22 5-16m135 16-5-17m12 14 3-20m4 23 10-13" stroke="#354b5c" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="65" cy="98" r="23" fill="#84919a" stroke="#fffaf0" stroke-width="5"/>
+      <circle cx="156" cy="98" r="23" fill="#84919a" stroke="#fffaf0" stroke-width="5"/>
+      <circle cx="65" cy="98" r="12" fill="#445b6b"/><circle cx="156" cy="98" r="12" fill="#445b6b"/>
+      <path d="M52 132q0-53 58-52 61 0 61 52l-17 23-44 21-42-21Z" fill="#a8b2b7" stroke="#fffaf0" stroke-width="6" stroke-linejoin="round"/>
+      <path d="M61 127q21-21 47-5-7 26-31 24Zm101 0q-21-21-47-5 7 26 31 24Z" fill="#304558"/>
+      <path d="m93 145 18-31 18 31q-18 34-36 0" fill="#f8f4e9"/>
+      <circle cx="85" cy="130" r="7" fill="#fff9ec"/><circle cx="138" cy="130" r="7" fill="#fff9ec"/>
+      <circle cx="87" cy="131" r="4" fill="#233e64"/><circle cx="136" cy="131" r="4" fill="#233e64"/>
+      <ellipse cx="111" cy="147" rx="9" ry="6" fill="#304558"/>
+      <path d="M103 158q8 8 16 0" fill="none" stroke="#304558" stroke-width="3" stroke-linecap="round"/>
+      <path d="m83 94 25-76 30 76Z" fill="#315c9b" stroke="#fffaf0" stroke-width="5" stroke-linejoin="round"/>
+      <circle cx="108" cy="18" r="10" fill="#e4b45e" stroke="#fffaf0" stroke-width="4"/>
+      <path d="m108 45 4 8 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1Z" fill="#f8e7c1"/>
+      <path d="M88 82h44" stroke="#a9c9e5" stroke-width="7"/>
+      <path d="m108 184-24-13v28Zm6 0 24-13v28Z" fill="#e4b45e" stroke="#fffaf0" stroke-width="3"/>
+      <circle cx="111" cy="184" r="6" fill="#c69239"/>
+      <ellipse cx="88" cy="265" rx="22" ry="10" fill="#354b5c"/><ellipse cx="135" cy="265" rx="22" ry="10" fill="#354b5c"/>
+    </symbol>
+    <symbol id="party-golden" viewBox="0 0 180 280">
+      <path d="M131 230q44-34 35-53" fill="none" stroke="#f1c482" stroke-width="18" stroke-linecap="round"/>
+      <ellipse cx="89" cy="214" rx="44" ry="58" fill="#e5ad68" stroke="#fffaf0" stroke-width="6"/>
+      <ellipse cx="90" cy="217" rx="25" ry="40" fill="#f9dba7"/>
+      <path d="m60 190-37-38m95 39 29-46" stroke="#fffaf0" stroke-width="24" stroke-linecap="round"/>
+      <path d="m60 190-37-38m95 39 29-46" stroke="#e5ad68" stroke-width="16" stroke-linecap="round"/>
+      <ellipse cx="42" cy="116" rx="21" ry="45" fill="#c98a49" stroke="#fffaf0" stroke-width="5" transform="rotate(13 42 116)"/>
+      <ellipse cx="135" cy="116" rx="21" ry="45" fill="#c98a49" stroke="#fffaf0" stroke-width="5" transform="rotate(-13 135 116)"/>
+      <ellipse cx="88" cy="120" rx="50" ry="48" fill="#f1c482" stroke="#fffaf0" stroke-width="5"/>
+      <path d="M58 113q10-12 20 0m22 0q10-12 20 0" fill="none" stroke="#624633" stroke-width="5" stroke-linecap="round"/>
+      <ellipse cx="89" cy="139" rx="24" ry="21" fill="#ffe7bf"/>
+      <path d="M71 144q17 29 35 0Z" fill="#624633"/>
+      <path d="M82 151h15v11q-7 12-15 0Z" fill="#dd8f8e"/>
+      <ellipse cx="89" cy="130" rx="11" ry="7" fill="#624633"/>
+      <path d="m62 82 24-68 29 68Z" fill="#86abc9" stroke="#fffaf0" stroke-width="5" stroke-linejoin="round"/>
+      <path d="m73 54 30 10m-35 2 40 11" stroke="#315c9b" stroke-width="5"/>
+      <circle cx="86" cy="15" r="8" fill="#e4b45e" stroke="#fffaf0" stroke-width="3"/>
+      <path d="m60 178 30 13 28-13-28 34Z" fill="#315c9b"/>
+      <circle cx="89" cy="195" r="4" fill="#f8e7c1"/>
+      <ellipse cx="65" cy="266" rx="23" ry="10" fill="#c98a49"/><ellipse cx="113" cy="266" rx="23" ry="10" fill="#c98a49"/>
+    </symbol>
+    <symbol id="party-husky" viewBox="0 0 180 280">
+      <path d="M133 230q43-19 24-49" fill="none" stroke="#8d9ca8" stroke-width="21" stroke-linecap="round"/>
+      <ellipse cx="90" cy="215" rx="42" ry="57" fill="#8d9ca8" stroke="#fffaf0" stroke-width="6"/>
+      <ellipse cx="90" cy="219" rx="27" ry="41" fill="#f4f2e9"/>
+      <path d="m59 192-34-42m95 40 27-40" stroke="#fffaf0" stroke-width="24" stroke-linecap="round"/>
+      <path d="m59 192-34-42m95 40 27-40" stroke="#8d9ca8" stroke-width="16" stroke-linecap="round"/>
+      <path d="m40 108 4-58 36 31m21 0 37-31 3 58" fill="#687e91" stroke="#fffaf0" stroke-width="5" stroke-linejoin="round"/>
+      <path d="m50 82 2-18 16 19m47 0 15-19 1 18" fill="#d7b0a8"/>
+      <ellipse cx="90" cy="121" rx="51" ry="49" fill="#a4b0b7" stroke="#fffaf0" stroke-width="5"/>
+      <path d="M48 117q7-27 24-25l18 23 18-23q17-2 24 25l-20 40H68Z" fill="#f9f6ee"/>
+      <ellipse cx="70" cy="119" rx="7" ry="9" fill="#5b9cc6"/><ellipse cx="111" cy="119" rx="7" ry="9" fill="#5b9cc6"/>
+      <circle cx="70" cy="119" r="3" fill="#233e64"/><circle cx="111" cy="119" r="3" fill="#233e64"/>
+      <ellipse cx="90" cy="139" rx="23" ry="18" fill="#fffaf0"/>
+      <ellipse cx="90" cy="131" rx="10" ry="7" fill="#304558"/>
+      <path d="M77 145q13 23 26 0Z" fill="#304558"/>
+      <path d="M85 150h11v12q-6 9-11 0Z" fill="#d99091"/>
+      <path d="m67 79 21-63 28 63Z" fill="#315c9b" stroke="#fffaf0" stroke-width="5" stroke-linejoin="round"/>
+      <circle cx="88" cy="17" r="8" fill="#d99091" stroke="#fffaf0" stroke-width="3"/>
+      <circle cx="86" cy="44" r="4" fill="#d5e7f1"/><circle cx="96" cy="61" r="4" fill="#d5e7f1"/><circle cx="79" cy="69" r="4" fill="#d5e7f1"/>
+      <path d="m85 183-21-12v24Zm9 0 21-12v24Z" fill="#c28d68"/>
+      <circle cx="90" cy="183" r="6" fill="#e4b45e"/>
+      <ellipse cx="65" cy="266" rx="22" ry="10" fill="#f4f2e9"/><ellipse cx="114" cy="266" rx="22" ry="10" fill="#f4f2e9"/>
+    </symbol>
+    <symbol id="party-pug" viewBox="0 0 180 280">
+      <path d="M129 229q29-9 15-29-14-7-13 11" fill="none" stroke="#ceaa80" stroke-width="14" stroke-linecap="round"/>
+      <ellipse cx="90" cy="220" rx="47" ry="52" fill="#d9b994" stroke="#fffaf0" stroke-width="6"/>
+      <ellipse cx="90" cy="224" rx="25" ry="35" fill="#f6e2c5"/>
+      <path d="m59 201-34-28m95 28 31-33" stroke="#fffaf0" stroke-width="24" stroke-linecap="round"/>
+      <path d="m59 201-34-28m95 28 31-33" stroke="#d9b994" stroke-width="16" stroke-linecap="round"/>
+      <ellipse cx="90" cy="131" rx="55" ry="48" fill="#d9b994" stroke="#fffaf0" stroke-width="6"/>
+      <path d="M47 93q-35 0-16 46l27-31m75-15q35 0 16 46l-27-31" fill="#6a5a50" stroke="#fffaf0" stroke-width="4" stroke-linejoin="round"/>
+      <ellipse cx="70" cy="127" rx="15" ry="19" fill="#6a5a50"/><ellipse cx="112" cy="127" rx="15" ry="19" fill="#6a5a50"/>
+      <circle cx="71" cy="125" r="9" fill="#233e64"/><circle cx="111" cy="125" r="9" fill="#233e64"/>
+      <circle cx="73" cy="122" r="3" fill="#fffaf0"/><circle cx="113" cy="122" r="3" fill="#fffaf0"/>
+      <ellipse cx="91" cy="149" rx="29" ry="20" fill="#6a5a50"/>
+      <ellipse cx="91" cy="141" rx="11" ry="7" fill="#263b52"/>
+      <path d="M83 154h16v13q-8 12-16 0Z" fill="#dd8f8e"/>
+      <path d="M76 104q14-8 29 0m-27-9q12-6 24 0" fill="none" stroke="#aa8968" stroke-width="3" stroke-linecap="round"/>
+      <path d="m65 92 25-65 27 65Z" fill="#84a58e" stroke="#fffaf0" stroke-width="5" stroke-linejoin="round"/>
+      <path d="m79 61 21 9m-28 8 36 8" stroke="#f8e7c1" stroke-width="5"/>
+      <circle cx="90" cy="28" r="8" fill="#e4b45e" stroke="#fffaf0" stroke-width="3"/>
+      <path d="M53 185q37 19 74 0" fill="none" stroke="#315c9b" stroke-width="10"/>
+      <circle cx="90" cy="197" r="10" fill="#e4b45e"/>
+      <ellipse cx="62" cy="266" rx="22" ry="10" fill="#ceaa80"/><ellipse cx="118" cy="266" rx="22" ry="10" fill="#ceaa80"/>
+    </symbol>
+    <symbol id="party-dogs" viewBox="0 0 360 320">
+      <use href="#party-golden" x="0" y="10" width="170" height="290" transform="rotate(-8 80 170)"/>
+      <use href="#party-husky" x="194" y="10" width="160" height="290" transform="rotate(8 275 170)"/>
+      <use href="#party-pug" x="100" y="84" width="160" height="235"/>
+    </symbol>
+  </svg>
+
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+  <div class="site-shell">
+    <header class="site-header">
+      <a class="brand" href="#welcome" aria-label="Birthday home"><span aria-hidden="true">&#10022;</span> made with love</a>
+      <span class="header-note">one very special birthday</span>
+      <div class="header-actions">
+        <button class="header-button header-games" type="button" data-go="party">Party games</button>
+        <button class="header-button header-fullscreen" id="fullscreen" type="button" aria-pressed="false">TV / fullscreen</button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="page welcome-page" id="welcome" aria-labelledby="welcome-title">
+        <div class="portrait-side">
+          <span class="paper-label tilted-left">my favorite person</span>
+          <div class="photo-frame">
+            <div class="photo-placeholder" id="birthday-photo">
+              <span class="photo-sparkle" aria-hidden="true">&#10022;</span>
+              <span>Your birthday boy<br>goes right here</span>
+              <small>A favorite photo, a very big smile.</small>
+            </div>
+            <p class="photo-caption" data-content="photoCaption"></p>
+          </div>
+          <img class="camera-sticker" src="./sticker-camera.png" alt="" aria-hidden="true" data-required-asset>
+          <span class="little-note">a whole day to celebrate you</span>
+        </div>
+        <div class="welcome-copy">
+          <p class="eyebrow">a little birthday magic, just for you</p>
+          <h1 id="welcome-title" class="cutout-title" aria-label="Happy birthday">
+            <span class="word word-happy"><img class="title-star" src="./sticker-star.png" alt="" aria-hidden="true" data-required-asset><i>H</i><i>A</i><i>P</i><i>P</i><i>Y</i><img class="title-star" src="./sticker-star.png" alt="" aria-hidden="true" data-required-asset></span>
+            <span class="word word-birthday"><i>B</i><i>i</i><i>R</i><i>t</i><i>H</i><i>d</i><i>A</i><i>Y</i></span>
+          </h1>
+          <p class="handwritten recipient" data-content="recipient"></p>
+          <p class="intro" data-content="welcomeMessage"></p>
+          <button class="primary-button" type="button" data-go="cake">Let's make a wish <span aria-hidden="true">&#8594;</span></button>
+          <span class="tiny-caption">there might be a few surprises waiting...</span>
+        </div>
+        <img class="corner-star" src="./sticker-star.png" alt="" aria-hidden="true" data-required-asset>
+        <div class="raccoon-sticker" aria-hidden="true">
+          <img class="welcome-raccoon" src="./party-raccoon.png" alt="" data-required-asset>
+        </div>
+      </section>
+
+      <section class="page centered-page" id="cake" aria-labelledby="cake-title" hidden>
+        <p class="eyebrow">birthday rule number one</p>
+        <h1 class="handwritten page-title" id="cake-title" tabindex="-1">Make a wish...</h1>
+        <p class="page-description">Then click the cake to blow out your candles.</p>
+        <div class="cake-scene">
+          <img class="dog-party dogs-left" src="./party-dogs-left-with-cake.png" alt="" aria-hidden="true" data-required-asset>
+          <button class="cake-button" id="blow-candles" type="button" aria-label="Blow out the birthday candles">
+            <span class="cake-art" aria-hidden="true">
+              <img class="cake-photo" src="./party-cake.png" alt="" data-required-asset>
+              <span class="flame" style="--x:20.833%; --y:12.258%"></span>
+              <span class="flame" style="--x:30.833%; --y:13.548%"></span>
+              <span class="flame" style="--x:35.833%; --y:11.613%"></span>
+              <span class="flame" style="--x:41.111%; --y:12.581%"></span>
+              <span class="flame" style="--x:49.722%; --y:15.484%"></span>
+              <span class="flame" style="--x:55.278%; --y:12.258%"></span>
+              <span class="flame" style="--x:64.722%; --y:13.871%"></span>
+              <span class="flame" style="--x:69.444%; --y:12.581%"></span>
+              <span class="flame" style="--x:76.667%; --y:14.839%"></span>
+            </span>
+          </button>
+          <img class="dog-party dogs-right" src="./party-dogs-right.png" alt="" aria-hidden="true" data-required-asset>
+        </div>
+        <p class="handwritten cake-status" id="cake-status" role="status">One click. One wish. All the love.</p>
+        <button class="primary-button" id="after-cake" type="button" data-go="accept" hidden>There's something for you <span aria-hidden="true">&#8594;</span></button>
+      </section>
+
+      <section class="page centered-page" id="accept" aria-labelledby="accept-title" hidden>
+        <p class="eyebrow">special delivery</p>
+        <h1 class="handwritten page-title" id="accept-title" tabindex="-1">Accept your gifts?</h1>
+        <p class="page-description">Three little surprises. A whole lot of love.</p>
+        <img class="accept-monkey" src="./party-monkey.png" alt="" aria-hidden="true" data-required-asset>
+        <div class="choice-buttons">
+          <button class="cloud-button yes-button" type="button" data-go="gifts">Yes, please!</button>
+          <button class="cloud-button" id="decline" type="button">No</button>
+        </div>
+        <p class="retry-message handwritten" id="retry-message" role="status"></p>
+      </section>
+
+      <section class="page centered-page" id="gifts" aria-labelledby="gifts-title" hidden>
+        <p class="eyebrow">picked especially for you</p>
+        <h1 class="handwritten page-title" id="gifts-title" tabindex="-1">A little box of happiness</h1>
+        <p class="page-description">Open them one at a time. There's no rush.</p>
+        <div class="gift-grid">
+          <button class="gift-card" type="button" data-go="messages">
+            <span class="gift-number">01 / your people</span>
+            <img class="gift-sticker" src="./sticker-envelope.png" alt="" aria-hidden="true" data-required-asset>
+            <strong>You've got love letters</strong>
+            <span>Guess who wrote each birthday wish.</span>
+            <span class="gift-action">Open gift one &#8599;</span>
+          </button>
+          <button class="gift-card" type="button" data-go="ours">
+            <span class="gift-number">02 / you + me</span>
+            <img class="gift-sticker" src="./sticker-camera.png" alt="" aria-hidden="true" data-required-asset>
+            <strong>My favorite us</strong>
+            <span>A little memory. A note from my heart.</span>
+            <span class="gift-action">Open gift two &#8599;</span>
+          </button>
+          <button class="gift-card" type="button" data-go="physical">
+            <span class="gift-number">03 / one more thing</span>
+            <img class="gift-sticker" src="./sticker-heart.png" alt="" aria-hidden="true" data-required-asset>
+            <strong>Beyond the screen</strong>
+            <span>This one's waiting in the real world.</span>
+            <span class="gift-action">Open gift three &#8599;</span>
+          </button>
+        </div>
+        <p class="tiny-caption">small surprises, big feelings</p>
+      </section>
+
+      <section class="page centered-page" id="messages" aria-labelledby="messages-title" hidden>
+        <p class="eyebrow">gift one / your people</p>
+        <h1 class="handwritten page-title" id="messages-title" tabindex="-1">So very loved.</h1>
+        <p class="page-description">A wish, a memory... can you guess who wrote it?</p>
+        <button class="letter-card" id="flip-note" type="button" aria-label="Reveal who wrote this note" aria-pressed="false" aria-describedby="friend-message flip-hint">
+          <span class="letter-turn">
+            <span class="letter-face letter-front" id="note-front" aria-hidden="false">
+              <img class="letter-heart" src="./sticker-heart.png" alt="" aria-hidden="true" data-required-asset>
+              <span id="friend-message" class="friend-message"></span>
+              <span class="letter-signoff">with love, from someone in your corner</span>
+            </span>
+            <span class="letter-face letter-back" id="note-back" aria-hidden="true">
+              <img class="letter-heart" src="./sticker-heart.png" alt="" aria-hidden="true" data-required-asset>
+              <span class="letter-signoff">this little wish is from...</span>
+              <span class="handwritten friend-name" id="friend-name"></span>
+              <span class="letter-signoff">Did you guess right?</span>
+            </span>
+          </span>
+        </button>
+        <p class="tiny-caption flip-hint" id="flip-hint">Guess first, then click the note to reveal the name.</p>
+        <div class="message-controls">
+          <button class="secondary-button" id="previous-message" type="button" aria-label="Previous message">&#8592; Previous</button>
+          <span id="message-count" role="status"></span>
+          <button class="secondary-button" id="next-message" type="button" aria-label="Next message">Next &#8594;</button>
+        </div>
+        <p class="preview-note" id="messages-preview" hidden>Preview wishes and names only. Your friends' responses will go here on Thursday.</p>
+        <button class="text-button" type="button" data-go="gifts">&#8592; Back to your gifts</button>
+      </section>
+
+      <section class="page ours-page" id="ours" aria-labelledby="ours-title" hidden>
+        <div class="our-photo-wrap">
+          <div class="photo-frame our-frame">
+            <div class="photo-placeholder" id="couple-photo">
+              <img class="photo-sparkle" src="./sticker-heart.png" alt="" aria-hidden="true" data-required-asset>
+              <span>Our favorite memory</span>
+              <small>Your photo together goes here.</small>
+            </div>
+            <p class="photo-caption">you + me, always</p>
+          </div>
+        </div>
+        <div class="our-note">
+          <p class="eyebrow">gift two / you + me</p>
+          <h1 class="handwritten page-title" id="ours-title" tabindex="-1">My favorite person.<br>My favorite us.</h1>
+          <p class="personal-message" data-content="personalMessage"></p>
+          <p class="handwritten signature" data-content="signature"></p>
+          <button class="text-button" type="button" data-go="gifts">&#8592; Back to your gifts</button>
+        </div>
+      </section>
+
+      <section class="page centered-page physical-page" id="physical" aria-labelledby="physical-title" hidden>
+        <p class="eyebrow">gift three / off-screen magic</p>
+        <img class="big-heart" src="./sticker-heart.png" alt="" aria-hidden="true" data-required-asset>
+        <h1 class="handwritten page-title" id="physical-title" tabindex="-1">Now, look at me.</h1>
+        <p class="page-description">Not everything lovely fits inside a screen.</p>
+        <p class="physical-note">I have one more surprise for you.<br>This one comes with a hug.</p>
+        <button class="text-button" type="button" data-go="gifts">&#8592; Back to your gifts</button>
+      </section>
+      <section class="page centered-page" id="party" aria-labelledby="party-title" hidden>
+        <p class="eyebrow">everyone's invited</p>
+        <h1 class="handwritten page-title" id="party-title" tabindex="-1">Let the games begin!</h1>
+        <p class="page-description">Enter your player count for a party plan, then pick a game or let the wheel decide.</p>
+        <p class="party-notice" id="party-notice" role="alert" hidden></p>
+        <div class="inline-controls party-tabs" role="tablist" aria-label="Party planning and games">
+          <button class="secondary-button" id="party-setup-tab" type="button" role="tab" aria-selected="true" aria-controls="party-setup-panel">Party setup</button>
+          <button class="secondary-button" id="party-games-tab" type="button" role="tab" aria-selected="false" aria-controls="party-games-panel" tabindex="-1">Games &amp; wheel</button>
+        </div>
+        <div class="party-main-panel party-panel" id="party-setup-panel" role="tabpanel" aria-labelledby="party-setup-tab">
+          <h2 class="handwritten">How many are playing?</h2>
+          <form id="party-setup-form">
+            <label for="party-player-count">Total players (not counting a host who isn't playing)</label>
+            <div class="inline-controls">
+              <input id="party-player-count" type="number" min="2" max="20" step="1" placeholder="11" required>
+              <button class="primary-button" type="submit">Generate our plan</button>
+            </div>
+          </form>
+          <p class="party-small">Enter 2 to 20 players. We suggest balanced teams of up to four, with at least two teams. At two players, each person is a solo team; partner-based games need more players. No names or on-screen scores to maintain.</p>
+          <p id="party-plan-summary" role="status">Enter your headcount to see your teams and game flow.</p>
+          <div id="party-plan-result" hidden>
+            <div class="party-team-chips" id="party-team-chips"></div>
+            <p id="party-plan-guide"></p>
+            <p class="party-small">Every game's instructions will show the arrangement for this headcount. Team suggestions and scores are managed by you; game timers stay unchanged. If you change the headcount mid-round, finish or restart that round before using the new team rotation.</p>
+            <div class="inline-controls">
+              <button class="secondary-button" id="party-open-games" type="button">Choose a game</button>
+              <button class="primary-button" id="party-try-drawing" type="button">Trial: Draw Behind the Back</button>
+            </div>
+          </div>
+        </div>
+        <div class="party-main-panel" id="party-games-panel" role="tabpanel" aria-labelledby="party-games-tab" hidden>
+        <div class="party-hub">
+          <div class="party-panel wheel-panel">
+            <h2 class="handwritten">Let fate pick!</h2>
+            <div class="wheel-shell">
+              <span class="wheel-pointer" aria-hidden="true"></span>
+              <div class="party-wheel" id="party-wheel" aria-hidden="true"></div>
+              <span class="wheel-centre" aria-hidden="true">
+                <img src="./wheel-monkey.png" alt="" data-required-asset>
+              </span>
+            </div>
+            <p id="wheel-result" class="wheel-result handwritten" role="status">Check the games you'd like in the wheel.</p>
+            <div class="inline-controls">
+              <button class="primary-button" id="spin-wheel" type="button">Spin the wheel</button>
+              <button class="secondary-button" id="play-wheel-game" type="button" disabled>Play this game</button>
+            </div>
+            <p class="party-small">Wheel numbers match the game cards below. Checked games save in this browser.</p>
+          </div>
+        </div>
+        <div class="game-menu-heading">
+          <h2 class="handwritten">The game shelf</h2>
+          <label for="game-filter">Show
+            <select id="game-filter">
+              <option value="all">All games</option>
+              <option value="teams">Team games</option>
+              <option value="group">Whole-group games</option>
+            </select>
+          </label>
+          <button class="secondary-button" id="enable-all-games" type="button">Check all</button>
+          <button class="secondary-button" id="disable-all-games" type="button">Clear wheel</button>
+        </div>
+        <p class="party-small">Checked games enter the wheel, even when hidden by the filter. Every game can also be opened directly.</p>
+        <div class="party-game-grid" id="party-game-grid"></div>
+        </div>
+      </section>
+
+      <section class="page centered-page" id="party-round" aria-labelledby="party-round-title" hidden>
+        <p class="eyebrow">party games / host-led fun</p>
+        <h1 class="handwritten page-title" id="party-round-title" tabindex="-1">Choose a game</h1>
+        <p class="party-notice" id="round-notice" role="alert" hidden></p>
+        <p id="round-empty">Choose a game from the shelf or spin the wheel first.</p>
+        <div class="round-layout" id="round-body" hidden>
+          <div class="round-main">
+            <div class="party-panel party-player-plan" id="round-player-plan">
+              <h2 class="handwritten" id="round-plan-heading">Your party flow</h2>
+              <p id="round-plan-summary"></p>
+              <ol id="round-plan-steps"></ol>
+              <div class="inline-controls">
+                <button class="secondary-button" id="round-edit-setup" type="button">Party setup</button>
+                <button class="primary-button" id="drawing-trial" type="button" hidden>Try the easy drawing prompt</button>
+              </div>
+            </div>
+            <details class="party-panel" id="round-instructions">
+              <summary>How to play &amp; what you'll need</summary>
+              <p id="round-supplies"></p>
+              <ol id="round-rules"></ol>
+              <p id="round-format" class="party-small"></p>
+            </details>
+            <div class="party-panel rapid-intro" id="rapid-intro" hidden>
+              <h2 class="handwritten">How to play</h2>
+              <p class="rapid-example"><span id="rapid-example-clue"></span><span aria-hidden="true">&rarr;</span><strong id="rapid-example-answer"></strong></p>
+              <p class="party-small" id="rapid-example-tip"></p>
+              <p id="rapid-how-to-play"></p>
+              <p class="rapid-line-guide" id="rapid-line-guide" hidden></p>
+              <div class="inline-controls" id="rapid-round-options" aria-label="Choose a game round"></div>
+              <p id="rapid-round-summary"></p>
+              <button class="primary-button rapid-start" id="start-rapid-round" type="button">START</button>
+              <p class="party-small" id="rapid-pack-note"></p>
+            </div>
+            <div class="party-panel" id="drawing-game-settings" hidden>
+              <h2 class="handwritten">One clock, many drawings</h2>
+              <label for="drawing-prompt-count">Prompts to attempt</label>
+              <input id="drawing-prompt-count" type="number" min="1" step="1" required>
+              <p id="drawing-game-summary" role="status"></p>
+              <p class="party-small">Choose your game length below, from 1 second to 10 minutes. The suggested time is a quick speed round, not a guarantee that every drawing will be finished. The selected pack starts at the current prompt and wraps around without repeats.</p>
+            </div>
+            <div class="round-prompt" id="round-prompt-card">
+              <p class="rapid-step-clock" id="rapid-step-clock" role="timer" aria-live="off" hidden></p>
+              <p class="rapid-reader-reminder" id="rapid-reader-reminder" hidden>Player: face away. Teammate: read the title aloud once, in its normal order. No hints or repeats.</p>
+              <p id="round-prompt-text"></p>
+              <table class="hand-map-board" id="hand-map-board" hidden>
+                <caption>Follow the rows from top to bottom</caption>
+                <thead><tr><th scope="col">Your left hand</th><th scope="col">Your right hand</th></tr></thead>
+                <tbody id="hand-map-rows"></tbody>
+              </table>
+              <p class="round-answer handwritten" id="round-answer" hidden></p>
+              <button class="primary-button rapid-start" id="rapid-answer-start" type="button" hidden>Start 10s</button>
+              <button class="rapid-skip-tile" id="rapid-skip-tile" type="button" aria-label="Skip this movie and show the next prompt" hidden></button>
+            </div>
+            <div class="inline-controls prompt-controls" id="round-prompt-controls">
+              <button class="secondary-button" id="previous-prompt" type="button">Previous</button>
+              <span id="prompt-count" role="status"></span>
+              <button class="secondary-button" id="next-prompt" type="button">Next prompt</button>
+              <button class="secondary-button" id="shuffle-prompt" type="button">Random prompt</button>
+              <button class="primary-button" id="reveal-prompt" type="button" hidden>Reveal answer</button>
+            </div>
+            <div class="party-panel" id="audio-panel" hidden>
+              <label for="round-audio-file">Add an audio clip for this challenge</label>
+              <input id="round-audio-file" type="file" accept="audio/*,.mp3,.wav,.m4a,.ogg,.aac,.flac">
+              <audio id="round-audio" controls preload="metadata" hidden></audio>
+              <p class="party-small" id="audio-status">No audio added yet. Choose a clip you have permission to use.</p>
+              <button class="text-button" id="remove-audio" type="button" disabled>Remove uploaded clip</button>
+              <p class="party-small">Uploads stay in this tab, not on a server. Reloading clears uploaded clips. Music plays only when you press play.</p>
+            </div>
+            <div class="party-panel timer-panel" id="round-timer-panel">
+              <label id="timer-duration-label" for="timer-seconds">Round length (seconds)</label>
+              <input id="timer-seconds" type="number" min="1" max="600" step="1" value="30" required>
+              <p class="party-small" id="rapid-timed-play-note" hidden>Timed play remaining in this round. Reading time is untimed.</p>
+              <p class="round-send-cue" id="round-send-cue" role="status" hidden>SEND TO WHATSAPP!</p>
+              <output class="round-timer" id="round-timer" role="timer" aria-live="off">0:30</output>
+              <div class="inline-controls">
+                <button class="primary-button" id="start-timer" type="button">Start timer</button>
+                <button class="secondary-button" id="reset-timer" type="button">Reset timer</button>
+              </div>
+              <p id="round-status" role="status">Ready when you are.</p>
+              <p class="party-small" id="timer-help">Timers pause when you leave the round or hide this tab. Reloading resets the timer.</p>
+            </div>
+            <div class="party-panel rapid-finish" id="rapid-finish" hidden>
+              <h2 class="handwritten" id="rapid-finish-title"></h2>
+              <p>Take a breather, then get everyone ready for the next round.</p>
+              <div class="inline-controls">
+                <button class="primary-button" id="rapid-next-round" type="button">Next round</button>
+                <button class="secondary-button" id="rapid-choose-round" type="button">Choose a round</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="text-button" type="button" data-go="party">&#8592; Back to party games</button>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>for you, with all my love</span>
+      <nav aria-label="Birthday chapters" class="chapter-dots">
+        <a href="#welcome" aria-label="Welcome" data-chapter="welcome"></a>
+        <a href="#cake" aria-label="Birthday cake" data-chapter="cake"></a>
+        <a href="#accept" aria-label="Accept gifts" data-chapter="accept"></a>
+        <a href="#gifts" aria-label="Gift menu" data-chapter="gifts"></a>
+        <a href="#party" aria-label="Party games" data-chapter="party"></a>
+      </nav>
+      <button class="quiet-button" id="restart" type="button" aria-label="Restart birthday surprise; keep game choices">Start again</button>
+    </footer>
+  </div>
+  <div class="turn-changeover" id="turn-changeover" role="status" aria-live="assertive" hidden>
+    <strong>NEXT!</strong>
+    <p>Next player, step forward</p>
+    <p id="turn-changeover-countdown" aria-hidden="true"></p>
+  </div>
+  <p class="site-error" id="site-error" role="alert" hidden></p>
+  <noscript><p class="site-error">Please enable JavaScript to open the gifts and blow out the candles.</p></noscript>
+</body>
+</html>
