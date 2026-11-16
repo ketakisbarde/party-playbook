@@ -4,7 +4,7 @@ window.birthdayContent = {
   recipient: "my birthday boy",
   photoCaption: "it's your day, darling",
   welcomeMessage: "Today is all about you. Your laugh, your kindness, and all the little things that make you my favorite person.",
-  birthdayPhoto: "./cover-photo-blurred.jpg",
+  birthdayPhoto: "./images/cover-photo-blurred.jpg",
   couplePhoto: "",
   personalMessage: "Your short message will go here. A favorite memory, something you love about him, or a little wish for the year ahead.",
   signature: "All my love, Ketaki",
