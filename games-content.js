@@ -333,7 +333,26 @@ window.partyGames = [
       { text: "Name three board games." },
       { text: "Name three movies with a number in the title." },
       { text: "Name three fictional places from films, books or TV." },
-      { text: "Name three apps you would hate to lose for a day." }
+      { text: "Name three apps you would hate to lose for a day." },
+      { text: "Name three countries in South America." },
+      { text: "Name three European capital cities." },
+      { text: "Name three Indian states." },
+      { text: "Name three languages spoken in India." },
+      { text: "Name three planets in our solar system." },
+      { text: "Name three musical instruments." },
+      { text: "Name three sports played at the Summer Olympics." },
+      { text: "Name three dog breeds." },
+      { text: "Name three video streaming services." },
+      { text: "Name three car manufacturers." },
+      { text: "Name three video-game franchises." },
+      { text: "Name three Harry Potter characters." },
+      { text: "Name three animated Disney or Pixar movies." },
+      { text: "Name three Indian playback singers." },
+      { text: "Name three authors of published books." },
+      { text: "Name three famous real-world landmarks." },
+      { text: "Name three airlines." },
+      { text: "Name three chemical elements from the periodic table." },
+      { text: "Name three clothing brands." }
     ]
   },
   {
@@ -374,7 +393,21 @@ window.partyGames = [
       { text: "A group pretending to understand modern art" },
       { text: "People stuck in a lift with someone singing badly" },
       { text: "Wedding guests spotting the dessert buffet" },
-      { text: "A rowing team paddling in completely different directions" }
+      { text: "A rowing team paddling in completely different directions" },
+      { text: "Astronauts trying to eat a meal in zero gravity" },
+      { text: "A tour group realising their guide is completely lost" },
+      { text: "A magician and assistants discovering the disappearing trick has failed" },
+      { text: "Supermarket staff struggling with a checkout conveyor that keeps speeding up" },
+      { text: "A royal court accidentally bowing to the wrong person" },
+      { text: "Restaurant waiters delivering every dish to the wrong table" },
+      { text: "Train passengers realising they have all missed their stop" },
+      { text: "Pirates searching for treasure with their map upside down" },
+      { text: "A film crew trying to finish a scene while every actor keeps laughing" },
+      { text: "Hotel staff preparing for a very demanding VIP guest" },
+      { text: "Zombies attending their first aerobics class" },
+      { text: "A colony of penguins huddling together in a snowstorm" },
+      { text: "Scientists watching their experiment produce something completely unexpected" },
+      { text: "A classroom hiding its mischief just as the teacher walks in" }
     ]
   },
   {
