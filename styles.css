@@ -112,9 +112,10 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
 .word-birthday i:nth-child(8) { font-family: "Arial Black", sans-serif; background: #188dbd; transform: rotate(5deg); }
 .title-star { width: clamp(28px, 3.3vw, 48px); height: clamp(28px, 3.3vw, 48px); object-fit: contain; flex-shrink: 0; filter: drop-shadow(2px 3px 0 #fffdf6); transform: rotate(-12deg); }
 .title-star:last-child { transform: rotate(12deg); }
-.raccoon-sticker { position: absolute; right: 0; bottom: 0; width: 260px; height: 310px; pointer-events: none; }
+.welcome-page { row-gap: 0; }
+.raccoon-sticker { position: relative; grid-column: 2; justify-self: end; width: clamp(280px, 26vw, 390px); aspect-ratio: 418 / 596; margin-right: -65px; margin-bottom: -45px; pointer-events: none; }
 .raccoon-sticker::before { content: ""; position: absolute; inset: 30px 0 0; background: repeating-linear-gradient(0deg, #719bc13b 0 15px, transparent 15px 30px), repeating-linear-gradient(90deg, #719bc13b 0 15px, #f8f3e8 15px 30px); border-radius: 80% 0 0 0; }
-.welcome-raccoon { position: absolute; right: 6px; bottom: 0; width: 220px; height: 300px; object-fit: contain; object-position: right bottom; filter: drop-shadow(2px 4px 1px #233e6426); }
+.welcome-raccoon { position: absolute; right: 0; bottom: 0; width: 100%; height: 100%; object-fit: contain; object-position: right bottom; filter: drop-shadow(2px 4px 1px #233e6426); }
 .handwritten { font-family: "Caveat", "Segoe Print", cursive; }
 .recipient { font-size: clamp(34px, 4vw, 54px); margin: 23px 0 10px; line-height: 1.1; }
 .intro { max-width: 410px; font-size: 16px; line-height: 1.8; margin-bottom: 27px; }
@@ -129,7 +130,7 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
 .centered-page { display: flex; flex-direction: column; align-items: center; text-align: center; }
 .page-title { font-size: clamp(40px, 4.7vw, 68px); line-height: 1.08; font-weight: 600; margin: 0 0 14px; outline: none; }
 .page-description { font-size: 16px; line-height: 1.6; margin: 0; }
-#cake { isolation: isolate; }
+#cake { isolation: isolate; padding-bottom: clamp(140px, 34vw, 460px); }
 #cake::before, #cake::after {
   content: ""; position: absolute; bottom: 0; width: clamp(80px, 13vw, 190px); height: clamp(140px, 20vw, 285px);
   background: repeating-linear-gradient(0deg, #74a1cc66 0 16px, transparent 16px 32px), repeating-linear-gradient(90deg, #74a1cc88 0 16px, #fff9ec 16px 32px);
@@ -140,8 +141,8 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
 #cake::after { right: 0; transform: scaleX(-1); }
 .cake-scene { display: flex; justify-content: center; margin: 30px 0 0; width: 100%; }
 .dog-party { position: absolute; bottom: 18px; display: block; width: clamp(140px, 28vw, 420px); height: auto; object-fit: contain; pointer-events: none; filter: drop-shadow(2px 4px 1px #233e6426); }
-.dogs-left { left: 12px; width: clamp(140px, 36.75vw, 530px); transform: rotate(-4deg); }
-.dogs-right { right: 12px; width: clamp(100px, 25.9vw, 367px); transform: rotate(4deg) scaleX(-1); }
+.dogs-left { left: 0; width: min(59%, clamp(170px, max(46vw, 60svh), 800px)); }
+.dogs-right { right: 0; width: min(41%, clamp(118px, max(32vw, 42svh), 556px)); transform: scaleX(-1); }
 .cake-button { position: relative; border: 0; background: transparent; padding: 10px 15px; border-radius: 35px; }
 .cake-button:disabled { opacity: 1; }
 .cake-art { position: relative; display: block; width: clamp(260px, 21vw, 320px); aspect-ratio: 360 / 310; }
@@ -150,7 +151,7 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
 .flame:nth-of-type(even) { animation-delay: -.3s; }
 .blown-out .flame { opacity: 0; animation: none; }
 .cake-status { font-size: 29px; margin: 15px 0 20px; min-height: 36px; max-width: 280px; }
-.accept-monkey { width: min(240px, 100%); height: 310px; margin: 12px 0; object-fit: contain; }
+.accept-monkey { width: min(100%, clamp(240px, 26vw, 390px)); height: auto; aspect-ratio: 279 / 405; margin: 12px 0; object-fit: contain; }
 .choice-buttons { display: flex; gap: 40px; }
 .cloud-button { min-width: 142px; padding: 19px 27px; border: 2px solid #8aaed0; background: #c7ddef; border-radius: 48% 44% 45% 40%; color: var(--ink); font-family: "Caveat", cursive; font-size: 30px; font-weight: 700; box-shadow: 3px 5px 0 #315c9b20; }
 .yes-button { background: #b0cdea; }
@@ -184,9 +185,14 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
 #message-count { font-size: 12px; min-width: 95px; }
 .preview-note { font-size: 12px; color: #8b593f; margin: 17px 0 0; }
 .text-button { border: 0; padding: 14px 8px; margin-top: 22px; color: var(--blue); background: none; font-size: 13px; }
-.our-photo-wrap { position: relative; padding: 25px; }
+.ours-page { align-items: start; }
+.our-photo-wrap { position: relative; padding: 25px; display: flex; flex-direction: column; justify-content: space-between; gap: 45px; align-self: stretch; min-width: 0; }
 .our-frame { transform: rotate(4deg); }
 .our-frame .photo-placeholder { aspect-ratio: 1; }
+.letter-memory { margin: 0; }
+.letter-memory img { display: block; width: 100%; height: auto; }
+.letter-memory-jenis { width: 82%; align-self: flex-start; transform: rotate(-4deg); }
+.letter-memory-sf { transform: rotate(3deg); }
 .personal-message { white-space: pre-line; font-size: 19px; line-height: 1.9; }
 .signature { font-size: 33px; }
 .big-heart { width: 150px; height: 145px; object-fit: contain; margin: 10px 0 20px; }
@@ -306,14 +312,10 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
   .gift-card strong { font-size: 36px; }
 }
 @media (max-width: 1300px) {
-  .raccoon-sticker { position: relative; grid-column: 2; justify-self: end; width: 220px; height: 285px; margin-right: -35px; margin-bottom: -40px; }
-  .welcome-raccoon { width: 180px; height: 280px; }
+  .raccoon-sticker { position: relative; grid-column: 2; justify-self: end; width: min(100%, clamp(240px, 30vw, 340px)); margin-right: -35px; margin-bottom: -40px; }
 }
 @media (max-width: 1200px) {
-  #cake { padding-bottom: clamp(160px, 38vw, 355px); }
   #cake::before, #cake::after { height: clamp(110px, 32vw, 285px); }
-  .dogs-left { left: 0; width: 59%; max-width: 530px; transform: none; }
-  .dogs-right { right: 0; width: 41%; max-width: 367px; transform: scaleX(-1); }
   .cake-art { width: 100%; }
   .cake-button { padding: 0; width: min(260px, 100%); }
 }
@@ -382,7 +384,11 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
   .message-controls { gap: 9px; width: 100%; }
   .secondary-button { padding: 12px; font-size: 14px; }
   #message-count { min-width: 72px; }
-  .our-photo-wrap { max-width: 350px; width: 100%; margin: auto; }
+  .our-photo-wrap { max-width: 350px; width: 100%; margin: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 25px 16px; padding: 15px; }
+  .our-frame { grid-column: 1 / -1; }
+  .letter-memory { width: 100%; padding: 8px 8px 1px; align-self: center; }
+  .letter-memory::before { width: 45px; height: 20px; top: -8px; left: 30%; }
+  .letter-memory .photo-caption { font-size: 19px; margin: 10px 0; }
   .our-note { text-align: center; }
   .personal-message { font-size: 17px; }
 }
