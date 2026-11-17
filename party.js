@@ -19,6 +19,7 @@
   let wheelRotation = 0;
 
   const el = id => document.getElementById(id);
+  const teamLabel = index => `Team ${String.fromCharCode(65 + index)}`;
   const make = (tag, className, text) => {
     const node = document.createElement(tag);
     node.className = className;
@@ -140,101 +141,70 @@
       : "Enter your headcount to see your teams and game flow.";
     if (!plan) return;
     plan.sizes.forEach((size, index) => {
-      el("party-team-chips").append(make("span", "party-team-chip", `Team ${index + 1}: ${size} player${size === 1 ? "" : "s"}`));
+      el("party-team-chips").append(make("span", "party-team-chip", `${teamLabel(index)}: ${size} player${size === 1 ? "" : "s"}`));
     });
     el("party-plan-guide").textContent = plan.chainSize < 2
-      ? "Some teams have only one player. Drawing chains, dance telephone, teammate-read Backwards and Reverse Charades need at least two per team. Their instructions will flag this; use individual or whole-group games for now."
-      : `Whole-group games: all ${plan.players} players together. Team games: your ${plan.teamCount} teams compete. For telephone games, use ${plan.chainSize} players per team so every chain has the same length, then rotate extra players in. Open a game for its exact roles and an example.`;
+      ? "Solo teams: choose individual or whole-group games. Drawing, Copy the Step, Backwards and Reverse Charades need at least two players per team."
+      : `Group games: everyone plays together. Team games: use Teams ${plan.sizes.map((_, index) => String.fromCharCode(65 + index)).join(", ")}. Telephone games: ${plan.chainSize} players per chain; rotate extras in. Open a game for roles and turn order.`;
   }
 
   function gameFlow(game, plan) {
-    const order = plan.sizes.map((_, index) => `Team ${index + 1} player`).join(" -> ");
-    const representatives = `One representative from each of your ${plan.teamCount} teams plays; other teammates do not help. Rotate representatives after each prompt.`;
-    const chain = `Use ${plan.chainSize} players in each of ${plan.teamCount} equal-length team lines. Teams with extra members rotate them in between prompts.`;
+    const order = plan.sizes.map((_, index) => teamLabel(index)).join(" -> ");
     const needsPartners = ["movie-backwards", "drawing-telephone", "dance-telephone", "reverse-charades"].includes(game.id);
     if (needsPartners && plan.chainSize < 2) {
-      return ["This format needs at least two players in every team. Your current split has a solo team, so do not use this team format yet. Enter at least four players or choose an individual/whole-group game."];
+      return ["Each team needs at least two players. Add players (four total minimum), or choose an individual/whole-group game."];
     }
     if (game.id === "bollywood") {
-      const rounds = Array.from({ length: Math.ceil(game.prompts.length / game.roundSize) }, (_, round) =>
-        `Round ${round + 1}: ${plan.sizes.map((size, index) => `Team ${index + 1} Player ${round % size + 1}`).join(" vs ")}.`);
-      return [`Bring one player from each team up together; all ${plan.teamCount} representatives compete on the same clues. Other teammates stay quiet.`, ...rounds,
-        "First correct team gets one point. Record each round on your whiteboard; the smaller team's players repeat, but every team has the same number of chances."];
+      return [`Lineup: one player each from ${order.replaceAll(" -> ", ", ")}. Start with Player 1; call the next teammate each round. Smaller teams loop back sooner. Equal turns, equal glory.`];
     }
     if (game.id === "wrong-answers" || game.id === "movie-backwards" || game.id === "five-things") {
       const fullCycles = Math.floor(game.prompts.length / plan.teamCount);
       const bonus = game.prompts.length % plan.teamCount;
       const starters = Array.from({ length: Math.ceil(game.prompts.length / game.roundSize) }, (_, round) =>
-        `Round ${round + 1} starts with Team ${round * game.roundSize % plan.teamCount + 1}`);
+        `Round ${round + 1}: start with ${teamLabel(round * game.roundSize % plan.teamCount)}`);
       return [
-        `Use ${plan.teamCount} short team queues, calling ${order}, then repeat. Each team sends its next player on its turn. ${plan.sizes[0] !== plan.chainSize ? `The smaller team rotates its players more often; a fixed ${plan.players}-person line would give bigger teams more attempts.` : "Your teams are equally sized, so an alternating-player line also works."}`,
-        `${starters.join("; ")}. Keep the team order rolling across round breaks.`,
-        game.id === "five-things"
-          ? "Only the called player answers: say five different valid answers aloud in ten seconds for one point; fewer than five earns zero. No teammate help. NEXT! lasts one second, then the next player's prompt starts automatically. Pause if judging needs longer. Ash confirms personal facts and favourites."
-          : game.readAloud
-          ? "On each turn, an answering player faces away and a teammate reads the title once, normally. The host clicks Start 10s after the read-out; NEXT! lasts two seconds. Swap answering and reading roles."
-          : "Only the called player answers: a clearly wrong answer earns one point; a genuinely correct answer, silence or repeating the question earns zero. Five seconds to answer, then one second of NEXT!.",
+        `Turn order: ${order}, then repeat. Each team sends its next player; smaller teams loop back sooner.`,
+        `${starters.join("; ")}. Continue the team order across rounds.`,
         bonus
-          ? `Suggested fair scoring across the full pack: ${fullCycles * plan.teamCount} scored prompts give ${fullCycles} attempts per team. Treat the final ${bonus} prompt${bonus === 1 ? "" : "s"} as an unscored bonus. Timers and titles are unchanged; the host applies this scoring manually.`
-          : `Across all ${game.prompts.length} prompts, each team gets ${fullCycles} attempts. Keep the same team order across rounds and record points manually.`
+          ? `For equal turns: score the first ${fullCycles * plan.teamCount} prompts (${fullCycles} per team). Final ${bonus} prompt${bonus === 1 ? "" : "s"}: unscored bonus. Record points yourself.`
+          : `${game.prompts.length} prompts = ${fullCycles} turns per team.`
       ];
     }
     switch (game.id) {
       case "drawing-telephone":
-        return [chain,
-          ...plan.sizes.map((_, team) => `Team ${team + 1}: ${Array.from({ length: plan.chainSize }, (_, step) => {
-            const player = plan.chainSize - step;
-            return `Player ${player} (${step === 0 ? "artist" : player === 1 ? "guesser" : "copies what they felt"})`;
-          }).join(" -> ")}.`),
-          "Only the artist sees the secret prompt. They draw gently on paper against the next player's back, with permission. Each player passes on what they felt; the front player guesses. No talking, peeking or help from waiting players.",
-          "Practice without points or a running clock: use 'Mountains' and pass two large peaks down each chain. Then choose your prompt count and game length.",
+        return [
+          `Each team: ${plan.chainSize} in line, all facing forward. Back = artist${plan.chainSize > 2 ? ` -> ${plan.chainSize - 2} copier${plan.chainSize > 3 ? "s" : ""}` : ""} -> front = guesser. Rotate extras between drawings.`,
           drawing && drawing.trial
-            ? "This trial is untimed and unscored. Mountains is not in the game pack. Click Finish trial / set up game when everyone is ready."
-            : `One shared clock covers ${drawing ? drawing.count : game.prompts.length} prompts${drawing ? ` in ${drawing.duration} seconds` : ""}. All teams get the same prompt. First correct team earns a point; the host clicks Next drawing and everyone abandons the old drawing. The clock keeps running.`,
-          "Only artists look when each new prompt is revealed. Switch roles between drawings. Play stops when the game clock expires or the selected pack is finished; scores stay on your whiteboard."];
+            ? "Practice mode: Mountains = two big peaks. No clock, no points, no pressure! Click Finish trial / set up game when ready. Mountains is not in the scored pack."
+            : `Your pack: ${drawing ? drawing.count : game.prompts.length} drawings${drawing ? ` / ${drawing.duration}s total` : ""}. Try Mountains first for a warm-up.`
+        ];
       case "dance-telephone":
-        return [chain,
-          "Only the first performer in each team sees the same secret situation. Hide it, then start the 60-second default timer for the whole chain and final guess.",
-          "Act silently once for the next player, who copies what they saw once for the next. Everyone else faces away. No talking, sound effects, real props or help from waiting players.",
-          "The last player guesses the situation privately to the host before time is up. Keep guesses secret until every team has answered or time ends, then reveal the prompt.",
-          "One point per team for the correct situation; exact wording is not needed. The host judges and scores manually. Rotate roles and extra players for the next prompt. Most points after your agreed rounds wins; ties may share the win.",
-          "Mime everything, including fireworks; run on the spot and never fall or collide with anyone. Adapt movements for comfort; anyone may pass."];
+        return [`Each team: ${plan.chainSize} in line. First = actor; last = guesser. Rotate roles and extras each prompt.`];
       case "reverse-charades":
-        return [`Use one guesser and ${plan.chainSize - 1} actor${plan.chainSize === 2 ? "" : "s"} from each team, so actor counts match. Rotate extra players in each turn.`,
-          "Only the actors see the secret prompt. Hide it before the guesser turns back; actors mime silently. One point for a correct guess within 45 seconds."];
+        return [`Each team: one guesser + ${plan.chainSize - 1} actor${plan.chainSize === 2 ? "" : "s"}. Same actor count for everyone; rotate extras each turn.`];
       case "alphabet":
-        return [representatives,
-          "All representatives search together for each of eight letters: ten seconds to find or point out a safe object, then one second of full-screen NEXT! before the next letter starts automatically.",
-          "First valid object earns one point per letter; no object by the cutoff means no point. The host judges and records scores manually.",
-          "Use the next teammate at each NEXT!, cycling through team queues so each team gets eight chances. Pause if the changeover needs longer. No running, climbing, private rooms or unsafe objects."];
+        return ["Call one player per team together. Cycle each team's queue at NEXT!: eight chances per team, whatever its size."];
       case "hook-step":
-        return [representatives, "Use one permitted audio clip for everyone's turn. Each representative performs the displayed dance challenge; compare performances and award points manually."];
+        return ["Call one dancer per team, or invite whole teams. Use the same clip for competing teams; rotate dancers next turn."];
       case "tunnel-vision":
-        return [representatives, `Prepare ${plan.teamCount} matching tabletop stations, each with three blunt paper straws and one wide-neck container. Race while stationary; rotate players after each attempt. Never walk with restricted vision.`];
+        return [`Set ${plan.teamCount} matching stations: three straws + one container each. Call one player per team; rotate after each race. Relay: switch after each straw, three total per team.`];
       case "balloon-cups":
-        return [representatives, `Prepare ${plan.teamCount} matching lanes with five cups each and individual balloons. Each representative moves all five cups. For a relay, assign five cup moves per team, not one move per member.`];
+        return [`Set ${plan.teamCount} matching lanes, five cups each. Call one player per team; rotate next race. Relay: switch after each cup, five total per team.`];
       case "balloon-knockdown":
-        return [representatives, `Give each of ${plan.teamCount} teams five cups and its own safe table lane. Use escaping balloon air to clear them; first to clear the identical set wins.`];
+        return [`Set ${plan.teamCount} matching table lanes. Call one player per team; rotate next race. Use five cups, or three for the accuracy prompt.`];
       case "dice-tower":
-        return [representatives, `Give ${plan.teamCount} representatives matching dice sets and chopsticks or tongs. Build for 45 seconds; the tallest standing tower wins. Rotate players next turn.`];
+        return [`Call one player per team. Give all ${plan.teamCount} players equal dice sets; rotate next round.`];
       case "in-out":
-        return [`Play as one group, not teams. If a host calls, all ${plan.players} players participate; if a player calls, ${plan.players - 1} others play.`,
-          "Do an unscored practice: IN, IN, OUT. Then play elimination with steps or a seated hand version; last player remaining wins."];
+        return [`One group: ${plan.players} players if you call; ${plan.players - 1} if a player calls. Warm up with IN, IN, OUT, no eliminations.`];
       case "count-together":
-        return [`All ${plan.players} players form one group. Try to count from 1 to ${plan.players}, with a different person saying each number and no planned order.`,
-          "Two voices together means restart at one. Use a seated action or raised hand instead of squatting if preferred. There are no team points needed."];
+        return [`One group: all ${plan.players} players. Your target is ${plan.players}; no team scores.`];
       case "camera-catch":
-        if (plan.players < 3) return ["This game needs a seated camera player and at least two people passing the ball. Enter at least three players or choose another whole-group game."];
-        return [`One of your ${plan.players} players sits stationary with the camera; the other ${plan.players - 1} gently pass the soft ball. Rotate the camera role after each 45-second round.`,
-          "Only record with everyone's consent. No throws toward the seated player, blindfolded movement or collisions. The website never accesses the camera."];
+        if (plan.players < 3) return ["Need three players: one seated camera player + two passing. Add a player or choose another group game."];
+        return [`Seat one camera player; ${plan.players - 1} others form a circle. Switch camera player after each 45s round.`];
       case "scattergories":
-        return [`All ${plan.players} players answer individually in your existing WhatsApp group; team sizes do not affect this game.`,
-          "Choose a random category, then start the 60-second default timer. Everyone types three different answers in one message, without sending it yet. There is no letter rule.",
-          "At SEND TO WHATSAPP, everyone sends together. No early posts, copying or editing after the host's cutoff.",
-          "Each valid answer nobody else submitted earns one point, up to three. Matching answers cancel out. The host judges and scores manually; the website never accesses WhatsApp."];
+        return [`All ${plan.players} play individually in your WhatsApp group. Teams take a tea break.`];
       case "hand-map":
-        return [`All ${plan.players} players play together, not in team lines. Everyone uses their own left and right hands to follow the same four-row map.`,
-          "Round 1: handprint means palm, circle means fist. Round 2 reverses those meanings. Go top to bottom, then compare with Reveal answer. The timer is optional and there is no need to switch teams."];
+        return [`All ${plan.players} play together. No teams or turn-taking; just you versus your hands.`];
       default:
         throw new Error(`Missing headcount instructions for game ${game.id}.`);
     }
@@ -243,18 +213,16 @@
   function renderGamePlan(game) {
     if (!game) return;
     const plan = partyPlan();
-    el("round-plan-heading").textContent = plan ? `How it works with ${plan.players} players` : "Your party flow";
+    el("round-plan-heading").textContent = "How to play";
     el("round-plan-summary").textContent = plan
-      ? `${plan.teamCount} teams: ${plan.sizes.map((size, index) => `Team ${index + 1} has ${size}`).join("; ")}.`
-      : "Enter the total players in Party setup to generate team sizes, turn order and an example for this game.";
-    el("round-plan-steps").replaceChildren(...(plan ? gameFlow(game, plan) : []).map(step => make("li", "", step)));
+      ? game.group === "group" ? `${plan.players} players / ${game.id === "scattergories" ? "individual scores" : "one big group"}`
+        : plan.sizes.map((size, index) => `${teamLabel(index)}: ${size}`).join(" / ")
+      : "Add your headcount in Party setup for team sizes and turn order.";
+    el("round-plan-steps").replaceChildren(...[
+      ...(plan ? gameFlow(game, plan) : []), ...game.rules
+    ].map(step => make("li", "", step)));
     el("drawing-trial").hidden = game.trialPrompt === undefined;
     if (game.trialPrompt) el("drawing-trial").textContent = `Trial: ${game.trialPrompt}`;
-    el("round-format").textContent = game.group === "group"
-      ? game.id === "scattergories"
-        ? `Individual WhatsApp submissions${plan ? ` from ${plan.players} players` : ""}. ${game.seconds}s default typing time per category; the host records individual scores.`
-        : `Whole-group round${plan ? ` for ${plan.players} players` : ""}. Keep the timer optional for elimination or counting games.`
-      : `${plan ? `${plan.teamCount} teams of ${plan.sizes.join(", ")}` : "Choose your teams in the room"}; the host keeps scores manually.`;
   }
 
   function stopSpin() {
@@ -458,7 +426,6 @@
     el("rapid-finish").hidden = !rapid.complete;
     el("rapid-round-menu").hidden = !rapid.started || rapid.complete;
     el("rapid-round-menu-note").hidden = !rapid.started || rapid.complete;
-    el("round-instructions").open = false;
   }
 
   function prepareRapidRound(round) {
@@ -667,7 +634,9 @@
     el("round-prompt-text").textContent = drawing && drawing.complete
         ? drawing.reason === "time" ? "TIME'S UP!" : "PACK COMPLETE!"
         : changeover ? "NEXT!" : secret && !promptRevealed
-        ? "Secret prompt! Only the starting players should look. Ask everyone else to turn away, then reveal."
+        ? game.id === "reverse-charades"
+          ? "Actors only! Guessers, look away. Reveal, memorise, then hide."
+          : "First players only! Everyone else, look away. Reveal, memorise, then hide."
         : prompt.text;
     el("round-answer").textContent = promptRevealed && !secret && prompt.answer ? prompt.answer : "";
     el("round-answer").hidden = !promptRevealed || secret || !prompt.answer;
@@ -764,18 +733,9 @@
       el("rapid-example-clue").textContent = game.example.text;
       el("rapid-example-answer").textContent = game.example.answer;
       el("rapid-example-tip").textContent = game.example.tip;
-      const timing = game.readAloud
-        ? `Press START to show the first title. Reading time is untimed. After the teammate finishes, press Start ${game.guessSeconds}s to begin the answer countdown. A full-screen NEXT! cue lasts ${game.transitionSeconds} seconds, then the next title waits for its reader and another host click.`
-        : game.revealSeconds === 0
-        ? `Each person gets ${game.guessSeconds} seconds.${game.transitionSeconds ? ` A full-screen NEXT! cue appears for ${game.transitionSeconds} second${game.transitionSeconds === 1 ? "" : "s"} before the next person's prompt appears automatically.` : " The next person's prompt then appears automatically."}`
-        : `${game.guessSeconds} seconds per clue, then a ${game.revealSeconds}-second answer reveal before the next clue starts automatically.`;
-      el("rapid-how-to-play").textContent = `${game.intro} ${timing} Pick a round, get ready, then press START!`;
-      el("rapid-line-guide").hidden = game.lineGuide === undefined;
-      el("rapid-line-guide").textContent = game.lineGuide === undefined ? "" : game.lineGuide;
       el("rapid-skip-tile").setAttribute("aria-label", game.id === "alphabet" ? "Skip to the next letter" : game.revealSeconds === 0
         ? "Move to the next person's prompt" : "Skip this movie and show the next prompt");
     }
-    el("round-instructions").open = game.id === "drawing-telephone";
     el("rapid-intro").hidden = !isRapid;
     el("rapid-finish").hidden = true;
     el("rapid-round-menu").hidden = true;
@@ -805,8 +765,7 @@
         : game.id === "scattergories"
           ? "Type three answers in WhatsApp but wait to send. At time's up, send together. Changing category starts a fresh default timer. Leaving this page or hiding the tab pauses the timer; reloading resets it."
           : "Timers pause when you leave the round or hide this tab. Reloading resets the timer.";
-    el("round-supplies").textContent = game.supplies;
-    el("round-rules").replaceChildren(...game.rules.map(rule => make("li", "", rule)));
+    el("round-supplies").textContent = `Grab: ${game.supplies}`;
     renderGamePlan(game);
     renderPrompt();
   }

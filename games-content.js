@@ -13,8 +13,13 @@ window.partyGames = [
     roundSize: 12, guessSeconds: 10, revealSeconds: 1,
     example: { text: "Yes Exit", answer: "No Entry", tip: "This is a practice example, not a clue in the game." },
     intro: "The competing teams guess together. The host judges answers and keeps points manually.",
-    supplies: "No props. The competing teams guess together; the host keeps points manually.",
-    rules: ["Guess the Bollywood movie from its playful opposite title.", "Choose a round and get the competing teams ready before pressing START.", "You have 10 seconds per movie. The answer appears for 1 second, then the next movie starts automatically.", "First team to give a correct answer earns a point. The host judges answers and keeps scores manually.", "Some clues are playful word swaps rather than strict opposites. Accept sensible alternatives at the host's discretion.", "The host can tap the tile to skip a movie, or use Reveal answer early. Pause whenever you need a break."],
+    supplies: "No props; a whiteboard for your scores.",
+    rules: [
+      "Say: 'Decode the opposite movie title. Bollywood knowledge, questionable logic!' Only the called players answer; no teammate hints.",
+      "Choose a round, then START. Each clue gets 10 seconds to guess + a 1-second answer reveal. The next clue starts automatically.",
+      "First correct team: one point. You judge and record it; accept sensible word-swap alternatives.",
+      "Tap the clue to skip, Reveal answer to check early, or Pause for a breather."
+    ],
     prompts: [
       { text: "Principal of the Day", answer: "Student of the Year" },
       { text: "Go to Sleep Sid", answer: "Wake Up Sid" },
@@ -86,13 +91,24 @@ window.partyGames = [
     intro: "One player from every team searches at the same time. Find or point out a safe object beginning with the displayed letter within ten seconds. First valid object earns one point; the host judges and scores manually.",
     lineGuide: "Use a different teammate for each letter, cycling through each team's queue. A full-screen NEXT! cue lasts one second, then the next ten-second search starts automatically. Pause for extra time to change players or settle a point.",
     supplies: "Objects already in the agreed party area.",
-    rules: ["One player from each team searches at the same time; everyone else stays out of the search and gives no hints.", "Press START for eight letters. Each letter gets ten seconds, followed by a one-second full-screen NEXT! cue. Letters advance automatically.", "Find or point out a safe object beginning with the displayed letter. Keep searching to the agreed party area: no private rooms, cupboards, dangerous objects, climbing or running.", "First valid object earns one point per letter. If nobody finds one before time is up, no point. The host judges and scores manually; the website cannot detect objects.", "Rotate to the next teammate at every NEXT!, cycling through each team's queue. Every team gets eight chances even when team sizes differ.", "Use Pause if you need more time to change players or settle a point. Choose the most points after eight letters as the winner; ties may share the win."],
+    rules: [
+      "Say: 'Find something starting with this letter. Pointing counts; parkour does not!' Only called players search; no teammate hints.",
+      "Press START: eight letters, 10 seconds each. At the 1-second NEXT!, switch players; the next letter starts automatically.",
+      "Award one point for the first valid object. Nothing by time-up = zero. You judge and keep score; most points wins, ties can share.",
+      "Stay in the agreed party area. No private rooms, cupboards, unsafe objects, climbing or running.",
+      "Pause whenever judging or changing players needs longer."
+    ],
     prompts: [..."ABCMPSTW"].map(letter => ({ text: `Find something starting with...\n${letter}` }))
   },
   {
     id: "hook-step", title: "Hook-Step Roulette", group: "teams", mode: "audio", seconds: 30,
     supplies: "A speaker and your own permitted audio clips.",
-    rules: ["Send one representative, or invite the whole team to dance.", "Add an audio clip below, then press play when everyone is ready.", "Perform the displayed challenge. Cheer loudly; the host awards a point.", "Use a different clip or challenge for each turn."],
+    rules: [
+      "Say: 'Talent optional. Commitment compulsory!' Show the dance challenge and get the dancers ready.",
+      "Add a clip you have permission to use, then press Play. Use the optional 30-second timer.",
+      "Let them perform, cheer loudly, and award a point yourself.",
+      "Next turn: change the challenge or clip and rotate dancers."
+    ],
     prompts: [
       { text: "Mickey-style clubhouse dance!\nMake it your funniest cartoon dance." },
       { text: "Do your favourite Bollywood hook step." },
@@ -105,7 +121,13 @@ window.partyGames = [
   {
     id: "dance-telephone", title: "Copy the Step", group: "teams", mode: "secret", seconds: 60,
     supplies: "Enough clear space for equal-length team lines. All actions and props are imaginary.",
-    rules: ["Use equal-length team lines; rotate extra players and roles between prompts. Everyone faces away until it is their turn to watch.", "Only the first performer in each team sees the same secret situation. Everyone else turns away from the screen. Hide the prompt before starting the timer.", "Start the 60-second default timer for the whole chain, including the final guess. Person one silently acts the situation once for person two, who copies what they saw once for person three, and so on.", "No talking, sound effects, spelling, real props or help from waiting players. Only the next person in the chain watches each performance.", "The last player guesses the situation privately to the host before time runs out. Keep all guesses private until every team has answered or time is up, so teams cannot copy.", "Reveal the original after guesses are locked. Each team earns one point for a correct situation; exact wording is not required. The host judges and records scores manually. Most points after the agreed rounds wins; ties may share the win.", "Use mime only: never light real fireworks, spill drinks, fall or collide with anyone. Run on the spot and adapt movements for comfort. Anyone may pass."],
+    rules: [
+      "Say: 'Pass the action, not an explanation!' Make equal-length lines. Show the SAME situation to each first actor only, then hide it.",
+      "Start 60 seconds for the whole chain AND final guess. Each actor performs once for the next player. Everyone else faces away.",
+      "No talking, sounds, spelling, real props or outside help. Last players give you their guesses privately before time-up.",
+      "Lock every team's guess before revealing. Award one point per correct team; exact wording is not needed. Record scores; most points after agreed rounds wins, ties can share.",
+      "Rotate roles and extras. Mime safely: no real fireworks, spills, falls or collisions; run on the spot. Adapt actions or pass."
+    ],
     prompts: [
       { text: "Killing a mosquito: spot it, chase it, and swat it." },
       { text: "Lighting an imaginary Diwali pataka and running away at Flash speed. Mime running on the spot!" },
@@ -145,8 +167,14 @@ window.partyGames = [
     example: { text: "What do you drink when you're thirsty?", answer: "An umbrella!", tip: "'Water' would be a fail. Any clearly wrong answer works. This practice question is not used in the rounds." },
     intro: "The front person gives a clearly wrong answer. A correct answer, silence, or repeating the question is a fail. The host judges, not the website. Move to the back after your turn.",
     lineGuide: "Alternate players from opposing teams; agree on the turn order in the room. Agree on an optional silly face, brief seated statue pose, or water/mocktail sip for a fail. Anyone may pass.",
-    supplies: "No props. An alternating-team line; one person answers at a time.",
-    rules: ["Arrange an alternating-team turn order in the room; the website does not track names.", "Only the person at the front answers. They must give a clearly wrong answer within five seconds.", "A correct answer, silence, or repeating the question is a fail. The host decides; the website cannot hear or judge answers.", "After five seconds, Next! appears for one second. Move to the back of the line during this changeover; the next question then starts automatically.", "The host can use Next person to advance early, or Pause if someone needs extra time to move or take a forfeit.", "There are three rounds of 22 questions. Rotate players and agree on each round's starting team. Take a break between rounds.", "Agree on an optional silly face, brief seated statue pose, or water/mocktail sip for a fail. Passing is always fine; no one has to drink.", "If you want points, the host records one for each successful wrong answer manually."],
+    supplies: "No props; make a queue for each team.",
+    rules: [
+      "Say: 'Be confidently incorrect!' Choose one of three 22-question rounds, then START. Only the called player answers.",
+      "A clearly wrong answer in 5 seconds = one point if scoring. Correct answer, silence or repeating the question = zero. You judge and record points.",
+      "At the 1-second NEXT!, go to the back of your team's queue. The next question starts automatically. Keep the team order across round breaks.",
+      "Use Next person to skip or Pause for extra time. Take a breather between rounds.",
+      "Optional fail challenge: silly face, seated statue pose or water/mocktail sip. Passing is fine; nobody has to drink."
+    ],
     prompts: [
       { text: "What do you eat your food with?" },
       { text: "What do you sleep on?" },
@@ -224,8 +252,14 @@ window.partyGames = [
     example: { text: "Dil Chahta Hai", answer: "Hai Chahta Dil", tip: "The teammate says 'Dil Chahta Hai' once. The player faces away from the screen and answers 'Hai Chahta Dil' from memory. Reverse words, not letters. This practice title is not used in either round." },
     intro: "One player faces away from the screen. A teammate faces the screen and reads the title aloud once, in its normal order. No repeats, hints, or help with reversing it. The player then says the whole title backwards from memory, keeping each word unchanged. The host judges and records points manually; the website does not listen or score.",
     lineGuide: "Rotate player-reader pairs from opposing teams; agree on the turn order in the room. During NEXT!, get the next player facing away and their teammate ready to read. Swap reader and answering roles so everyone gets to play. Any silly forfeit is optional; anyone may pass.",
-    supplies: "No props. One answering player facing away from the screen and one teammate reading it.",
-    rules: ["Choose an answering player and a reader from the same team. The answering player must face away from the screen before the title appears.", "The reader says the displayed title aloud once, in its normal order. No repeats, hints, or reversing it for the player.", "Press START to show the first title. It waits without a countdown while the teammate reads. When the reader finishes, the host presses Start 10s.", "The player has ten seconds to say the title with its words in reverse order, from memory. Do not reverse letters inside words or look at the screen.", "The host judges the answer and records one point for a correct reversal, or no point for a wrong answer or silence. Use Reveal answer to check the expected order after the player answers; it is never revealed automatically.", "After ten seconds, a full-screen NEXT! cue appears for two seconds. Get the next player-reader pair ready; the next title then appears and waits for the host to start its timer.", "Use Pause to stop an active countdown, Resume to continue, or Next person to skip a title. Reading time is untimed and is not included in the round's timed-play total.", "There are two rounds of eleven titles, each with at least three words and no repeated titles. Rotate answering and reading roles between turns. Any forfeit is optional; passing is always fine."],
+    supplies: "No props; one reader + one answering teammate per turn.",
+    rules: [
+      "Say: 'Reverse the words, not your brain!' Answerer faces AWAY before you press START. Reader says the title once in normal order; no repeats or hints.",
+      "Reading is untimed. When the reader finishes, press Start 10s. The answerer reverses the word order from memory; keep each word intact. No peeking!",
+      "Correct reversal = one point; wrong or silent = zero. You score. Reveal answer checks it after they answer; answers never reveal automatically.",
+      "At the 2-second NEXT!, switch pairs. Each new title waits for its reader and your Start 10s click. Swap reader/answerer roles.",
+      "Two rounds, 11 unique titles each. Pause/Resume controls the countdown; Next person skips. Reading is excluded from timed play. Any forfeit is optional; passing is fine."
+    ],
     prompts: [
       "Zindagi Na Milegi Dobara",
       "Mere Brother Ki Dulhan",
@@ -255,7 +289,12 @@ window.partyGames = [
   {
     id: "tunnel-vision", title: "Cone & Bottle Challenge", group: "teams", mode: "challenge", seconds: 45,
     supplies: "Paper viewing cones, blunt paper straws, wide-neck bottles or cups, and a table.",
-    rules: ["Adapt the floor-bottle idea into a stationary tabletop challenge.", "Hold a paper cone in front of your face without pressing it against your eye.", "Look through the narrow opening and place blunt paper straws into the container.", "Keep containers on a table and don't walk with restricted vision or use sharp sticks.", "First player to place all three straws wins a point."],
+    rules: [
+      "Say: 'Three straws. Tiny view. Huge confidence.' Keep the whole challenge on a table.",
+      "Hold the cone in front of your face, not against your eye. Look through it and place three blunt paper straws in the container.",
+      "Start the 45-second timer. First player/team to place all three earns one point.",
+      "Stay stationary. No walking with restricted vision and no sharp sticks."
+    ],
     prompts: [
       { text: "Three straws. One container. Tunnel vision!\nFirst to place all three wins." },
       { text: "Team relay: place three straws in total per team, swapping players after each straw." }
@@ -265,7 +304,13 @@ window.partyGames = [
     id: "drawing-telephone", title: "Draw Behind the Back", group: "teams", mode: "secret", seconds: 140, continuous: true,
     trialPrompt: "Mountains",
     supplies: "Paper and washable markers for everyone.",
-    rules: ["Teams form equal-length lines, each person looking at the back of the person in front. Use the smallest team's size and rotate extra players in between prompts.", "Every team's starting artist gets the same secret prompt. Everyone else, including waiting players, must avoid peeking or giving hints.", "With permission, draw gently on paper held against the next person's back, never directly on skin. Anyone may opt out of back contact.", "Each player recreates what they felt on the next person's paper. No talking or peeking; the front person guesses.", "Choose how many prompts to attempt and a whole-game duration, up to ten minutes. The suggested speed-round time is 90 seconds for eight prompts or 140 seconds for twelve. Increase it if the chains need longer.", "First correct team earns one point. The host records it and clicks Next drawing; all teams abandon the old drawing and start the new one. Only artists look when the host reveals the new prompt.", "One continuous clock covers all drawings, revealing prompts and switching roles. Next drawing does not reset it. The game ends when time runs out or the selected pack is finished.", "Try an untimed, unscored practice with 'Mountains' first: two large peaks. This trial prompt never appears in the game pack. Finish the trial to set up the actual game. Rotate drawing, copying and guessing roles after each prompt. The website never hears guesses or awards points."],
+    rules: [
+      "Say: 'Your back is the message board. Good luck, artists!' Make equal-length lines. Show the SAME secret drawing to starting artists only; no hints from waiting players.",
+      "With permission, draw gently on PAPER against the next person's back, never skin. They copy what they felt onto the next person's paper; the front player guesses. No talking or peeking. Back contact is optional.",
+      "For the scored game, choose the prompt count and total time (up to 10 minutes). Quick suggestions: 8 drawings / 90 seconds or 12 / 140. Add time for longer chains.",
+      "First correct team = one point. You record it, then click Next drawing. Everyone drops the old drawing; reveal the new one to artists only and rotate roles/extras.",
+      "One clock covers drawing, reveals and swaps; Next drawing NEVER resets it. Stop at time-up or pack completion. The site does not judge guesses or award points."
+    ],
     prompts: [
       { text: "A house with a chimney and one window" },
       { text: "A birthday cake with three candles" },
@@ -284,7 +329,12 @@ window.partyGames = [
   {
     id: "balloon-cups", title: "Balloon Cup Relay", group: "teams", mode: "challenge", seconds: 60,
     supplies: "Five lightweight cups per team, individual balloons, and a clear table.",
-    rules: ["Arrange one clearly marked, identical lane per competing team.", "Use your own balloon: put its opening into an upright cup and inflate it enough to grip the cup inside.", "Lift and move the cup using the balloon, without holding the cup with your hands.", "Deflate to release it at the finish. Repeat for all five cups.", "First team to move all five wins. Do not share balloons; a hand pump is an alternative."],
+    rules: [
+      "Say: 'Balloon forklifts ready? Hands off the cups!' Give every team an identical, clearly marked lane.",
+      "Put your own balloon's opening inside an upright cup. Inflate until it grips, lift with the balloon, then deflate to release at the finish.",
+      "Start 60 seconds. First team to move all five cups wins; hands must not hold the cups.",
+      "Never share balloons. A hand pump is fine."
+    ],
     prompts: [
       { text: "Move all five cups to the finish line.\nNo hands on the cups!" },
       { text: "Relay edition: move five cups in total per team, swapping players after each cup." }
@@ -293,7 +343,12 @@ window.partyGames = [
   {
     id: "balloon-knockdown", title: "Balloon Cup Knockdown", group: "teams", mode: "challenge", seconds: 45,
     supplies: "Lightweight cups, individual balloons, a table, and a clear landing area.",
-    rules: ["Line up five cups on each team's side of the table.", "Inflate your own balloon, then aim the escaping air at the cups.", "Move the cups across the finish line or off the far edge, without touching them.", "Keep people and breakable items out of the landing area.", "First team to clear all five cups wins a point."],
+    rules: [
+      "Say: 'Big puff, tiny hurricane!' Line up identical cup sets for every team.",
+      "Inflate your own balloon. Aim escaping air at the cups; no touching them. Start the 45-second timer.",
+      "First to clear all five off the far edge earns one point. Accuracy prompt: race three cups across the taped finish line instead.",
+      "Keep people and breakables out of the landing area."
+    ],
     prompts: [
       { text: "Use balloon air to knock down all five cups!" },
       { text: "Accuracy round: move three cups across a taped finish line." }
@@ -302,7 +357,11 @@ window.partyGames = [
   {
     id: "dice-tower", title: "Chop & Die Towers", group: "teams", mode: "challenge", seconds: 45,
     supplies: "Chopsticks or tongs, equal sets of large dice, and a stable table.",
-    rules: ["Lift and stack dice using chopsticks or tongs; hands cannot touch the dice.", "Everyone gets the same number of dice and the same time.", "The tallest tower still standing when time ends wins.", "Swap players for the next round."],
+    rules: [
+      "Say: 'Build a skyline. Try not to sneeze.' Use chopsticks or tongs only; hands off the dice.",
+      "Give everyone equal dice and time. Start 45 seconds; tallest tower still standing at time-up wins.",
+      "For the five-dice prompt, race to stack five instead. Swap players next round."
+    ],
     prompts: [
       { text: "Build the tallest standing dice tower in 45 seconds." },
       { text: "First to stack five dice wins!" }
@@ -311,7 +370,12 @@ window.partyGames = [
   {
     id: "in-out", title: "In-N-Out Circle", group: "group", mode: "challenge", seconds: 60,
     supplies: "A roomy circle marked with tape or soft markers, not trip hazards.",
-    rules: ["One caller stands outside the circle and looks away.", "The caller says IN or OUT; everyone moves to the correct side of the line.", "A mistake means sitting out that round. Make the circle smaller only if there is still safe space.", "Use steps rather than jumps; a seated version uses hands in or out instead.", "Last player remaining wins. The timer is optional."],
+    rules: [
+      "Say: 'Follow the word, not the crowd!' Caller stands outside the marked circle and looks away.",
+      "Call IN or OUT, including repeats. Players step to the correct side. A mistake means sitting out this round.",
+      "Last player standing wins. Timer optional; shrink the circle only while there is safe space.",
+      "Step, don't jump. Seated players can move their hands in/out instead; keep markers trip-free."
+    ],
     prompts: [
       { text: "Caller says IN or OUT.\nListen carefully: repeated commands count!" },
       { text: "Practice round: IN, IN, OUT, IN, OUT, OUT!" }
@@ -321,7 +385,13 @@ window.partyGames = [
     id: "scattergories", title: "Scattergories Sprint", group: "group", mode: "challenge", seconds: 60,
     supplies: "Each player's phone, your existing WhatsApp group, and the shared screen.",
     timeUpMessage: "Time's up! Send your three answers to the WhatsApp group now. The host checks answers and scores.",
-    rules: ["Choose Random category or Next category. There is no starting-letter restriction: name three things matching the displayed category.", "Everyone plays individually. Start the timer, then type three different answers in one WhatsApp message. The default typing time is 60 seconds.", "Do not send early, discuss answers, or copy another player's answers. Keep the message unsent until the timer ends.", "When SEND TO WHATSAPP appears, everyone sends their prepared message. The host calls the cutoff; no editing or adding answers afterward.", "Each valid answer that no other player submitted earns one point, up to three points. Matching answers between players cancel out; a repeated answer in your own message counts only once.", "The host judges answers and records scores manually. The website does not access WhatsApp, read messages, send messages or score answers."],
+    rules: [
+      "Say: 'Be original. Your bestie's answer could cancel yours!' Choose Random category or Next category. Name three things; no starting-letter rule.",
+      "Start 60 seconds. Each person types three different answers in ONE WhatsApp message. Keep it UNSENT; no discussing or copying.",
+      "At SEND TO WHATSAPP, tell everyone to send together. Call the cutoff: no late additions or edits.",
+      "Award one point per valid answer nobody else sent, max three. Matches across players cancel; repeats in your own message count once.",
+      "You check messages and keep individual scores. The site cannot read, send or score WhatsApp messages."
+    ],
     prompts: [
       { text: "Name three Taylor Swift songs." },
       { text: "Name three football (soccer) clubs." },
@@ -358,7 +428,12 @@ window.partyGames = [
   {
     id: "count-together", title: "Count & Squat", group: "group", mode: "challenge", seconds: 60,
     supplies: "A circle and enough space. Sitting or raising a hand works too.",
-    rules: ["Count upward together, but only one person may say each number.", "Whoever says a number squats, sits, or raises a hand for the rest of that attempt.", "No planning, signals, fixed order, or two people speaking together.", "If two people speak at once, reset to one and try again.", "Try to get everyone counted. The timer is optional."],
+    rules: [
+      "Say: 'Count together. Absolutely no organising the chaos!' Start at ONE; a different person says each number.",
+      "After speaking, squat, sit or raise a hand for the rest of that attempt.",
+      "No plans, signals or fixed order. Two voices at once? Everyone resets to ONE.",
+      "Get everyone counted to win together. Timer optional."
+    ],
     prompts: [
       { text: "Start at ONE.\nOne voice, one number, one person at a time." },
       { text: "No planning or signals!\nCan everyone finish this time?" }
@@ -367,7 +442,12 @@ window.partyGames = [
   {
     id: "camera-catch", title: "Moon Ball Camera Catch", group: "group", mode: "challenge", seconds: 45,
     supplies: "A soft ball and, only with everyone's consent, a phone camera.",
-    rules: ["Seat the camera player in the middle; they stay stationary. Looking away can replace a blindfold.", "The surrounding players gently pass or bounce a soft ball without appearing in the phone's view.", "No throwing toward the seated player, collisions, or moving while blindfolded.", "After the round, review the recording together to see who was caught.", "The website does not access or record your camera. Agree on recording first and delete clips unless everyone wants to keep them."],
+    rules: [
+      "Say: 'Pass the ball. Dodge your documentary debut!' Get everyone's recording consent; the site never uses your camera.",
+      "Seat the camera player in the middle, stationary. Looking away can replace a blindfold.",
+      "Start 45 seconds. Others gently pass or bounce the soft ball, trying to stay out of the phone's view.",
+      "No throws toward the seated player, collisions or moving blindfolded. Watch the clip together; delete it unless everyone wants to keep it."
+    ],
     prompts: [
       { text: "Pass the soft ball around the circle.\nCan you escape the camera?" },
       { text: "Gentle-bounce round: keep the middle player stationary." }
@@ -376,7 +456,12 @@ window.partyGames = [
   {
     id: "reverse-charades", title: "Reverse Charades", group: "teams", mode: "secret", seconds: 45,
     supplies: "No props. One guesser per team.",
-    rules: ["Choose one guesser and the same number of actors from each team; rotate extra players in between prompts. The guesser turns away while the actors see the secret prompt.", "Hide the prompt before the guesser looks back.", "The selected actors perform together without words or spelling letters.", "One point if the guesser gets it before the timer ends."],
+    rules: [
+      "Say: 'One guesses. The rest become a very chaotic theatre company!' Pick one guesser and equal actor counts per team.",
+      "Guessers look away. Show actors the secret scene, then HIDE it before guessers turn back.",
+      "Start 45 seconds. Actors mime together; no words, singing or spelling letters.",
+      "Correct before time-up = one point. You score; rotate roles and extras next scene."
+    ],
     prompts: [
       { text: "An orchestra discovering that nobody is following the conductor" },
       { text: "Passengers trying to keep their balance on a very bumpy bus ride" },
@@ -417,7 +502,13 @@ window.partyGames = [
     intro: "One player at a time says five different valid answers aloud in ten seconds. All five earn one point; fewer than five earn zero. No teammate help. The host judges and scores manually.",
     lineGuide: "Alternate teams, sending the next player from each team's queue. After ten seconds, a full-screen NEXT! cue lasts one second, then a fresh prompt starts automatically. Pause if changing players or judging needs longer.",
     supplies: "No props.",
-    rules: ["Use alternating team turns, with one player speaking at a time. Cycle through each team's players rather than letting larger teams take more turns.", "Press START for 30 prompts. One player names five different answers aloud in ten seconds. No repeated answers or help from teammates.", "All five valid answers earn one point; fewer than five earn zero. The host judges and records scores manually.", "After each ten-second turn, a full-screen NEXT! cue lasts one second. The next player takes over and a fresh prompt starts automatically. Pause if judging or changing players needs longer.", "The host judges answers manually. Ash confirms personal facts and favourites; there is no built-in answer key. Favourites can be named in any order. For imagined reactions or plans, accept plausible, good-natured answers rather than treating them as facts.", "Give every team the same number of scored turns. If 30 does not divide evenly by the number of teams, treat the leftover prompts as unscored bonuses. Most points wins; ties may share the win."],
+    rules: [
+      "Say: 'Five answers. Ten seconds. Suddenly every word has vanished!' Alternate teams; only the called player speaks.",
+      "Press START for 30 prompts. Name five DIFFERENT valid answers aloud in 10 seconds; no repeats or teammate help.",
+      "All five = one point; fewer = zero. You judge and score. At the 1-second NEXT!, switch players; the next prompt starts automatically. Pause if needed.",
+      "Ask Ash to confirm personal facts/favourites; any order is fine. For imaginary reactions or plans, accept plausible, kind answers. There is no built-in answer key.",
+      "Give teams equal scored turns; leftover prompts are unscored bonuses. Most points wins, ties can share."
+    ],
     prompts: [
       { text: "Name five things Ash says." },
       { text: "Name five Bollywood villains." },
@@ -453,9 +544,14 @@ window.partyGames = [
   },
   {
     id: "hand-map", title: "Hand & Fist Map", group: "group", mode: "quiz", seconds: 60,
-    supplies: "No props. Use your own hands; a table is optional. The timer is optional.",
+    supplies: "Your own hands; a table is optional.",
     handMap: [["palm", "circle"], ["circle", "circle"], ["circle", "palm"], ["palm", "palm"]],
-    rules: ["Everyone plays together. Follow the four rows from top to bottom, using your own left and right hands.", "Round 1: a handprint means an open palm; a circle means a closed fist.", "Round 2, Opposite Hands: a handprint means a fist; a circle means an open palm. The displayed map stays the same.", "Keep left and right as labelled on the screen. Hold your hands up or place them gently on your own tabletop; do not touch the TV.", "Use Next prompt to switch rounds and Reveal answer to check the sequence. Play self-paced, or use the optional one-minute timer.", "The host judges mistakes. A silly pose or sitting out an attempt is optional; anyone may pass."],
+    rules: [
+      "Say: 'Your hands have one job. Let's see how that goes.' Follow the four rows top to bottom, using left/right as labelled.",
+      "Round 1: handprint = open palm; circle = fist. Round 2: swap the meanings, not the map.",
+      "Next prompt changes rounds; Reveal answer checks the sequence. Play at your pace or start the optional 60-second timer.",
+      "Hold hands up or rest them on your own table, not the TV. You judge mistakes; a silly pose or sitting out is optional. Anyone may pass."
+    ],
     prompts: [
       { text: "Round 1: Match the map\nHandprint = open palm. Circle = closed fist.", answer: "Left / Right\nPalm / Fist\nFist / Fist\nFist / Palm\nPalm / Palm" },
       { text: "Round 2: Opposite Hands\nHandprint = closed fist. Circle = open palm.", answer: "Left / Right\nFist / Palm\nPalm / Palm\nPalm / Fist\nFist / Fist" }
