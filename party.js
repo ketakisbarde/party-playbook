@@ -150,20 +150,22 @@
 
   function gameFlow(game, plan) {
     const order = plan.sizes.map((_, index) => teamLabel(index)).join(" -> ");
-    const needsPartners = ["movie-backwards", "drawing-telephone", "dance-telephone", "reverse-charades"].includes(game.id);
+    const needsPartners = ["movie-backwards", "drawing-telephone", "dance-telephone", "reverse-charades", "alphabet"].includes(game.id);
     if (needsPartners && plan.chainSize < 2) {
       return ["Each team needs at least two players. Add players (four total minimum), or choose an individual/whole-group game."];
     }
     if (game.id === "bollywood") {
       return [`Lineup: one player each from ${order.replaceAll(" -> ", ", ")}. Start with Player 1; call the next teammate each round. Smaller teams loop back sooner. Equal turns, equal glory.`];
     }
-    if (game.id === "wrong-answers" || game.id === "movie-backwards" || game.id === "five-things") {
+    if (["wrong-answers", "movie-backwards", "five-things", "hook-step"].includes(game.id)) {
       const fullCycles = Math.floor(game.prompts.length / plan.teamCount);
       const bonus = game.prompts.length % plan.teamCount;
       const starters = Array.from({ length: Math.ceil(game.prompts.length / game.roundSize) }, (_, round) =>
         `Round ${round + 1}: start with ${teamLabel(round * game.roundSize % plan.teamCount)}`);
       return [
-        `Turn order: ${order}, then repeat. Each team sends its next player; smaller teams loop back sooner.`,
+        game.id === "hook-step"
+          ? `Turn order: ${order}, then repeat. Send the next solo dancer, or the whole called team when marked WHOLE TEAM. Whole-team dances do not advance the solo queue.`
+          : `Turn order: ${order}, then repeat. Each team sends its next player; smaller teams loop back sooner.`,
         `${starters.join("; ")}. Continue the team order across rounds.`,
         bonus
           ? `For equal turns: score the first ${fullCycles * plan.teamCount} prompts (${fullCycles} per team). Final ${bonus} prompt${bonus === 1 ? "" : "s"}: unscored bonus. Record points yourself.`
@@ -183,9 +185,7 @@
       case "reverse-charades":
         return [`Each team: one guesser + ${plan.chainSize - 1} actor${plan.chainSize === 2 ? "" : "s"}. Same actor count for everyone; rotate extras each turn.`];
       case "alphabet":
-        return ["Call one player per team together. Cycle each team's queue at NEXT!: eight chances per team, whatever its size."];
-      case "hook-step":
-        return ["Call one dancer per team, or invite whole teams. Use the same clip for competing teams; rotate dancers next turn."];
+        return [`Every team sends two searchers together. Cycle pairs through each team's queue; teams of two keep the same pair. All ${game.prompts.length} hunts are shared, so every team has equal chances.`];
       case "tunnel-vision":
         return [`Set ${plan.teamCount} matching stations: three straws + one container each. Call one player per team; rotate after each race. Relay: switch after each straw, three total per team.`];
       case "balloon-cups":
@@ -289,8 +289,8 @@
     if (rapid) {
       const game = byId.get(state.selectedId);
       const reading = rapid.phase === "reading" && !rapid.complete;
-      const phaseLabel = rapid.phase === "transition" ? "Next player"
-        : game.revealSeconds === 0 ? "Your turn" : rapid.phase === "guess" ? "Guess" : "Answer";
+      const phaseLabel = rapid.phase === "transition" ? game.id === "hook-step" ? "Next team" : "Next player"
+        : game.id === "hook-step" ? "Dance" : game.id === "alphabet" ? "Search" : game.revealSeconds === 0 ? "Your turn" : rapid.phase === "guess" ? "Guess" : "Answer";
       el("start-timer").textContent = running ? "Pause" : rapid.complete ? "Replay round" : reading ? `Start ${game.guessSeconds}s` : "Resume";
       el("rapid-step-clock").textContent = rapid.complete ? "Round complete"
         : reading ? `Read aloud first, then press Start ${game.guessSeconds}s`
@@ -308,14 +308,18 @@
     for (const id of ["drawing-trial", "party-try-drawing"]) {
       el(id).disabled = Boolean(drawing && drawing.started && !drawing.complete);
     }
-    el("timer-seconds").disabled = running || Boolean(drawing && drawing.started && !drawing.complete);
+    el("timer-seconds").disabled = running || Boolean(rapid) || Boolean(drawing && drawing.started && !drawing.complete);
     const showChangeover = Boolean(rapid && running && !rapid.complete && rapid.phase === "transition" && location.hash === "#party-round");
     el("turn-changeover").hidden = !showChangeover;
+    el("turn-changeover-instruction").textContent = state.selectedId === "hook-step"
+      ? "Next team, get your dancer or whole team ready"
+      : state.selectedId === "alphabet" ? "Next pair from every team, step forward" : "Next player, step forward";
     el("turn-changeover-countdown").textContent = showChangeover ? `${Math.ceil(rapid.phaseRemaining)}s` : "";
     el("round-send-cue").hidden = state.selectedId !== "scattergories" || seconds !== 0;
   }
 
   function pauseTimer() {
+    if (state?.selectedId === "hook-step") audio.pause();
     if (running) {
       const now = performance.now();
       remaining = Math.max(0, (deadline - now) / 1000);
@@ -339,7 +343,7 @@
     const value = Number(input.value);
     if (!input.checkValidity() || !Number.isInteger(value)) {
       input.reportValidity();
-      partyError("Choose a whole-number round length between 1 and 600 seconds.");
+      partyError(`Choose a whole-number round length between 1 and ${input.max} seconds.`);
       return null;
     }
     return value;
@@ -419,6 +423,7 @@
   }
 
   function showRapidStage() {
+    el("hunt-seconds").disabled = rapid.started && !rapid.complete;
     el("rapid-intro").hidden = rapid.started;
     el("round-prompt-card").hidden = !rapid.started;
     el("round-prompt-controls").hidden = !rapid.started;
@@ -435,6 +440,8 @@
     state.promptIndex = round * game.roundSize;
     promptRevealed = false;
     setTimer(rapidCount() * rapidStepSeconds(game));
+    el("timer-seconds").max = game.seconds;
+    if (game.id === "alphabet") el("hunt-seconds").value = game.guessSeconds;
     const options = el("rapid-round-options");
     options.replaceChildren();
     for (let index = 0; index < Math.ceil(game.prompts.length / game.roundSize); index += 1) {
@@ -448,7 +455,7 @@
     let timing = game.revealSeconds === 0
       ? game.readAloud
         ? `untimed teammate read-out / host starts each ${game.guessSeconds}s answer timer`
-        : `${game.guessSeconds}s per person / automatic next ${unit}`
+        : `${game.guessSeconds}s per ${game.id === "hook-step" ? "team turn" : game.id === "alphabet" ? "pair" : "person"} / automatic next ${unit}`
       : `${game.guessSeconds}s guessing + ${game.revealSeconds}s answer reveal`;
     if (game.transitionSeconds) timing += ` / ${game.transitionSeconds}s NEXT! changeover`;
     el("rapid-round-summary").textContent = `${rapidRoundLabel(round)}: ${count} ${unit}${count === 1 ? "" : "s"} / ${remaining} ${game.readAloud ? "timed seconds + reading time" : "seconds"} / ${timing}`;
@@ -459,6 +466,7 @@
         ? `${game.prompts.length - suggested} supplied clues + ${suggested} editable starter suggestions. No repeated answers across these rounds.`
         : `All ${game.prompts.length} clues supplied by you. No repeated answers across these rounds.`;
     showRapidStage();
+    if (game.id === "hook-step") renderAudio();
     updatePromptView();
     saveState();
   }
@@ -470,7 +478,30 @@
     el("rapid-round-options").scrollIntoView({ block: "center", behavior: "instant" });
   }
 
+  function huntTeamsReady() {
+    const plan = partyPlan();
+    if (plan && plan.chainSize >= 2) return true;
+    partyError("Object Hunt needs two players per team. Enter at least four players in Party setup before starting.");
+    return false;
+  }
+
+  function configureHuntDuration() {
+    const input = el("hunt-seconds");
+    const seconds = Number(input.value);
+    if (!input.checkValidity() || !Number.isInteger(seconds)) {
+      input.reportValidity();
+      partyError("Choose a whole-number hunt length between 1 and 600 seconds. The previous hunt length was kept.");
+      return false;
+    }
+    const game = byId.get("alphabet");
+    game.guessSeconds = seconds;
+    game.seconds = game.roundSize * rapidStepSeconds(game);
+    el("timer-seconds").max = game.seconds;
+    return true;
+  }
+
   function beginRapidRound() {
+    if (state.selectedId === "alphabet" && (!huntTeamsReady() || !configureHuntDuration())) return;
     clearPartyError();
     pauseTimer();
     const game = byId.get(state.selectedId);
@@ -482,6 +513,7 @@
     promptRevealed = false;
     setTimer(rapidCount() * rapidStepSeconds(game));
     showRapidStage();
+    if (game.id === "hook-step") renderAudio();
     saveState();
     if (game.readAloud) {
       waitForReader();
@@ -501,6 +533,7 @@
   }
 
   function finishRapidRound() {
+    if (state.selectedId === "hook-step") audio.pause();
     clearInterval(timerInterval);
     running = false;
     remaining = 0;
@@ -512,7 +545,9 @@
     el("rapid-next-round").disabled = rapid.round + 1 >= Math.ceil(byId.get(state.selectedId).prompts.length / byId.get(state.selectedId).roundSize);
     el("rapid-next-round").textContent = !el("rapid-next-round").disabled && rapidRoundLabel(rapid.round + 1) === "Bonus round"
       ? "Play bonus round" : "Next round";
-    el("round-status").textContent = byId.get(state.selectedId).revealSeconds === 0
+    el("round-status").textContent = state.selectedId === "hook-step"
+      ? "Dance round finished! Cheer for everyone and record your team points."
+      : byId.get(state.selectedId).revealSeconds === 0
       ? byId.get(state.selectedId).readAloud
         ? "Round finished. Record team points and get the next player-reader pair ready."
         : "Round finished. Take a breather and get the line ready before starting another round."
@@ -537,6 +572,7 @@
       remaining = (rapid.round * game.roundSize + rapidCount() - state.promptIndex) * rapidStepSeconds(game);
       waitForReader();
     }
+    if (game.id === "hook-step") renderAudio();
     updatePromptView();
     saveState();
   }
@@ -555,6 +591,7 @@
         promptRevealed = true;
         updatePromptView();
       } else if (rapid.phase !== "transition" && game.transitionSeconds) {
+        if (game.id === "hook-step") audio.pause();
         rapid.phase = "transition";
         rapid.phaseRemaining = game.transitionSeconds;
         promptRevealed = false;
@@ -566,6 +603,7 @@
   }
 
   function runTimer() {
+    if (state.selectedId === "alphabet" && !huntTeamsReady()) return;
     if (rapid && rapid.phase === "reading") {
       rapid.phase = "guess";
       rapid.phaseRemaining = byId.get(state.selectedId).guessSeconds;
@@ -577,9 +615,11 @@
     running = true;
     el("round-status").textContent = rapid
       ? state.selectedId === "alphabet"
-        ? "Go! One player per team searches together. First valid object earns a point; rotate teammates at NEXT!."
+        ? `Go! Two players per team search together for ${byId.get(state.selectedId).guessSeconds} seconds. First valid team earns a point; every team changes pairs at NEXT!.`
         : state.selectedId === "five-things"
           ? "Go! Only the called player speaks: five different valid answers in ten seconds earns one point. Rotate at NEXT!; the host judges."
+          : state.selectedId === "hook-step"
+            ? "Go! The called dancer or whole team gets 20 seconds. Switch teams at NEXT!; the host awards points for commitment."
           : byId.get(state.selectedId).revealSeconds === 0
         ? byId.get(state.selectedId).readAloud
           ? "Go! Player: keep facing away and say the title backwards from memory. Reader: no hints or repeats. The host judges."
@@ -611,6 +651,24 @@
     const secret = game.mode === "secret";
     const changeover = Boolean(rapid && rapid.phase === "transition" && !rapid.complete);
     const reading = Boolean(rapid && rapid.phase === "reading" && !rapid.complete);
+    const danceTurn = el("rapid-player-turn");
+    danceTurn.hidden = !["hook-step", "alphabet"].includes(game.id) || !rapid?.started || rapid.complete || changeover;
+    if (game.id === "hook-step") {
+      const plan = partyPlan();
+      const team = plan ? state.promptIndex % plan.teamCount : null;
+      const soloTurns = plan ? prompts.slice(0, state.promptIndex)
+        .filter((previous, index) => index % plan.teamCount === team && !previous.wholeTeam).length : 0;
+      danceTurn.textContent = plan
+        ? `${teamLabel(team)} - ${prompt.wholeTeam
+          ? `WHOLE TEAM (${plan.sizes[team]} dancer${plan.sizes[team] === 1 ? "" : "s"})`
+          : `ONE DANCER (Player ${soloTurns % plan.sizes[team] + 1})`}`
+        : `${prompt.wholeTeam ? "WHOLE TEAM" : "ONE DANCER"} from the called team`;
+    } else if (game.id === "alphabet") {
+      const plan = partyPlan();
+      danceTurn.textContent = plan ? plan.sizes.map((size, team) =>
+        `${teamLabel(team)}: Players ${state.promptIndex * 2 % size + 1} + ${(state.promptIndex * 2 + 1) % size + 1}`).join(" / ")
+        : "TWO SEARCHERS FROM EACH TEAM";
+    }
     el("hand-map-board").hidden = game.handMap === undefined;
     el("round-prompt-card").classList.toggle("hand-map-active", game.handMap !== undefined);
     el("hand-map-rows").replaceChildren();
@@ -654,7 +712,7 @@
     el("next-prompt").disabled = state.promptIndex >= prompts.length - 1;
     el("shuffle-prompt").disabled = prompts.length < 2;
     if (rapid) {
-        el("prompt-count").textContent = `${rapidRoundLabel(rapid.round)} / ${game.id === "alphabet" ? "Letter" : game.revealSeconds === 0 ? "Turn" : "Clue"} ${state.promptIndex - rapid.round * game.roundSize + 1} of ${rapidCount()}`;
+        el("prompt-count").textContent = `${rapidRoundLabel(rapid.round)} / ${game.id === "alphabet" ? "Hunt" : game.revealSeconds === 0 ? "Turn" : "Clue"} ${state.promptIndex - rapid.round * game.roundSize + 1} of ${rapidCount()}`;
       el("previous-prompt").disabled = true;
       el("shuffle-prompt").disabled = true;
       el("next-prompt").disabled = !running && !reading;
@@ -682,7 +740,7 @@
   function renderAudio() {
     audio.pause();
     const game = byId.get(state.selectedId);
-    el("audio-panel").hidden = game.mode !== "audio";
+    el("audio-panel").hidden = game.mode !== "audio" && game.id !== "hook-step";
     const prompt = game.prompts[state.promptIndex];
     const slot = audioSlots.get(audioKey());
     const source = slot ? slot.url : prompt.audio;
@@ -727,13 +785,15 @@
     el("party-round-title").textContent = game ? game.title : "Choose a game";
     if (!game) return;
     const isRapid = game.mode === "rapid";
+    el("hunt-timing-settings").hidden = game.id !== "alphabet";
+    el("timer-seconds").max = isRapid ? game.seconds : 600;
     el("drawing-game-settings").hidden = !game.continuous;
     el("rapid-intro").classList.toggle("turn-game", isRapid && game.revealSeconds === 0);
     if (isRapid) {
       el("rapid-example-clue").textContent = game.example.text;
       el("rapid-example-answer").textContent = game.example.answer;
       el("rapid-example-tip").textContent = game.example.tip;
-      el("rapid-skip-tile").setAttribute("aria-label", game.id === "alphabet" ? "Skip to the next letter" : game.revealSeconds === 0
+      el("rapid-skip-tile").setAttribute("aria-label", game.id === "hook-step" ? "Skip this dance and call the next team" : game.id === "alphabet" ? "Skip to the next hunt and change pairs" : game.revealSeconds === 0
         ? "Move to the next person's prompt" : "Skip this movie and show the next prompt");
     }
     el("rapid-intro").hidden = !isRapid;
@@ -751,7 +811,7 @@
     el("timer-duration-label").hidden = isRapid;
     el("timer-seconds").hidden = isRapid;
     el("rapid-timed-play-note").hidden = !isRapid || !game.readAloud;
-    el("next-prompt").textContent = isRapid ? game.id === "alphabet" ? "Next letter" : game.revealSeconds === 0 ? "Next person" : "Skip movie" : game.id === "scattergories" ? "Next category" : "Next prompt";
+    el("next-prompt").textContent = isRapid ? game.id === "hook-step" ? "Next team" : game.id === "alphabet" ? "Next hunt" : game.revealSeconds === 0 ? "Next person" : "Skip movie" : game.id === "scattergories" ? "Next category" : "Next prompt";
     el("previous-prompt").textContent = game.id === "scattergories" ? "Previous category" : "Previous";
     el("shuffle-prompt").textContent = game.id === "scattergories" ? "Random category" : "Random prompt";
     el("reset-timer").textContent = isRapid ? "Restart round" : game.continuous ? "Reset game" : "Reset timer";
@@ -783,6 +843,7 @@
 
   function spinWheel() {
     clearPartyError();
+    void playCelebrationSound("party");
     const pool = state.enabled.length > 1 ? state.enabled.filter(id => id !== state.selectedId) : state.enabled;
     const id = pool[Math.floor(Math.random() * pool.length)];
     const index = state.enabled.indexOf(id);
@@ -800,6 +861,7 @@
       renderRound();
       renderWheel();
       el("wheel-result").textContent = `The wheel picked: ${byId.get(id).title}!`;
+      void playCelebrationSound("party");
     }, matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 1800);
   }
 
@@ -808,7 +870,7 @@
     const valid = Array.isArray(games) && games.length > 0 && games.every(game =>
       game && typeof game.id === "string" && /^[a-z][a-z0-9-]*$/.test(game.id) &&
       typeof game.title === "string" && game.title.trim() && ["teams", "group"].includes(game.group) &&
-      modes.has(game.mode) && Number.isInteger(game.seconds) && game.seconds >= 1 && game.seconds <= 600 &&
+      modes.has(game.mode) && Number.isInteger(game.seconds) && game.seconds >= 1 && (game.mode === "rapid" || game.seconds <= 600) &&
       typeof game.supplies === "string" && Array.isArray(game.rules) && game.rules.length &&
       game.rules.every(rule => typeof rule === "string" && rule.trim()) && Array.isArray(game.prompts) &&
       game.prompts.length > 0 &&
@@ -838,13 +900,14 @@
         (!(game.mode === "quiz" || game.mode === "rapid" && game.revealSeconds > 0) || prompt.answer !== undefined) &&
         (prompt.answer === undefined || typeof prompt.answer === "string" && prompt.answer.trim()) &&
         (prompt.suggested === undefined || typeof prompt.suggested === "boolean") &&
+        (game.id !== "hook-step" || typeof prompt.wholeTeam === "boolean") &&
         (prompt.audio === undefined || typeof prompt.audio === "string" && prompt.audio.trim()))
     ) && new Set(games.map(game => game.id)).size === games.length;
     if (!valid) {
       partyError("Party game content is invalid. Check unique IDs, rules, prompts and round lengths in games-content.js.");
       return;
     }
-    games.forEach(game => byId.set(game.id, game.id === "five-things"
+    games.forEach(game => byId.set(game.id, ["five-things", "hook-step", "alphabet"].includes(game.id)
       ? { ...game, prompts: shuffleItems(game.prompts) }
       : game));
     state = loadState();
@@ -907,6 +970,16 @@
     el("spin-wheel").addEventListener("click", spinWheel);
     el("play-wheel-game").addEventListener("click", () => selectGame(state.selectedId));
     el("start-rapid-round").addEventListener("click", beginRapidRound);
+    el("hunt-seconds").addEventListener("change", () => {
+      if (el("hunt-seconds").disabled) {
+        partyError("Choose the Object Hunt round again before changing its timer.");
+        return;
+      }
+      if (configureHuntDuration()) {
+        clearPartyError();
+        prepareRapidRound(rapid.round);
+      }
+    });
     el("rapid-answer-start").addEventListener("click", runTimer);
     el("rapid-next-round").addEventListener("click", () => chooseRapidRound(rapid.round + 1));
     for (const id of ["rapid-choose-round", "rapid-round-menu"]) {

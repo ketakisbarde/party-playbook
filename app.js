@@ -29,7 +29,7 @@ function showPage(id, moveFocus = true) {
   clearError();
   pages.forEach(page => { page.hidden = page.id !== id; });
   document.body.classList.toggle("birthday-chapter", document.getElementById(id).hasAttribute("data-fit-screen"));
-  document.getElementById("celebration-sound").hidden = id !== "cake";
+  document.getElementById("celebration-sound").hidden = !["cake", "party"].includes(id);
   if (id === "messages") setNoteRevealed(false);
   const chapter = ["messages", "ours", "physical"].includes(id) ? "gifts" : id === "party-round" ? "party" : id;
   document.querySelectorAll("[data-chapter]").forEach(link => {
@@ -121,11 +121,11 @@ function celebrate() {
   confettiTimer = setTimeout(() => container.replaceChildren(), 7600);
 }
 
-async function playCelebrationSound() {
+async function playCelebrationSound(originPage = "cake") {
   if (!celebrationSoundEnabled) return;
   const AudioContext = window.AudioContext || window.webkitAudioContext;
   if (!AudioContext) {
-    reportError("Birthday sound isn't supported in this browser. You can still enjoy the celebration without sound.");
+    reportError("Celebration sound isn't supported in this browser. You can still enjoy the celebration without sound.");
     return;
   }
   try {
@@ -135,9 +135,9 @@ async function playCelebrationSound() {
       celebrationVolume.connect(celebrationAudio.destination);
     }
     if (celebrationAudio.state !== "running") await celebrationAudio.resume();
-    if (!celebrationSoundEnabled || document.getElementById("cake").hidden) return;
+    if (!celebrationSoundEnabled || document.getElementById(originPage).hidden) return;
     if (celebrationAudio.state !== "running") {
-      reportError("The browser couldn't start the birthday sound. Try enabling sound in the browser or celebrate with sound off.");
+      reportError("The browser couldn't start the celebration sound. Try enabling sound in the browser or celebrate with sound off.");
       return;
     }
     const start = celebrationAudio.currentTime;
@@ -167,7 +167,7 @@ async function playCelebrationSound() {
       oscillator.stop(noteEnd);
     });
   } catch (error) {
-    reportError(`Couldn't play the birthday sound: ${error.message}. The rest of the surprise still works.`);
+    reportError(`Couldn't play the celebration sound: ${error.message}. The rest of the surprise still works.`);
   }
 }
 

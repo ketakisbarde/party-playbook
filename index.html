@@ -7,9 +7,9 @@
   <title>A birthday, just for you</title>
   <link rel="stylesheet" href="./styles.css?v=20261120-reference">
   <script src="./content.js?v=20261120-18-wishes" defer></script>
-  <script src="./games-content.js?v=20261120-five-things" defer></script>
-  <script src="./app.js?v=20261120-party-fun" defer></script>
-  <script src="./party.js?v=20261120-five-things" defer></script>
+  <script src="./games-content.js?v=20261120-object-hunt30" defer></script>
+  <script src="./app.js?v=20261120-wheel-sound" defer></script>
+  <script src="./party.js?v=20261120-object-hunt30" defer></script>
 </head>
 <body>
   <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -142,7 +142,7 @@
       <div class="header-actions">
         <button class="header-button header-games" type="button" data-go="party">Party games</button>
         <button class="header-button header-fullscreen" id="fullscreen" type="button" aria-pressed="false">TV / fullscreen</button>
-        <button class="header-button header-fullscreen" id="celebration-sound" type="button" aria-label="Birthday celebration sound" aria-pressed="true" hidden>Sound on</button>
+        <button class="header-button header-fullscreen" id="celebration-sound" type="button" aria-label="Celebration sound effects" aria-pressed="true" hidden>Sound on</button>
       </div>
     </header>
 
@@ -397,6 +397,11 @@
               <h2 class="handwritten">Quick practice, then showtime</h2>
               <p class="rapid-example"><span id="rapid-example-clue"></span><span aria-hidden="true">&rarr;</span><strong id="rapid-example-answer"></strong></p>
               <p class="party-small" id="rapid-example-tip"></p>
+              <div id="hunt-timing-settings" hidden>
+                <label for="hunt-seconds">Seconds per hunt</label>
+                <input id="hunt-seconds" type="number" min="1" max="600" step="1" value="20" required aria-describedby="hunt-timing-help">
+                <p class="party-small" id="hunt-timing-help">Choose 1-600 seconds per prompt. NEXT! always lasts 1 second. Choose a round again to change this setting after starting.</p>
+              </div>
               <div class="inline-controls" id="rapid-round-options" aria-label="Choose a game round"></div>
               <p id="rapid-round-summary"></p>
               <button class="primary-button rapid-start" id="start-rapid-round" type="button">START</button>
@@ -419,6 +424,7 @@
             </div>
             <div class="round-prompt" id="round-prompt-card" tabindex="-1">
               <p class="rapid-step-clock" id="rapid-step-clock" role="timer" aria-live="off" hidden></p>
+              <p class="rapid-step-clock" id="rapid-player-turn" role="status" hidden></p>
               <p class="rapid-reader-reminder" id="rapid-reader-reminder" hidden>Player: face away. Teammate: read the title aloud once, in its normal order. No hints or repeats.</p>
               <p id="round-prompt-text"></p>
               <table class="hand-map-board" id="hand-map-board" hidden>
@@ -480,7 +486,7 @@
   </div>
   <div class="turn-changeover" id="turn-changeover" role="status" aria-live="assertive" hidden>
     <strong>NEXT!</strong>
-    <p>Next player, step forward</p>
+    <p id="turn-changeover-instruction">Next player, step forward</p>
     <p id="turn-changeover-countdown" aria-hidden="true"></p>
   </div>
   <p class="site-error" id="site-error" role="alert" hidden></p>
