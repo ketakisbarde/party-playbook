@@ -393,19 +393,19 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
   .personal-message { font-size: 17px; }
 }
 .birthday-chapter { --chapter-border: clamp(6px, 1.5svh, 16px); padding: var(--chapter-border); }
-.birthday-chapter .site-shell { display: flex; flex-direction: column; min-height: calc(100svh - 2 * var(--chapter-border)); }
+.birthday-chapter .site-shell { display: flex; flex-direction: column; max-width: 2200px; min-height: calc(100svh - 2 * var(--chapter-border)); }
 .birthday-chapter .site-header { padding: 8px 20px; }
 .birthday-chapter .header-button { min-height: 44px; padding: 8px 14px; font-size: 14px; }
 .birthday-chapter .site-footer { padding: 6px 20px; }
 .birthday-chapter #main { display: flex; flex: 1; }
-.birthday-chapter .page { width: 100%; min-height: 0; padding: clamp(12px, 2.5svh, 28px) 32px; }
+.birthday-chapter .page { --chapter-padding: clamp(12px, 2.5svh, 28px); --chapter-padding-x: 32px; width: 100%; min-height: 0; padding: var(--chapter-padding) var(--chapter-padding-x); }
 .birthday-chapter .centered-page { justify-content: center; }
 .birthday-chapter .eyebrow { margin-bottom: 10px; }
 .birthday-chapter .page-title { font-size: clamp(32px, 6svh, 58px); margin-bottom: 8px; }
 .birthday-chapter .page-description { font-size: 15px; line-height: 1.5; }
 .birthday-chapter .primary-button { min-height: 44px; padding: 12px 20px; }
 .birthday-chapter .text-button { margin-top: 8px; padding: 10px 8px; }
-.birthday-chapter .welcome-page { grid-template-columns: .8fr 1.4fr .55fr; gap: 24px; }
+.birthday-chapter .welcome-page { grid-template-columns: minmax(0, .8fr) minmax(0, 1.4fr) minmax(0, .65fr); gap: 24px; }
 .birthday-chapter .portrait-side { width: min(100%, 34svh); padding: 10px; justify-self: center; }
 .birthday-chapter .photo-frame { padding: 10px 10px 1px; }
 .birthday-chapter .paper-label { font-size: 24px; padding: 3px 12px; }
@@ -417,13 +417,14 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
 .birthday-chapter .recipient { font-size: clamp(30px, 4.5svh, 46px); margin: 18px 0 8px; }
 .birthday-chapter .intro { font-size: 15px; line-height: 1.6; margin: 12px 0 18px; }
 .birthday-chapter .tiny-caption { margin-top: 12px; }
-.birthday-chapter .raccoon-sticker { grid-column: 3; width: min(100%, 36svh); margin: 0; justify-self: center; }
-.birthday-chapter #cake { padding-bottom: clamp(80px, 15svh, 140px); }
-.birthday-chapter .cake-scene { margin-top: 12px; }
-.birthday-chapter .cake-button { width: min(100%, 30svh, 290px); padding: 0; }
+.birthday-chapter .raccoon-sticker { grid-column: 3; width: min(100%, 44svh); margin: 0 calc(-1 * var(--chapter-padding-x)) calc(-1 * var(--chapter-padding)) 0; justify-self: end; align-self: end; }
+.birthday-chapter #cake { padding-bottom: var(--chapter-padding); }
+.birthday-chapter .cake-scene { display: grid; grid-template-columns: minmax(0, 1fr) min(58svh, 42vw, 700px) minmax(0, 1fr); align-items: end; gap: 12px; margin-top: 12px; }
+.birthday-chapter .cake-button { width: 100%; padding: 0; }
 .birthday-chapter .cake-art { width: 100%; }
-.birthday-chapter .dogs-left { width: min(42%, 45svh, 500px); }
-.birthday-chapter .dogs-right { width: min(30%, 32svh, 350px); }
+.birthday-chapter .dog-party { position: static; }
+.birthday-chapter .dogs-left { width: min(100%, 85svh, 1000px); justify-self: start; }
+.birthday-chapter .dogs-right { width: min(100%, 60svh, 700px); justify-self: end; }
 .birthday-chapter #cake::before, .birthday-chapter #cake::after { height: min(20svh, 160px); }
 .birthday-chapter .cake-status { font-size: 24px; line-height: 1.2; margin: 12px 0; min-height: 0; max-width: 100%; }
 .birthday-chapter .accept-monkey { width: min(100%, 25svh, 260px); margin: 10px 0; }
@@ -434,9 +435,9 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
 .birthday-chapter .gift-sticker { width: min(100%, 14svh, 120px); height: min(12svh, 100px); margin: 14px 0 8px; }
 .birthday-chapter .gift-card strong { font-size: 28px; margin: 10px 0; }
 .birthday-chapter .gift-card .gift-action { padding-top: 16px; }
-.birthday-chapter .letter-card { width: min(900px, 100%); margin-top: 16px; padding: 16px 24px; }
+.birthday-chapter .letter-card { width: min(1080px, 100%); margin-top: 16px; padding: 16px 24px; }
 .birthday-chapter .letter-heart { width: 28px; height: 28px; }
-.birthday-chapter .friend-message { font-size: clamp(16px, 1.8vw, 24px); line-height: 1.5; margin: 8px 0 12px; }
+.birthday-chapter .friend-message { font-size: clamp(16px, min(1.8vw, 2.6svh), 24px); line-height: 1.5; margin: 8px 0 12px; }
 .birthday-chapter .letter-signoff { font-size: 20px; }
 .birthday-chapter .flip-hint { margin: 10px 0; }
 .birthday-chapter .message-controls { gap: 12px; }
@@ -444,10 +445,32 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
 .birthday-chapter .big-heart { width: min(110px, 14svh); height: min(106px, 13.5svh); margin: 8px 0 12px; }
 .birthday-chapter .physical-note { font-size: 18px; line-height: 1.5; margin: 12px 0; }
 @media (max-width: 1000px) and (min-width: 681px) {
-  .birthday-chapter .welcome-page { grid-template-columns: .8fr 1.2fr; gap: 16px; }
-  .birthday-chapter .portrait-side { grid-column: 1; grid-row: 1 / span 2; }
-  .birthday-chapter .welcome-copy { grid-column: 2; grid-row: 1; }
-  .birthday-chapter .raccoon-sticker { grid-column: 2; grid-row: 2; width: min(100%, 13svh); justify-self: end; }
+  .birthday-chapter .welcome-page { gap: 16px; }
+  .birthday-chapter .cutout-title i { font-size: clamp(18px, 2.5vw, 24px); }
+  .birthday-chapter .word { gap: 5px; }
+}
+@media (min-width: 681px) and (max-height: 800px) {
+  .birthday-chapter .cake-scene { grid-template-columns: minmax(0, 1fr) min(52svh, 42vw, 450px) minmax(0, 1fr); margin-top: 8px; }
+  .birthday-chapter .cake-status { margin: 8px 0; }
+}
+@media (min-width: 681px) and (max-height: 700px) {
+  .birthday-chapter .page { --chapter-padding: 8px; }
+  .birthday-chapter .eyebrow { margin-bottom: 6px; }
+  .birthday-chapter .page-title { font-size: clamp(28px, 5svh, 36px); margin-bottom: 6px; }
+  .birthday-chapter .gift-grid { margin-top: 12px; gap: 12px; }
+  .birthday-chapter .gift-card { padding: 12px; }
+  .birthday-chapter .gift-sticker { width: 70px; height: min(9svh, 70px); margin: 10px 0 6px; }
+  .birthday-chapter .gift-card strong { font-size: 24px; line-height: 1.1; margin: 6px 0; }
+  .birthday-chapter .gift-card .gift-action { padding-top: 10px; }
+  .birthday-chapter .page-description { font-size: 14px; line-height: 1.4; }
+  .birthday-chapter .letter-card { margin-top: 12px; padding: 8px 20px; }
+  .birthday-chapter .letter-heart { width: 20px; height: 20px; }
+  .birthday-chapter .friend-message { line-height: 1.35; margin: 6px 0 8px; }
+  .birthday-chapter .letter-signoff { font-size: 18px; line-height: 1.2; }
+  .birthday-chapter .flip-hint { margin: 6px 0; }
+  .birthday-chapter .text-button { margin-top: 4px; }
+  .birthday-chapter .cake-scene { grid-template-columns: minmax(0, 1fr) min(50svh, 42vw, 350px) minmax(0, 1fr); margin-top: 8px; }
+  .birthday-chapter .cake-status { margin: 8px 0; }
 }
 @media (max-width: 680px) {
   .birthday-chapter .site-header { flex-wrap: nowrap; gap: 8px; padding: 8px; }
@@ -459,21 +482,21 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
   .birthday-chapter .site-footer > span { display: none; }
   .birthday-chapter .chapter-dots { order: 0; flex-basis: auto; gap: 0; }
   .birthday-chapter .site-footer .quiet-button { font-size: 10px; padding: 4px; }
-  .birthday-chapter .page { padding: 12px 16px; }
-  .birthday-chapter .welcome-page { grid-template-columns: 1fr 1fr; gap: 12px; align-content: center; }
-  .birthday-chapter .portrait-side { grid-column: 1; grid-row: 1; width: min(100%, 23svh); padding: 5px; }
-  .birthday-chapter .raccoon-sticker { grid-column: 2; grid-row: 1; width: min(100%, 20svh); align-self: center; }
+  .birthday-chapter .page { --chapter-padding: 18px; --chapter-padding-x: 16px; }
+  .birthday-chapter .welcome-page { grid-template-columns: 1fr; gap: 24px; align-content: center; }
+  .birthday-chapter .portrait-side { grid-column: 1; grid-row: 1; width: min(100%, 240px); padding: 8px; }
+  .birthday-chapter .raccoon-sticker { grid-column: 1; grid-row: 3; width: min(75%, 260px); }
   .birthday-chapter .welcome-copy { grid-column: 1 / -1; grid-row: 2; }
-  .birthday-chapter .paper-label { font-size: 17px; padding: 2px 6px; }
+  .birthday-chapter .paper-label { font-size: 22px; padding: 3px 10px; }
   .birthday-chapter .photo-frame { padding: 6px 6px 1px; }
   .birthday-chapter .photo-frame::before { width: 45px; height: 18px; top: -8px; }
-  .birthday-chapter .photo-caption { font-size: 16px; margin: 5px 0; }
-  .birthday-chapter .camera-sticker { width: 25px; margin-top: 5px; }
-  .birthday-chapter .little-note { font-size: 14px; margin-top: 4px; }
+  .birthday-chapter .photo-caption { font-size: 20px; margin: 8px 0; }
+  .birthday-chapter .camera-sticker { width: 40px; margin-top: 8px; }
+  .birthday-chapter .little-note { font-size: 18px; margin-top: 8px; }
   .birthday-chapter .cutout-title i { font-size: clamp(21px, 5.5vw, 34px); }
   .birthday-chapter .cutout-title { gap: 12px; }
   .birthday-chapter .recipient { font-size: 30px; margin: 12px 0 6px; }
-  .birthday-chapter .intro { font-size: 14px; line-height: 1.5; margin: 8px auto 12px; }
+  .birthday-chapter .intro { font-size: 16px; line-height: 1.5; margin: 8px auto 12px; }
   .birthday-chapter .tiny-caption { font-size: 10px; margin-top: 8px; }
   .birthday-chapter .page-description { font-size: 13px; line-height: 1.4; }
   .birthday-chapter .gift-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 12px; }
@@ -489,24 +512,16 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
   .birthday-chapter .message-controls { flex-wrap: nowrap; gap: 6px; }
   .birthday-chapter .secondary-button { font-size: 12px; padding: 8px; }
   .birthday-chapter .text-button { font-size: 12px; }
+  .birthday-chapter .cake-scene { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 18px 0; }
+  .birthday-chapter .cake-button { grid-column: 1 / -1; grid-row: 1; width: min(100%, 260px); justify-self: center; }
+  .birthday-chapter .dogs-left { grid-column: 1; grid-row: 2; }
+  .birthday-chapter .dogs-right { grid-column: 2; grid-row: 2; }
 }
 @media (max-width: 680px) and (max-height: 750px) {
   .birthday-chapter { --chapter-border: 6px; }
-  .birthday-chapter .page { padding: 8px 12px; }
+  .birthday-chapter .page { --chapter-padding: 12px; --chapter-padding-x: 12px; }
   .birthday-chapter .eyebrow { margin-bottom: 6px; }
   .birthday-chapter .page-title { font-size: 32px; margin-bottom: 4px; }
-  .birthday-chapter .welcome-page { gap: 6px; }
-  .birthday-chapter .portrait-side { width: min(100%, 15svh); padding: 2px; }
-  .birthday-chapter .photo-frame { padding: 4px 4px 1px; }
-  .birthday-chapter .paper-label { font-size: 14px; white-space: nowrap; }
-  .birthday-chapter .photo-caption { font-size: 13px; line-height: 1.1; margin: 3px 0; }
-  .birthday-chapter .camera-sticker { display: none; }
-  .birthday-chapter .little-note { font-size: 12px; line-height: 1.2; margin-top: 2px; }
-  .birthday-chapter .raccoon-sticker { width: min(100%, 16svh); }
-  .birthday-chapter .cutout-title { gap: 6px; }
-  .birthday-chapter .cutout-title i { font-size: 20px; }
-  .birthday-chapter .recipient { font-size: 26px; margin-top: 8px; }
-  .birthday-chapter .intro { font-size: 13px; line-height: 1.4; margin: 4px auto 6px; }
   .birthday-chapter .tiny-caption { margin-top: 6px; }
   .birthday-chapter .letter-card { margin-top: 8px; padding: 8px 12px; }
   .birthday-chapter .letter-heart { width: 20px; height: 20px; }
@@ -515,7 +530,6 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
   .birthday-chapter .flip-hint { margin: 6px 0; }
   .birthday-chapter .text-button { margin-top: 4px; }
   .birthday-chapter .primary-button { font-size: 13px; padding: 8px 12px; }
-  .birthday-chapter .cake-button { width: min(100%, 24svh); }
   .birthday-chapter .cake-scene { margin-top: 8px; }
   .birthday-chapter .cake-status { font-size: 18px; margin: 8px 0; }
   .birthday-chapter .accept-monkey { width: min(100%, 18svh); }
