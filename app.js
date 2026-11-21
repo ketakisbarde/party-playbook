@@ -24,6 +24,7 @@ function showPage(id, moveFocus = true) {
   }
   clearError();
   pages.forEach(page => { page.hidden = page.id !== id; });
+  document.body.classList.toggle("birthday-chapter", document.getElementById(id).hasAttribute("data-fit-screen"));
   if (id === "messages") setNoteRevealed(false);
   const chapter = ["messages", "ours", "physical"].includes(id) ? "gifts" : id === "party-round" ? "party" : id;
   document.querySelectorAll("[data-chapter]").forEach(link => {
