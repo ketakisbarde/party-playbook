@@ -844,7 +844,9 @@
       partyError("Party game content is invalid. Check unique IDs, rules, prompts and round lengths in games-content.js.");
       return;
     }
-    games.forEach(game => byId.set(game.id, game));
+    games.forEach(game => byId.set(game.id, game.id === "five-things"
+      ? { ...game, prompts: shuffleItems(game.prompts) }
+      : game));
     state = loadState();
     renderMenu();
     renderWheel();

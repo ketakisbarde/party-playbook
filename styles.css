@@ -205,6 +205,8 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
 .confetti span { position: absolute; top: -25px; width: 9px; height: 14px; background: var(--blue); animation: confetti-fall 2.6s ease-in forwards; }
 .confetti span:nth-child(3n) { background: var(--gold); }
 .confetti span:nth-child(3n + 1) { background: #a8c5de; }
+.confetti span:nth-child(4n) { border-radius: 50%; }
+.confetti span:nth-child(5n) { background: #e5a5bb; clip-path: polygon(50% 0, 62% 35%, 100% 38%, 70% 60%, 80% 100%, 50% 78%, 20% 100%, 30% 60%, 0 38%, 38% 35%); }
 .site-error { margin: 15px auto; max-width: 900px; background: #fff5ec; color: #88412c; padding: 18px; border: 1px solid #b47358; border-radius: 5px; }
 .site-header { flex-wrap: wrap; }
 .header-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; }
@@ -305,7 +307,7 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
 #round-audio { display: block; width: 100%; margin-top: 15px; }
 #audio-panel .text-button { margin-top: 0; }
 @keyframes flicker { to { transform: translate(-50%, -100%) rotate(7deg) scale(.9, 1.08); } }
-@keyframes confetti-fall { to { transform: translateY(110vh) rotate(620deg); } }
+@keyframes confetti-fall { to { transform: translate(var(--drift, 0px), 110vh) rotate(620deg); } }
 @media (min-width: 1700px) {
   .page { min-height: calc(100svh - 190px); }
   .intro, .page-description { font-size: 20px; }
@@ -405,19 +407,24 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
 .birthday-chapter .page-description { font-size: 15px; line-height: 1.5; }
 .birthday-chapter .primary-button { min-height: 44px; padding: 12px 20px; }
 .birthday-chapter .text-button { margin-top: 8px; padding: 10px 8px; }
-.birthday-chapter .welcome-page { grid-template-columns: minmax(0, .8fr) minmax(0, 1.4fr) minmax(0, .65fr); gap: 24px; }
-.birthday-chapter .portrait-side { width: min(100%, 34svh); padding: 10px; justify-self: center; }
+.birthday-chapter .welcome-page { --welcome-raccoon-width: min(22vw, 30svh, 360px); grid-template-columns: minmax(0, .9fr) minmax(0, 1.2fr); gap: clamp(24px, 3vw, 56px); }
+.birthday-chapter .portrait-side { grid-column: 1; grid-row: 1; width: min(100%, max(220px, calc((100svh - 290px) * .75))); padding: 10px; justify-self: center; }
+.birthday-chapter #birthday-photo { aspect-ratio: 3 / 4; }
+.birthday-chapter #birthday-photo.has-photo { aspect-ratio: auto; }
+.birthday-chapter #birthday-photo.has-photo img { position: static; height: auto; object-fit: contain; }
+.birthday-chapter .welcome-copy { grid-column: 2; grid-row: 1; min-width: 0; align-self: start; padding-top: clamp(0px, calc((100svh - 700px) * .2), 90px); }
 .birthday-chapter .photo-frame { padding: 10px 10px 1px; }
 .birthday-chapter .paper-label { font-size: 24px; padding: 3px 12px; }
 .birthday-chapter .photo-caption { font-size: 22px; margin: 8px 0; }
-.birthday-chapter .camera-sticker { width: clamp(35px, 6svh, 65px); margin-top: 8px; }
+.birthday-chapter .camera-sticker { position: absolute; right: -5px; bottom: 70px; width: clamp(35px, 6svh, 65px); margin: 0; }
 .birthday-chapter .little-note { font-size: 20px; margin-top: 8px; }
-.birthday-chapter .cutout-title { gap: 14px; }
-.birthday-chapter .cutout-title i { font-size: clamp(24px, 3.2vw, 46px); }
-.birthday-chapter .recipient { font-size: clamp(30px, 4.5svh, 46px); margin: 18px 0 8px; }
-.birthday-chapter .intro { font-size: 15px; line-height: 1.6; margin: 12px 0 18px; }
+.birthday-title { margin: 0 0 12px; line-height: 0; }
+.birthday-title-art { display: block; width: min(100%, 64svh, 900px); height: auto; }
+.birthday-chapter .recipient { width: fit-content; max-width: calc(100% - var(--welcome-raccoon-width) - 16px); font-size: clamp(30px, 4.5svh, 46px); margin: 18px 0 8px; }
+.birthday-chapter .intro { max-width: min(410px, calc(100% - var(--welcome-raccoon-width) - 16px)); font-size: 15px; line-height: 1.5; margin: 10px 0 14px; }
 .birthday-chapter .tiny-caption { margin-top: 12px; }
-.birthday-chapter .raccoon-sticker { grid-column: 3; width: min(100%, 44svh); margin: 0 calc(-1 * var(--chapter-padding-x)) calc(-1 * var(--chapter-padding)) 0; justify-self: end; align-self: end; }
+.birthday-chapter .welcome-copy > .tiny-caption { max-width: min(410px, calc(100% - var(--welcome-raccoon-width) - 16px)); }
+.birthday-chapter .raccoon-sticker { position: absolute; grid-column: auto; right: 0; bottom: 0; width: var(--welcome-raccoon-width); margin: 0; }
 .birthday-chapter #cake { display: grid; grid-template-columns: minmax(0, 1fr) min(58svh, 42vw, 700px) minmax(0, 1fr); grid-template-rows: 1fr repeat(6, auto) 1fr; column-gap: 12px; padding-bottom: var(--chapter-padding); }
 .birthday-chapter #cake > :not(.cake-scene) { grid-column: 1 / -1; justify-self: center; }
 .birthday-chapter #cake > .eyebrow { grid-row: 2; }
@@ -452,8 +459,6 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
 .birthday-chapter .physical-note { font-size: 18px; line-height: 1.5; margin: 12px 0; }
 @media (max-width: 1000px) and (min-width: 681px) {
   .birthday-chapter .welcome-page { gap: 16px; }
-  .birthday-chapter .cutout-title i { font-size: clamp(18px, 2.5vw, 24px); }
-  .birthday-chapter .word { gap: 5px; }
 }
 @media (min-width: 681px) and (max-height: 800px) {
   .birthday-chapter #cake { grid-template-columns: minmax(0, 1fr) min(52svh, 42vw, 450px) minmax(0, 1fr); }
@@ -492,19 +497,20 @@ img.photo-sparkle { width: 60px; height: 60px; object-fit: contain; }
   .birthday-chapter .page { --chapter-padding: 18px; --chapter-padding-x: 16px; }
   .birthday-chapter .welcome-page { grid-template-columns: 1fr; gap: 24px; align-content: center; }
   .birthday-chapter .portrait-side { grid-column: 1; grid-row: 1; width: min(100%, 240px); padding: 8px; }
-  .birthday-chapter .raccoon-sticker { grid-column: 1; grid-row: 3; width: min(75%, 260px); }
-  .birthday-chapter .welcome-copy { grid-column: 1 / -1; grid-row: 2; }
+  .birthday-chapter .raccoon-sticker { position: relative; grid-column: 1; grid-row: 3; right: auto; bottom: auto; width: min(75%, 260px); margin: 0 calc(-1 * var(--chapter-padding-x)) calc(-1 * var(--chapter-padding)) 0; justify-self: end; align-self: end; }
+  .birthday-chapter .welcome-copy { grid-column: 1 / -1; grid-row: 2; padding-top: 0; }
   .birthday-chapter .paper-label { font-size: 22px; padding: 3px 10px; }
   .birthday-chapter .photo-frame { padding: 6px 6px 1px; }
   .birthday-chapter .photo-frame::before { width: 45px; height: 18px; top: -8px; }
   .birthday-chapter .photo-caption { font-size: 20px; margin: 8px 0; }
-  .birthday-chapter .camera-sticker { width: 40px; margin-top: 8px; }
+  .birthday-chapter .camera-sticker { width: 40px; bottom: 65px; }
   .birthday-chapter .little-note { font-size: 18px; margin-top: 8px; }
   .birthday-chapter .cutout-title i { font-size: clamp(21px, 5.5vw, 34px); }
   .birthday-chapter .cutout-title { gap: 12px; }
-  .birthday-chapter .recipient { font-size: 30px; margin: 12px 0 6px; }
-  .birthday-chapter .intro { font-size: 16px; line-height: 1.5; margin: 8px auto 12px; }
+  .birthday-chapter .recipient { max-width: 100%; font-size: 30px; margin: 12px auto 6px; }
+  .birthday-chapter .intro { max-width: 410px; font-size: 16px; line-height: 1.5; margin: 8px auto 12px; }
   .birthday-chapter .tiny-caption { font-size: 10px; margin-top: 8px; }
+  .birthday-chapter .welcome-copy > .tiny-caption { max-width: 410px; }
   .birthday-chapter .page-description { font-size: 13px; line-height: 1.4; }
   .birthday-chapter .gift-grid { grid-template-columns: 1fr; gap: 12px; margin-top: 12px; }
   .birthday-chapter .gift-card { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 4px 12px; padding: 12px; transform: none; }

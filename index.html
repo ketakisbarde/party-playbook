@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#315c9b">
   <title>A birthday, just for you</title>
-  <link rel="stylesheet" href="./styles.css?v=32c93b0">
-  <script src="./content.js" defer></script>
-  <script src="./games-content.js" defer></script>
-  <script src="./app.js" defer></script>
-  <script src="./party.js" defer></script>
+  <link rel="stylesheet" href="./styles.css?v=20261120-reference">
+  <script src="./content.js?v=20261120-18-wishes" defer></script>
+  <script src="./games-content.js?v=20261120-five-things" defer></script>
+  <script src="./app.js?v=20261120-party-fun" defer></script>
+  <script src="./party.js?v=20261120-five-things" defer></script>
 </head>
 <body>
   <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -142,6 +142,7 @@
       <div class="header-actions">
         <button class="header-button header-games" type="button" data-go="party">Party games</button>
         <button class="header-button header-fullscreen" id="fullscreen" type="button" aria-pressed="false">TV / fullscreen</button>
+        <button class="header-button header-fullscreen" id="celebration-sound" type="button" aria-label="Birthday celebration sound" aria-pressed="true" hidden>Sound on</button>
       </div>
     </header>
 
@@ -162,9 +163,8 @@
         </div>
         <div class="welcome-copy">
           <p class="eyebrow">a little birthday magic, just for you</p>
-          <h1 id="welcome-title" class="cutout-title" aria-label="Happy birthday">
-            <span class="word word-happy"><img class="title-star" src="./images/sticker-star.png" alt="" aria-hidden="true" data-required-asset><i>H</i><i>A</i><i>P</i><i>P</i><i>Y</i><img class="title-star" src="./images/sticker-star.png" alt="" aria-hidden="true" data-required-asset></span>
-            <span class="word word-birthday"><i>B</i><i>i</i><i>R</i><i>t</i><i>H</i><i>d</i><i>A</i><i>Y</i></span>
+          <h1 id="welcome-title" class="birthday-title" aria-label="Happy birthday">
+            <img class="birthday-title-art" src="./images/hbd-title.png" alt="" aria-hidden="true" data-required-asset>
           </h1>
           <p class="handwritten recipient" data-content="recipient"></p>
           <p class="intro" data-content="welcomeMessage"></p>
